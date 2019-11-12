@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>
@@ -6,19 +7,28 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
          <!-- <script src= "/socket.io/socket.io.js"></script>    -->
          <script src="/socket.io/socket.io.js"></script>
+         <style>
+           #recv {list-style-type: none;margin: 0;padding: 0;}
+           #recv li {padding: 5px 10px;}
+           #recv li:nth-child(odd) {background: #eee;}
+         </style>
     </head>
-    <body>
+
+ 
 
 
     <script>
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('https://gps-server-savy.herokuapp.com/');
     socket.on('server-recv', function (data) {
     console.log(data);
+    $('#recv').append($('<li>').text(data.data));
     var ele = document.createElement('div')
     ele.innerHTML = data.my
     document.body.appendChild(ele)
     });
     socket.emit('client-send', { my: 'data' });
     </script>
+       <body>
+           <ul id="recv"></ul>
       </body>
 </html>

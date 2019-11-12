@@ -12,7 +12,7 @@ gps_server.listen(PORT,function () {
 });
 
 
-app.get('/', function(req,res)
+app.get('/tienpjo', function(req,res)
 {
     res.sendFile(__dirname + '/index.html');
 });
