@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>
+            GPS SERVER
+        </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+         <!-- <script src= "/socket.io/socket.io.js"></script>    -->
+         <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+
+
+    <script>
+    var socket = io.connect('http://localhost:3000');
+    socket.on('server-recv', function (data) {
+    console.log(data);
+    var ele = document.createElement('div')
+    ele.innerHTML = data.my
+    document.body.appendChild(ele)
+    });
+    socket.emit('client-send', { my: 'data' });
+    </script>
+      </body>
+</html>

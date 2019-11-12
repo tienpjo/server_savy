@@ -1,0 +1,24 @@
+{
+  "name": "server_savy",
+  "version": "1.0.0",
+  "description": "server_gps_savy",
+  "main": "index.js",
+  "scripts": {
+    "test": "https://tienpjo@bitbucket.org/obd_savy/server_gps.git"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://tienpjo@bitbucket.org/obd_savy/server_gps.git"
+  },
+  "author": "Tien Tran <ductien.hust@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/obd_savy/server_gps#readme",
+  "dependencies": {
+    "bluebird": "^3.7.1",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.10",
+    "socket.io": "^2.3.0"
+  }
+}
