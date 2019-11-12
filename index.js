@@ -1,5 +1,5 @@
 var PORT = process.env.PORT || 3000;
-var express = require('express')();
+var express = require('express');
 var app = express();
 var gps_server = require('http').createServer(app);
 var io_socket = require('socket.io').listen(gps_server);
@@ -9,7 +9,7 @@ srv_connect = [];
 
 gps_server.listen(PORT,function () {
     console.log('Server running ... !!');
-    console.log(`Listening on ${ PORT }`);
+    // console.log(`Listening on ${ PORT }`);
 });
 
  
