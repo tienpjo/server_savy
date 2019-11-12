@@ -11,6 +11,7 @@ gps_server.listen(PORT,function () {
     console.log('Server running ... !!');
 });
 
+.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 app.get('/', function(req,res)
 {
