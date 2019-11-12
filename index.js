@@ -9,9 +9,10 @@ srv_connect = [];
 
 gps_server.listen(PORT,function () {
     console.log('Server running ... !!');
+    console.log(`Listening on ${ PORT }`);
 });
 
-.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+ 
 
 app.get('/', function(req,res)
 {
