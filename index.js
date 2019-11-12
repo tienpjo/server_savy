@@ -1,3 +1,4 @@
+var PORT = process.env.PORT || 3000;
 var express = require('express');
 var app = express();
 var gps_server = require('http').createServer(app);
@@ -6,8 +7,10 @@ users = [];
 srv_connect = [];
 
 
-gps_server.listen(process.env.PORT || 3000);
-console.log('Server running ... !!');
+gps_server.listen(PORT,function () {
+    console.log('Server running ... !!');
+});
+
 
 app.get('/', function(req,res)
 {
