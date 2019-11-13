@@ -1,4 +1,4 @@
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT;
 var express = require('express');
 var app = express();
 var gps_server = require('http').createServer(app);
