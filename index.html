@@ -18,7 +18,7 @@
     <body>
 
     <script>
-    var socket = io.connect('https://gps-server-savy.herokuapp.com/');
+    // var socket = io.connect('https://gps-server-savy.herokuapp.com/');
     socket.on('server-recv', function (data) {
     console.log(data);
     //$('#recv').append($('<li>').text(data.data));
@@ -26,7 +26,7 @@
     ele.innerHTML = data.my
     document.body.appendChild(ele)
     });
-    socket.emit('client-send', { my: 'data' });
+   // socket.emit('client-send', { my: 'data' });
     </script>
       </body>
 </html>
