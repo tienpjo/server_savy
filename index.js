@@ -12,7 +12,6 @@ gps_server.listen(PORT,function () {
     // console.log(`Listening on ${ PORT }`);
 });
 
- 
 
 app.get('/', function(req,res)
 {
@@ -22,6 +21,6 @@ app.get('/', function(req,res)
 io_socket.sockets.on('connection', function (socket) {
     socket.on("client-send",function (data) {
         console.log("Server vua nhan duoc data la: " + JSON.stringify(data));
-        io_socket.sockets.emit("server-recv",data);
+        // io_socket.sockets.emit("server-recv",data);
     });
 });
