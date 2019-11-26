@@ -2,18 +2,18 @@
 const express = require('express');
 var path = require("path");
 const app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
+var server = app.listen(3000);
+var io = sio.listen(server);
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
   
-  server.listen(app.get(3000)); 
-//   (3000, function() {
-//     console.log('Socket IO Server is listening on port 3000');
-// });
+  app.listen(3000, function () {
+    var addr = app.address();
+    console.log('   app listening on http://' + addr.address + ':' + addr.port);
+  });
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
