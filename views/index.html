@@ -17,7 +17,13 @@
          </style>
     </head>
 <body>
-
+    <script>
+      socket.on('emit_from_server', function (data) {
+       document.writeln('Ping : ' + data + '<br />');
+       data++;
+     //  setTimeout(function () { socket.emit('Pong', data); }, 1000);
+    });
+      </script>
     <!-- <script>
     var socket = io();
     socket.on('emit_from_server', function (data) {
@@ -28,16 +34,7 @@
 			//	$("#chat-content").append(data);
     });
    // socket.emit('client-send', { my: 'data' });
-    </script> -->
-    <script>
-    const ws = new WebSocket('ws://103.137.185.94:9000/');
-    ws.onopen = function() {
-        console.log('WebSocket Client Connected');
-        ws.send('Hi this is web client.');
-    };
-    ws.onmessage = function(e) {
-      console.log("Received: '" + e.data + "'");
-    };
-  </script>
+    </script>
+
       </body>
 </html>

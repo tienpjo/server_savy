@@ -2,7 +2,7 @@
 const express = require('express');
 var path = require("path");
 const app = express();
-var server = require('http').createServer(app);
+var server = require('http').createServer(handler;
 var io = require('socket.io')(server);
 
 
@@ -11,8 +11,17 @@ app.listen(3000, function() {
     console.log('Socket IO Server is listening on port 3000');
 });
 
-app.get("/", function (req, res) {
-    res.sendFile(__dirname + '/views/index.html');
+app.get("/", function handler(req, res) {
+    res.sendFile(__dirname + '/views/index.html',
+    function (err, data) {
+        if (err) {
+            res.writeHead(500);
+            return res.end('Error loading index.html');
+        }
+
+        res.writeHead(200);
+        res.end(data);
+    });
 });
 
 io.sockets.on('connection', function(socket) {
