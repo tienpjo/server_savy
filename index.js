@@ -7,9 +7,21 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "103.137.185.94");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+        // Website you wish to allow to connect
+        res.setHeader('Access-Control-Allow-Origin', 'http://103.137.185.94:3000');
+
+        // Request methods you wish to allow
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    
+        // Request headers you wish to allow
+        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    
+        // Set to true if you need the website to include cookies in the requests sent
+        // to the API (e.g. in case you use sessions)
+        res.setHeader('Access-Control-Allow-Credentials', true);
+    
+        // Pass to next layer of middleware
+        next();
   });
   
   server.listen(3000);//, function () {
