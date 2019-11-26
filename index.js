@@ -9,11 +9,10 @@ var io = require('socket.io')(server);
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(3000, function() {
     console.log('Socket IO Server is listening on port 3000');
-  });
+});
 
 app.get("/", function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
- 
 });
 
 io.sockets.on('connection', function(socket) {
