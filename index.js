@@ -26,11 +26,10 @@ net.createServer(function(sock) {
    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
 
  });
- 
- io.on('connection', function (socket) {
-    socket.on('send-index', function (data) {
-        io.sockets.emit('send-index', data);
-    });
 }).listen(PORT, HOST);
-
 console.log('Server listening on ' + HOST +':'+ PORT);
+io.on('connection', function (socket) {
+    socket.on('send', function (data) {
+        io.sockets.emit('send', data);
+    });
+});
