@@ -30,8 +30,6 @@ io.sockets.on('connection', function(socket) {
       io.sockets.emit('emit_from_server', data);
     });
   });
-  
-
 var net = require('net');
 var HOST = '103.137.185.94';
 var PORT = 9000;
@@ -40,7 +38,7 @@ net.createServer(function(sock) {
   sock.on('data', function(data) {
     var line = data.toString();
     console.log('got "data"', line);
-    socket.pipe(writable);
+    sock.pipe(writable);
     io.sockets.emit('emit_from_server', line); // socket.io呼び出し
    
   });
