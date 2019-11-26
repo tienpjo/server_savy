@@ -28,10 +28,11 @@ var HOST = '103.137.185.94';
 var PORT = 9000;
 net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
-  sock.on('data', function(data) {
+ io.sockets.on('connection', function(socket) {
+    io.sockets.emit('emit_from_server', 'connected');
+    sock.on('data', function(data) {
     var line = data.toString();
     //io.sockets.emit('emit_from_server', line); // socket.io呼び出し
-    io.sockets.on('connection', function(socket) {
     console.log('connection...');
         socket.on('emit_from_client', function(data) {
       console.log('socket.io server received : '+data);
