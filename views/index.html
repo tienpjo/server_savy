@@ -4,6 +4,7 @@
         <title>
             GPS SERVER
         </title>
+        
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
          <!-- <script src= "/socket.io/socket.io.js"></script>    -->
          <script src="/socket.io/socket.io.js"></script>
@@ -13,12 +14,11 @@
            #recv li:nth-child(odd) {background: #eee;}
          </style>
     </head>
-
-    <body>
+<body>
     
-    <!-- <script>
-    // var socket = io.connect('https://gps-server-savy.herokuapp.com/');
-    socket.on('server-recv', function (data) {
+    <script>
+     var socket = io.connect('http://103.137.185.94:3000');
+    socket.on('data-recv', function (data) {
     console.log(data);
     //$('#recv').append($('<li>').text(data.data));
     var ele = document.createElement('div')
@@ -26,6 +26,6 @@
     document.body.appendChild(ele)
     });
    // socket.emit('client-send', { my: 'data' });
-    </script> -->
+    </script>
       </body>
 </html>

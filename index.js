@@ -1,7 +1,9 @@
 var net = require('net');
 const express = require('express');
-const app = express();
 var path = require("path");
+const app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 
 var HOST = '103.137.185.94';
 var PORT = 9000;
@@ -16,8 +18,9 @@ app.listen(3000);
 
 net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
-  sock.on('data', function(data) {
-    console.log('DATA :' + data);
+  sock.on('data-recv', function(data) {
+   // console.log('DATA :' + data);
+    io.sockets.emit('send', data);
   });
  
  sock.on('close', function(data) {
