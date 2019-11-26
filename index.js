@@ -20,17 +20,17 @@ net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
   sock.on('data', function(data) {
     console.log('DATA :' + data);
-   io.on('connection', function (socket) {
-    socket.on('send-index', function (data) {
-        io.sockets.emit('send-index', data);
-    });
   });
  
  sock.on('close', function(data) {
    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
 
  });
-
+ 
+ io.on('connection', function (socket) {
+    socket.on('send-index', function (data) {
+        io.sockets.emit('send-index', data);
+    });
 }).listen(PORT, HOST);
 
 console.log('Server listening on ' + HOST +':'+ PORT);
