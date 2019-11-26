@@ -22,7 +22,6 @@
     var socket = io.connect('http://103.137.185.94:3000');
     socket.on('emit_from_server', function (data) {
     console.log(data);
-    //$('#recv').append($('<li>').text(data.data));
     var ele = document.createElement('div')
     ele.innerHTML = data.my
     document.body.appendChild(ele)

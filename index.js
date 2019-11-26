@@ -12,16 +12,7 @@ app.listen(3000, function() {
   });
 
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname + '/views/index.html'),function(err, data){
-        res.setHeader('Content-Type', 'text/plain');
-        if(err) {
-            res.writeHead(500);
-            return res.end('Error');
-          }
-          res.writeHead(200);
-          res.write(data);
-          res.end();
-    })
+    res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
 io.sockets.on('connection', function(socket) {
@@ -42,7 +33,6 @@ net.createServer(function(sock) {
     console.log('got "data"', line);
    // sock.pipe(writable);
     io.sockets.emit('emit_from_server', line); // socket.io呼び出し
-   
   });
  
 
