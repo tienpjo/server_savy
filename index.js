@@ -10,9 +10,10 @@ app.use(function(req, res, next) {
     next();
   });
   
-app.listen(3000, function() {
-    console.log('Socket IO Server is listening on port 3000');
-});
+  server.listen(app.get(3000)); 
+//   (3000, function() {
+//     console.log('Socket IO Server is listening on port 3000');
+// });
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
