@@ -29,7 +29,7 @@ net.createServer(function(sock) {
  });
   
 }).listen(PORT, HOST);
-app.listen(9000);
+app.listen(3000);
 console.log('Server listening on ' + HOST +':'+ PORT);
 // io.on('connection', function (socket) {
 //     console.log('Welcome to server chat');
