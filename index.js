@@ -20,12 +20,10 @@ net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
   sock.on('data', function(data) {
     console.log('DATA :' + data);
+    io.sockets.emit('send', data);
    
   });
  
-  sock.on('send', function (data) {
-    io.sockets.emit('send', data);
-        });
 
  sock.on('close', function(data) {
    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
