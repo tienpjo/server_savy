@@ -33,13 +33,13 @@ net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
  io.sockets.on('connection', function(socket) {
     io.sockets.emit('emit_from_server', 'connected');
-    // sock.on('data', function(data) {
-    // var line = data.toString();
-    // console.log('connection...');
-    //     socket.on('emit_from_client', function(data) {
-    //   console.log('socket.io server received : '+data);
-    //   io.sockets.emit('emit_from_server', data);
-    // });
+    sock.on('data', function(data) {
+    var line = data.toString();
+    console.log('connection...');
+        socket.on('emit_from_client', function(line) {
+      console.log('socket.io server received : '+line);
+      io.sockets.emit('emit_from_server', line);
+    });
   });
 });
  

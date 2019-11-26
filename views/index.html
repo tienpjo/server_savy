@@ -20,8 +20,8 @@
 
     <script>
       var socket = io.connect('http://103.137.185.94');
-      socket.on('emit_from_server', function (data) {
-        console.log(data);
+      socket.on('emit_from_server', function (line) {
+        console.log(line);
       });
     </script>
     <!-- <script>
