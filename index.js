@@ -19,7 +19,7 @@ app.listen(3000);
 net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
   sock.on('data-recv', function(data) {
-   // console.log('DATA :' + data);
+    console.log('DATA :' + data);
     io.sockets.emit('send', data);
   });
  
