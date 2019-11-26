@@ -2,7 +2,7 @@
 const express = require('express');
 var path = require("path");
 const app = express();
-var server = require('http').createServer(handler;
+var server = require('http').createServer(handler);
 var io = require('socket.io')(server);
 
 
@@ -18,7 +18,6 @@ app.get("/", function handler(req, res) {
             res.writeHead(500);
             return res.end('Error loading index.html');
         }
-
         res.writeHead(200);
         res.end(data);
     });
