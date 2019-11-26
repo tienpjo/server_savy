@@ -12,7 +12,8 @@ app.listen(3000, function() {
   });
 
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname + '/views/index.html'));
+    res.sendFile(__dirname + '/views/index.html');
+ 
 });
 
 io.sockets.on('connection', function(socket) {
@@ -30,7 +31,7 @@ net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
   sock.on('data', function(data) {
     var line = data.toString();
-    console.log('got "data"', line);
+  //  console.log('got "data"', line);
    // sock.pipe(writable);
     io.sockets.emit('emit_from_server', line); // socket.io呼び出し
   });
