@@ -18,7 +18,7 @@
 <body>
 
     <script>
-      var socket = io.connect('http://103.137.185.94');
+      var socket = io.connect('http://103.137.185.94:3000');
       socket.on('emit_from_server', function (line) {
         console.log(line);
       });
