@@ -1,23 +1,34 @@
-var PORT = process.env.PORT || 9000;
-var express = require('express');
-var app = express();
-var gps_server = require('http').createServer(app);
-var io_socket = require('socket.io').listen(gps_server);
-users = [];
-srv_connect = [];
-
-gps_server.listen(PORT,function () {
-    console.log('Server running ... !!');
-    console.log(`Listening on ${ PORT }`);
+var WebSocketServer = require('websocket').server;
+var http = require('http');
+var webSocketsServerPort = 9000;
+var server = http.createServer(function(request, response) {
+  // process HTTP request. Since we're writing just WebSockets
+  // server we don't have to implement anything.
+});
+server.listen(webSocketsServerPort, function() { 
+    console.log(" Server is listening on port "
+      + webSocketsServerPort);
 });
 
-app.get('/', function(req,res)
-{
-    res.sendFile(__dirname + '/index.html');
+// create the server
+wsServer = new WebSocketServer({
+  httpServer: server
 });
 
-io_socket.sockets.on('connection', function (socket) {
-    socket.on("client-send",function (data) {
-        console.log("Server vua nhan duoc data la: " + JSON.stringify(data));
-    });
+// WebSocket server
+wsServer.on('request', function(request) {
+  var connection = request.accept(null, request.origin);
+
+  // This is the most important callback for us, we'll handle
+  // all messages from users here.
+  connection.on('message', function(message) {
+    if (message.type === 'utf8') {
+        console.log((new Date()) + ' Received Message '
+        + ': ' + message.utf8Data);
+    }
+  });
+
+  connection.on('close', function(connection) {
+    // close user connection
+  });
 });
