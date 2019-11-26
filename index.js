@@ -18,13 +18,17 @@ app.listen(3000);
 
 net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
-  sock.on('data-recv', function(data) {
+  sock.on('data', function(data) {
     console.log('DATA :' + data);
-    io.sockets.emit('send', data);
+   io.on('connection', function (socket) {
+    socket.on('send-index', function (data) {
+        io.sockets.emit('send-index', data);
+    });
   });
  
  sock.on('close', function(data) {
    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
+
  });
 
 }).listen(PORT, HOST);
