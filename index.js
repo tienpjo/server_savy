@@ -18,13 +18,11 @@ app.get("/", function (req, res) {
 app.listen(3000);
 net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
- socket.on('send', function (data) {
-    io.sockets.emit('send', data);
-        });
-        
   sock.on('data', function(data) {
     console.log('DATA :' + data);
-   
+    socket.on('send', function (data) {
+        io.sockets.emit('send', data);
+            });
   });
  
  sock.on('close', function(data) {
