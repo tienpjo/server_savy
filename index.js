@@ -11,17 +11,17 @@ app.listen(3000, function() {
     console.log('Socket IO Server is listening on port 3000');
 });
 
-app.get("/", function(req, res) {
+app.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
-});
-
-io.sockets.on('connection', function(socket) {
-    console.log('connection...');
-        socket.on('emit_from_client', function(data) {
-      console.log('socket.io server received : '+data);
-      io.sockets.emit('emit_from_server', data);
-    });
   });
+
+// io.sockets.on('connection', function(socket) {
+//     console.log('connection...');
+//         socket.on('emit_from_client', function(data) {
+//       console.log('socket.io server received : '+data);
+//       io.sockets.emit('emit_from_server', data);
+//     });
+//   });
 
 var net = require('net');
 var HOST = '103.137.185.94';
@@ -30,7 +30,14 @@ net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
   sock.on('data', function(data) {
     var line = data.toString();
-    io.sockets.emit('emit_from_server', line); // socket.io呼び出し
+    //io.sockets.emit('emit_from_server', line); // socket.io呼び出し
+    io.sockets.on('connection', function(socket) {
+    console.log('connection...');
+        socket.on('emit_from_client', function(data) {
+      console.log('socket.io server received : '+data);
+      io.sockets.emit('emit_from_server', data);
+    });
+  });
   });
  
 
