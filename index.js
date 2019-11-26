@@ -1,34 +1,25 @@
-var WebSocketServer = require('websocket').server;
-var http = require('http');
-var webSocketsServerPort = 9000;
-var server = http.createServer(function(request, response) {
-  // process HTTP request. Since we're writing just WebSockets
-  // server we don't have to implement anything.
-});
-server.listen(webSocketsServerPort, function() { 
-    console.log(" Server is listening on port "
-      + webSocketsServerPort);
-});
+var net = require('net');
 
-// create the server
-wsServer = new WebSocketServer({
-  httpServer: server
-});
+var HOST = '103.137.185.94';
+var PORT = 9000;
 
-// WebSocket server
-wsServer.on('request', function(request) {
-  var connection = request.accept(null, request.origin);
-
-  // This is the most important callback for us, we'll handle
-  // all messages from users here.
-  connection.on('message', function(message) {
-    if (message.type === 'utf8') {
-        console.log((new Date()) + ' Received Message '
-        + ': ' + message.utf8Data);
-    }
+// Create a server instance, and chain the listen function to it
+// The function passed to net.createServer() becomes the event handler for the 'connection' event
+// The sock object the callback function receives UNIQUE for each connection
+net.createServer(function(sock) {
+  // We have a connection - a socket object is assigned to the connection automatically
+ console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
+  // Add a 'data' event handler to this instance of socket
+  sock.on('data', function(data) {
+    console.log('DATA :' + data);
+    // Write the data back to the socket, the client will receive it as data from the server
+  //  sock.write('You said "' + data + '"');
   });
+  // Add a 'close' event handler to this instance of socket
+ sock.on('close', function(data) {
+   console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
+ });
 
-  connection.on('close', function(connection) {
-    // close user connection
-  });
-});
+}).listen(PORT, HOST);
+
+console.log('Server listening on ' + HOST +':'+ PORT);
