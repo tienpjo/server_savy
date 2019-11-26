@@ -38,7 +38,6 @@ net.createServer(function(sock) {
     io.sockets.emit('emit_from_server', 'connected');
     sock.on('data', function(data) {
     var line = data.toString();
-    console.log('connection...');
         socket.on('emit_from_client', function(line) {
       console.log('socket.io server received : '+line);
       io.sockets.emit('emit_from_server', line);
