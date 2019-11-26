@@ -14,7 +14,7 @@ app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
-app.listen(3000);
+
 
 net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
@@ -27,9 +27,12 @@ net.createServer(function(sock) {
 
  });
 }).listen(PORT, HOST);
+
 console.log('Server listening on ' + HOST +':'+ PORT);
 io.on('connection', function (socket) {
+    console.log('Welcome to server chat');
     socket.on('send', function (data) {
         io.sockets.emit('send', data);
     });
 });
+app.listen(3000);
