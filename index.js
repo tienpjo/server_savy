@@ -13,6 +13,7 @@ app.listen(3000, function() {
 
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname + '/views/index.html'),function(err, data){
+        res.setHeader('Content-Type', 'text/plain');
         if(err) {
             res.writeHead(500);
             return res.end('Error');
