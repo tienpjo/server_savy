@@ -12,10 +12,10 @@ app.use(function(req, res, next) {
     next();
   });
   
-  server.listen(3000, function () {
-    var addr = app.address();
-    console.log('   app listening on http://' + addr.address + ':' + addr.port);
-  });
+  server.listen(3000);//, function () {
+//    // var addr = app.address();
+//     console.log('   app listening on http://' + addr.address + ':' + addr.port);
+//   });
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
