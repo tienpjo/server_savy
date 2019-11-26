@@ -12,6 +12,7 @@ app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
+app.listen(3000);
 
 net.createServer(function(sock) {
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
