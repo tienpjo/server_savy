@@ -13,7 +13,8 @@
            #recv {list-style-type: none;margin: 0;padding: 0;}
            #recv li {padding: 5px 10px;}
            #recv li:nth-child(odd) {background: #eee;}
-           #content {
+
+          #content {
           border: 1px solid darkgrey;
           width: 30px;
           height: 30px;
@@ -23,9 +24,9 @@
          </style>
     </head>
 <body>
-<fieldset>
+
     <div id="content"></div>
-  </fieldset>
+
 
     <script>
      var socket = io.connect('http://103.137.185.94');
@@ -34,9 +35,8 @@
       //   var ele = document.createElement('div')
       //  ele.innerHTML = data
       //  document.body.appendChild(ele)
-      $("#content").append("<p class='message'>" + data + "</p>")
+      $('#content').append('<li>' + data + '</li>')
                    });
-
     </script>
 
 
