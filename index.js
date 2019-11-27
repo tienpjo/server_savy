@@ -28,7 +28,8 @@ net.createServer(function(sock) {
   io.on('connection', function (socket) {
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
-      socket.emit('news', data);
+    var line = data.toString();
+      socket.emit('news', line);
       socket.on('my other event', function (data) {
         console.log(data);
       });
