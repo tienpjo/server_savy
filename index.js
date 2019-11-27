@@ -8,6 +8,10 @@ var PORT = 9000;
 
 var netServer = net.createServer(function(c) {
   console.log('client connected');
+  c.on('data', function(data) {
+    var line = data.toString();
+    io.sockets.emit('emit_from_server', line);
+  });
 
   c.on('end', function() {
     console.log('client disconnected');
