@@ -31,7 +31,12 @@ app.use(function(req, res, next) {
         next();
   });
 
-
+ io.on('connection', function (socket) {
+      socket.emit('news', { hello: 'world' });
+      // socket.on('my other event', function (data) {
+      //   console.log(data);
+      // });
+    });
 
 
 net.createServer(function(sock) {
@@ -41,12 +46,12 @@ net.createServer(function(sock) {
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
     // Write the data back to the socket, the client will receive it as data from the server
-    io.on('connection', function (socket) {
-      socket.emit('news', { hello: 'world' });
-      // socket.on('my other event', function (data) {
-      //   console.log(data);
-      // });
-    });
+    // io.on('connection', function (socket) {
+    //   socket.emit('news', { hello: 'world' });
+    //   // socket.on('my other event', function (data) {
+    //   //   console.log(data);
+    //   // });
+    // });
   //  sock.write('You said "' + data + '"');
   });
   // Add a 'close' event handler to this instance of socket
