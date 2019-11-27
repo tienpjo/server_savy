@@ -6,6 +6,22 @@ var net = require('net');
 var HOST = '103.137.185.94';
 var PORT = 9000;
 
+var netServer = net.createServer(function(c) {
+  console.log('client connected');
+
+  c.on('end', function() {
+    console.log('client disconnected');
+  });
+
+  c.write('hello\r\n');
+  c.pipe(c);
+});
+
+// main service listing to any service connection on port 8124
+netServer.listen(HOST,PORT);
+console.log('Server listening on ' + HOST +':'+ PORT);
+
+
 server.listen(3000);
 
 app.get('/', function (req, res) {
@@ -19,6 +35,7 @@ io.on('connection', function (socket) {
     console.log(data);
   });
 });
+
 
 // app.use(function(req, res, next) {
 //         // Website you wish to allow to connect
@@ -85,4 +102,4 @@ io.on('connection', function (socket) {
   
 // }).listen(PORT, HOST);
 
-console.log('Server listening on ' + HOST +':'+ PORT);
+
