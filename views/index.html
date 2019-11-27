@@ -21,14 +21,9 @@
      var socket = io.connect('http://103.137.185.94');
      socket.on('news', function (data) {
         console.log(data);
-      //   var ele = document.createElement('div')
-      //  ele.innerHTML = data.my
-      //  document.body.appendChild(ele)
-      var temp = document.createElement('div');
-    temp.innerHTML = data;
-      while (temp.firstChild) {
-          target.appendChild(temp.firstChild);
-        }
+        var ele = document.createElement('div')
+       ele.innerHTML = data
+       document.body.appendChild(ele)
                   });
     </script>
       </body>
