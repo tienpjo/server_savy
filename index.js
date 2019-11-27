@@ -56,7 +56,7 @@ net.createServer(function(sock) {
 }).listen(PORT, HOST);
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 // app.use(function(req, res, next) {
