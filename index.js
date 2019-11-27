@@ -3,10 +3,9 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var net = require('net');
+
 var HOST = '103.137.185.94';
 var PORT = 9000;
-var line;
-
 server.listen(3000);
 
 
@@ -49,7 +48,7 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
-  socket.emit('emit',line);
+ // socket.emit('emit',line);
   });
 
 
