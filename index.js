@@ -6,7 +6,7 @@ var net = require('net');
 var cors = require('cors');
 var HOST = '103.137.185.94';
 var PORT = 9000;
-const moment = require('moment');
+
 
 
 app.options('*', cors());
@@ -30,7 +30,6 @@ net.createServer(function(sock) {
   io.on('connection', function (socket) {
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    let now = moment();
     var line = sock.remoteAddress.toString() + data.toString();
       socket.emit('news', line);
       socket.on('my other event', function (data) {

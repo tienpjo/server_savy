@@ -32,14 +32,12 @@
      var socket = io.connect('http://103.137.185.94');
      socket.on('news', function (data) {
        console.log(data);
-        var ele = document.createElement('div')
-       ele.innerHTML = data
-       document.body.appendChild(ele)
-      // $('#content').append('<li>' + data + '</li>')
+      //   var ele = document.createElement('div')
+      //  ele.innerHTML = data
+      //  document.body.appendChild(ele)
+       $('#content').append('<li>' + data + '</li>')
                     });
     </script>
-
-
       </body>
 </html>
 
