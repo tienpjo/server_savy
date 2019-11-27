@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var net = require('net');
 var HOST = '103.137.185.94';
 var PORT = 9000;
-
+var line;
 net.createServer(function(c) {
   console.log('client connected');
   c.on('data', function(data) {
