@@ -36,8 +36,8 @@
       console.log(data);
       socket.emit('my other event', { my: 'data' });
     });
-    socket.on('emit_from_server', function (data) {
-      console.log(data);
+    socket.on('emit_from_server', function (line) {
+      console.log(line);
     });
   </script>
 </body>
