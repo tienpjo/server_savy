@@ -38,11 +38,6 @@ io.on('connection', function (socket) {
   socket.emit('emit_from_server',line);
   });
 
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
-
 
 // app.use(function(req, res, next) {
 //         // Website you wish to allow to connect
