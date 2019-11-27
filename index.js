@@ -5,7 +5,7 @@ var net = require('net');
 
 var HOST = '103.137.185.94';
 var PORT = 9000;
-
+var line = 'hello-tienpjo--okk'
 
 
 server.listen(3000);
@@ -16,22 +16,22 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+  socket.emit('news', line);
  // socket.emit('emit',line);
 });
 
-net.createServer(function(c) {
-  console.log('client connected');
-  c.on('data', function(data) {
-     line = data.toString();
-    console.log(line);
-  });
+// net.createServer(function(c) {
+//   console.log('client connected');
+//   c.on('data', function(data) {
+//      line = data.toString();
+//     console.log(line);
+//   });
 
-  c.on('end', function() {
-    console.log('client disconnected');
-  });
-  c.pipe(c);
-}).listen(PORT, HOST);
+//   c.on('end', function() {
+//     console.log('client disconnected');
+//   });
+//   c.pipe(c);
+// }).listen(PORT, HOST);
 // app.use(function(req, res, next) {
 //         // Website you wish to allow to connect
 //         res.setHeader('Access-Control-Allow-Origin', 'http://103.137.185.94:3000');
