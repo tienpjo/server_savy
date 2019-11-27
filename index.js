@@ -33,7 +33,6 @@ net.createServer(function(c) {
   c.on('data', function(data) {
      line = data.toString();
     console.log(line);
-    socket.emit('emit', line);
   });
 
   c.on('end', function() {
