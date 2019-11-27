@@ -25,10 +25,10 @@ net.createServer(function(sock) {
   // We have a connection - a socket object is assigned to the connection automatically
  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
   // Add a 'data' event handler to this instance of socket
+  io.on('connection', function (socket) {
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    io.on('connection', function (socket) {
-      socket.emit('news', { hello: 'world' });
+      socket.emit('news', data);
       socket.on('my other event', function (data) {
         console.log(data);
       });
