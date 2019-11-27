@@ -5,25 +5,24 @@ var io = require('socket.io')(server);
 var net = require('net');
 var HOST = '103.137.185.94';
 var PORT = 9000;
-var line;
-var netServer = net.createServer(function(c) {
+
+net.createServer(function(c) {
   console.log('client connected');
   c.on('data', function(data) {
-    console.log(data);
+    
     line = data.toString();
+    console.log(line);
     //io.sockets.emit('emit_from_server', line);
   });
 
   c.on('end', function() {
     console.log('client disconnected');
   });
-
-  c.write('hello\r\n');
   c.pipe(c);
-});
+}).listen(PORT, HOST);
 
 // main service listing to any service connection on port 8124
-netServer.listen(PORT);
+
 console.log('Server listening on ' + HOST +':'+ PORT);
 
 
@@ -36,8 +35,7 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
-  socket.emit('emit_from_server',function (line) {
-    console.log(line);
+  socket.emit('emit_from_server',line);
   });
 
   socket.on('my other event', function (data) {
