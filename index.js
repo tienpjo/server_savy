@@ -3,10 +3,12 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var net = require('net');
+var cors = require('cors');
 var HOST = '103.137.185.94';
 var PORT = 9000;
 
 server.listen(3000,HOST);
+app.use(cors());
 
 app.use(function(req, res, next) {
         // Website you wish to allow to connect
