@@ -37,11 +37,12 @@ io.on('connection', function (socket) {
   });
 });
 
-net.createServer(function(sock) {
-//  io.on('connection', function (socket) {
-    sock.on('data', function(data) {
-        var line = data.toString();
-        console.log(line);
+net.createServer('connection',function(sock) {
+    console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
+    sockets.push(sock);
+   sock.on('data', function(data) {
+        //var line = data.toString();
+        console.log(data);
 });
  sock.on('close', function(data) {
 console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
