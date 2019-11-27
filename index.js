@@ -30,7 +30,7 @@ net.createServer(function(sock) {
   io.on('connection', function (socket) {
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    var line = 'GPS_SAVY' +  new Date().toISOString() + '---->'+ sock.remoteAddress.toString() + ' ---->' + data.toString();
+    var line = 'GPS_SAVY' + '---->' +  new Date().toISOString() + '---->'+ sock.remoteAddress.toString() + ' ---->' + data.toString();
       socket.emit('news', line);
       socket.on('my other event', function (data) {
         console.log(data);
