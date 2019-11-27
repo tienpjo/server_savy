@@ -25,9 +25,6 @@ app.use(function(req, res, next) {
         // Pass to next layer of middleware
         next();
   });
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
 
 
 
@@ -52,6 +49,10 @@ net.createServer(function(sock) {
    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
  });
 }).listen(PORT, HOST);
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
+});
 
 // app.use(function(req, res, next) {
 //         // Website you wish to allow to connect
