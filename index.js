@@ -21,15 +21,12 @@ io.on('connection', function (socket) {
 });
 
 net.createServer(function(sock) {
- console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
- io.sockets.on('connection', function(socket) {
-    io.sockets.emit('emit_from_server', 'connected');
+ io.on('connection', function (socket) {
     sock.on('data', function(data) {
-       var line = data.toString();
-        socket.on('emit_from_client', function(line) {
-      console.log('socket.io server received : '+line);
-      io.sockets.emit('emit_from_server', line);
-    });
+        var line = data.toString();
+        console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort +':'+line);
+        socket.emit('news', line);
+        socket.sock.emit('news', line);
   });
 });
  sock.on('close', function(data) {
