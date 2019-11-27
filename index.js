@@ -6,7 +6,7 @@ var net = require('net');
 var HOST = '103.137.185.94';
 var PORT = 9000;
 
-server.listen(3000);
+server.listen(3000,HOST);
 
 app.use(function(req, res, next) {
         // Website you wish to allow to connect
