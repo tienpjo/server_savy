@@ -11,12 +11,7 @@ app.options('*', cors());
 app.use(cors());
 server.listen(3000);
 
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
+
 
 
 app.use(function(req, res, next) {
@@ -32,6 +27,12 @@ net.createServer(function(sock) {
   // Add a 'data' event handler to this instance of socket
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
+    io.on('connection', function (socket) {
+      socket.emit('news', { hello: 'world' });
+      socket.on('my other event', function (data) {
+        console.log(data);
+      });
+    });
   });
   // Add a 'close' event handler to this instance of socket
  sock.on('close', function(data) {
