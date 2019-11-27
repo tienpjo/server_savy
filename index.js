@@ -5,13 +5,23 @@ var io = require('socket.io')(server);
 var net = require('net');
 var HOST = '103.137.185.94';
 var PORT = 9000;
-var line;
+
+server.listen(3000);
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/views/index.html');
+});
+
 net.createServer(function(c) {
   console.log('client connected');
   c.on('data', function(data) {
     
-    line = data.toString();
+    var line = data.toString();
     console.log(line);
+    io.on('connection', function (socket) {
+      socket.emit('news', { hello: 'world' });
+      socket.emit('emit_from_server',line);
+      });
     //io.sockets.emit('emit_from_server', line);
   });
 
@@ -26,17 +36,12 @@ net.createServer(function(c) {
 console.log('Server listening on ' + HOST +':'+ PORT);
 
 
-server.listen(3000);
-
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
 
 
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.emit('emit_from_server',line);
-  });
+// io.on('connection', function (socket) {
+//   socket.emit('news', { hello: 'world' });
+//   socket.emit('emit_from_server',line);
+//   });
 
 
 // app.use(function(req, res, next) {
