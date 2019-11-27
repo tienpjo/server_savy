@@ -22,7 +22,7 @@ var netServer = net.createServer(function(c) {
 });
 
 // main service listing to any service connection on port 8124
-netServer.listen(HOST,PORT);
+netServer.listen(PORT);
 console.log('Server listening on ' + HOST +':'+ PORT);
 
 
