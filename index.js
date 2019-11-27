@@ -14,20 +14,20 @@ app.get('/', function (req, res) {
 
 
 io.on('connection', function (socket) {
-  //socket.emit('news', { hello: 'world' });
+  socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
     console.log(data);
   });
 });
 
 net.createServer(function(sock) {
- io.on('connection', function (socket) {
+//  io.on('connection', function (socket) {
     sock.on('data', function(data) {
         var line = data.toString();
-        console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort +':'+line);
-        socket.emit('news', line);
-        socket.sock.emit('news', line);
-  });
+        console.log(line);
+        // socket.emit('news', line);
+        // socket.sock.emit('news', line);
+  //});
 });
  sock.on('close', function(data) {
   console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
