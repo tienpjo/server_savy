@@ -14,11 +14,29 @@ app.get('/', function (req, res) {
 
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+  //socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
     console.log(data);
   });
 });
+
+net.createServer(function(sock) {
+ console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
+ io.sockets.on('connection', function(socket) {
+    io.sockets.emit('emit_from_server', 'connected');
+    sock.on('data', function(data) {
+       var line = data.toString();
+        socket.on('emit_from_client', function(line) {
+      console.log('socket.io server received : '+line);
+      io.sockets.emit('emit_from_server', line);
+    });
+  });
+});
+ sock.on('close', function(data) {
+  console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
+ });
+  
+}).listen(PORT, HOST);
 
 // app.use(function(req, res, next) {
 //         // Website you wish to allow to connect
@@ -85,4 +103,4 @@ io.on('connection', function (socket) {
   
 // }).listen(PORT, HOST);
 
-console.log('Server listening on ' + HOST +':'+ PORT);
+//console.log('Server listening on ' + HOST +':'+ PORT);
