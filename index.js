@@ -32,9 +32,9 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+  // socket.on('my other event', function (data) {
+  //   console.log(data);
+  // });
 });
 
 net.createServer(function(sock) {
@@ -50,7 +50,6 @@ net.createServer(function(sock) {
  sock.on('close', function(data) {
    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
  });
-
 }).listen(PORT, HOST);
 
 // app.use(function(req, res, next) {
