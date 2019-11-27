@@ -7,8 +7,11 @@ var cors = require('cors');
 var HOST = '103.137.185.94';
 var PORT = 9000;
 
-server.listen(3000,HOST);
+app.options('*', cors());
 app.use(cors());
+server.listen(3000);
+
+
 
 app.use(function(req, res, next) {
         // Website you wish to allow to connect
