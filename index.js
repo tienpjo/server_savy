@@ -23,12 +23,7 @@ app.use(function (req, res, next) {
 
   // tao 1 user de test
   
-  mongoClient.connect('mongodb://127.0.0.1:27017/config', function (err, db) {
-  //neu ket noi khong thanh cong thi in ra loi
-  if (err) throw err;
-  //neu thanh cong thi log ra thong bao
-  console.log('Ket noi thanh cong');
-});
+
       // user.create([
       //   {
       //     user: {
@@ -54,8 +49,15 @@ net.createServer(function (sock) {
   io.on('connection', function (socket) {
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
-  var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
+      var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
+      mongoClient.connect('mongodb://127.0.0.1:27017/config', function (err, db) {
+        //neu ket noi khong thanh cong thi in ra loi
+        if (err) throw err;
+        //neu thanh cong thi log ra thong bao
+        console.log('Ket noi thanh cong');
+      });
       socket.emit('news', line);
+ 
       socket.on('my other event', function (data) {
         console.log(data);
       });
