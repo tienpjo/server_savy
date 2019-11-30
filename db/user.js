@@ -1,6 +1,6 @@
 var mongoClient = require('mongodb').MongoClient;
 var user_dbo = mongoClient.Schema({
-    _id: mongoClient.Schema.Types.ObjectId,
+    _id: mongoose.Types.ObjectId,
     name : String,
     user: {
         mobile: {
@@ -27,11 +27,11 @@ var user_dbo = mongoClient.Schema({
         //  required: true  
         },
         Lon: {
-          type: mongoClient.Decimal128,
+          type: Number,
          // required: true
         },
         Lati: {
-          type: mongoClient.Decimal128,
+          type: Number,
          // required: true
         },
         time: {
