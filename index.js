@@ -22,6 +22,28 @@ app.use(function (req, res, next) {
 
 
   // tao 1 user de test
+  
+  mongoClient.connect('mongodb://127.0.0.1:27017/config', function (err, db) {
+  //neu ket noi khong thanh cong thi in ra loi
+  if (err) throw err;
+  //neu thanh cong thi log ra thong bao
+  console.log('Ket noi thanh cong');
+});
+      // user.create([
+      //   {
+      //     user: {
+      //       mobile: '+84989760173',
+      //       name: 'Tran Tien',
+      //       address: 'Thai Binh',
+      //     }
+      //   },
+      // {
+      //     device: {
+      //       Lon: '1512.13455',
+      //       Lati: '14566.113333',
+      //     }
+      //   },
+      // ])
 
 
 net.createServer(function (sock) {
@@ -32,36 +54,13 @@ net.createServer(function (sock) {
   io.on('connection', function (socket) {
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
-
   var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-
-  mongoClient.connect('mongodb://127.0.0.1:27017/config', function (err, db) {
-  //neu ket noi khong thanh cong thi in ra loi
-  if (err) throw err;
-  //neu thanh cong thi log ra thong bao
-  console.log('Ket noi thanh cong');
-      user.create([
-        {
-          user: {
-            mobile: '+84989760173',
-            name: 'Tran Tien',
-            address: 'Thai Binh',
-          }
-        },
-      {
-          device: {
-            Lon: '1512.13455',
-            Lati: '14566.113333',
-          }
-        },
-      ])
       socket.emit('news', line);
       socket.on('my other event', function (data) {
         console.log(data);
       });
     });
   });
-});
   // Add a 'close' event handler to this instance of socket
   sock.on('close', function (data) {
     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
