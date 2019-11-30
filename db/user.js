@@ -1,6 +1,6 @@
 var mongoClient = require('mongodb').MongoClient;
 var user_dbo = mongoClient.Schema({
-    _id: mongoose.Types.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
     name : String,
     user: {
         mobile: {
