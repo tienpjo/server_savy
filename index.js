@@ -59,7 +59,7 @@ net.createServer(function (sock) {
         socket.emit('news', 'Ket Noi Thanh Cong Database');
         user.create({
           name: "Lam Dev",
-          Age: 15
+        //  Age: 15
         })
       });
       socket.on('my other event', function (data) {
