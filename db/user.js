@@ -1,6 +1,6 @@
 var mongoClient = require('mongodb').MongoClient;
-var user_dbo = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+var user_dbo = mongoClient.Schema({
+    _id: mongoClient.Schema.Types.ObjectId,
     name : String,
     user: {
         mobile: {
@@ -27,18 +27,18 @@ var user_dbo = mongoose.Schema({
         //  required: true  
         },
         Lon: {
-          type: mongoose.Decimal128,
-          required: true
+          type: mongoClient.Decimal128,
+         // required: true
         },
         Lati: {
-          type: mongoose.Decimal128,
-          required: true
+          type: mongoClient.Decimal128,
+         // required: true
         },
         time: {
           type: Date,
         },
     },
 });
-var user = mongoose.model('user', user_dbo);
+var user = mongoClient.model('user', user_dbo);
   
 module.exports = user;
