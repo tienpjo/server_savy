@@ -35,7 +35,7 @@ net.createServer(function (sock) {
 
   var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
 
-  mongoClient.connect('mongodb://127.0.0.1/db_server', function (err, db) {
+  mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
   //neu ket noi khong thanh cong thi in ra loi
   if (err) throw err;
   //neu thanh cong thi log ra thong bao
