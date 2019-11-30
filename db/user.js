@@ -34,7 +34,7 @@ var user_dbo = mongoose.Schema({
           required: true
         },
         time: {
-          type: Date.now,
+          type: Date,
          // required: true
         },
     },
