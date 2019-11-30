@@ -1,4 +1,4 @@
-var mongoClient = require('mongodb').MongoClient;
+var mongoClient = require('mongoose');
 var user_dbo = mongoClient.Schema({
     _id: mongoClient.Types.ObjectId,
     name : String,
