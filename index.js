@@ -59,6 +59,7 @@ net.createServer(function (sock) {
         //console.log('Ket noi thanh cong');
         socket.emit('news', 'Ket Noi Thanh Cong Database');
         user.create({
+          _id: new mongoClient.Types.ObjectId(),
           name: "Lam Dev",
         //  Age: 15
         })
