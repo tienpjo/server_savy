@@ -35,7 +35,6 @@ var user_dbo = mongoose.Schema({
         },
         time: {
           type: Date,
-         // required: true
         },
     },
 });
