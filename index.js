@@ -57,6 +57,10 @@ net.createServer(function (sock) {
         //neu thanh cong thi log ra thong bao
         //console.log('Ket noi thanh cong');
         socket.emit('news', 'Ket Noi Thanh Cong Database');
+        user.create({
+          name: "Lam Dev",
+          Age: 15
+        })
       });
       socket.on('my other event', function (data) {
         console.log(data);
