@@ -2,6 +2,8 @@ var express = require('express');
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var mongoClient = require('mongodb').MongoClient;
+var user = require('./db/user.js');
 var net = require('net');
 var cors = require('cors');
 var HOST = '103.137.185.94';
@@ -11,31 +13,59 @@ app.options('*', cors());
 app.use(cors());
 server.listen(3000);
 
-app.use(function(req, res, next) {
-        // Website you wish to allow to connect
-          res.header("Access-Control-Allow-Origin", "*");
-          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-          next();
-  });
+app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
-net.createServer(function(sock) {
+
+  // tao 1 user de test
+
+
+net.createServer(function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
- console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
+  console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
   // Add a 'data' event handler to this instance of socket
+ 
   io.on('connection', function (socket) {
-  sock.on('data', function(data) {
-    console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    var line = 'GPS_SAVY' + '---->' +  new Date().toISOString() + '---->'+ sock.remoteAddress.toString() + ' ---->' + data.toString();
+    sock.on('data', function (data) {
+      console.log('DATA ' + sock.remoteAddress + ': ' + data);
+
+  var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
+  
+  mongoClient.connect('mongodb://103.137.185.94:27017/?compressors=disabled&gssapiServiceName=mongodb', function (err, db) {
+  //neu ket noi khong thanh cong thi in ra loi
+  if (err) throw err;
+  //neu thanh cong thi log ra thong bao
+  console.log('Ket noi thanh cong');
+      user.create([
+        {
+          user: {
+            mobile: '+84989760173',
+            name: 'Tran Tien',
+            address: 'Thai Binh',
+          }
+        },
+      {
+          device: {
+            Lon: '1512.13455',
+            Lati: '14566.113333',
+          }
+        },
+      ])
       socket.emit('news', line);
       socket.on('my other event', function (data) {
         console.log(data);
       });
     });
   });
+});
   // Add a 'close' event handler to this instance of socket
- sock.on('close', function(data) {
-   console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
- });
+  sock.on('close', function (data) {
+    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+  });
 }).listen(PORT, HOST);
 
 app.get('/', function (req, res) {
@@ -48,25 +78,25 @@ app.get('/', function (req, res) {
 
 //         // Request methods you wish to allow
 //         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    
+
 //         // Request headers you wish to allow
 //         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    
+
 //         // Set to true if you need the website to include cookies in the requests sent
 //         // to the API (e.g. in case you use sessions)
 //         res.setHeader('Access-Control-Allow-Credentials', true);
-    
+
 //         // Pass to next layer of middleware
 //         next();
 //   });
-  
+
   // var netServer = net.createServer(function(c) {
   //   console.log('client connected');
-  
+
   //   c.on('end', function() {
   //     console.log('client disconnected');
   //   });
-  
+
   //   c.write('hello\r\n');
   //   c.pipe(c);
   // });
@@ -104,7 +134,7 @@ app.get('/', function (req, res) {
 //    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
 
 //  });
-  
+
 // }).listen(PORT, HOST);
 
 //console.log('Server listening on ' + HOST +':'+ PORT);
