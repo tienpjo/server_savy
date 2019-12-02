@@ -30,8 +30,7 @@ net.createServer(function (sock) {
       // console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       socket.emit('news', line);
-      var data_raw = data.toString();
-      var data_filter = data_raw.split("2c").length;
+      var data_filter = data.split("2c").length;
       console.log(data_filter[0]);
       console.log(data_filter[2]);
       /*
