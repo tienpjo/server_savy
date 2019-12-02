@@ -24,30 +24,35 @@ net.createServer(function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
   // Add a 'data' event handler to this instance of socket
- 
+
   io.on('connection', function (socket) {
     sock.on('data', function (data) {
-     // console.log('DATA ' + sock.remoteAddress + ': ' + data);
+      // console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       socket.emit('news', line);
+      console.log(data);
+      /*
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
         //neu ket noi khong thanh cong thi in ra loi
         if (err) throw err;
         //neu thanh cong thi log ra thong bao
         console.log('Ket noi thanh cong');
-      //  socket.emit('news', 'Ket Noi Thanh Cong Database');
+        // socket.emit('news', 'Ket Noi Thanh Cong Database');
         var user_test = new user_db({
           _id: new mongoClient.Types.ObjectId(),
-          name: "Lam Dev" 
+          name: "Lam Dev"
         });
         user_test.save(function (error) {
           if (err) throw err;
           console.log('User Test successfully saved.');
         })
+        
       });
-      socket.on('my other event', function (data) {
-        console.log(data);
-      });
+      */
+      /* Sever - lang - nghe */
+      // socket.on('my other event', function (data) {
+      //   console.log(data);
+      // });
     });
   });
   // Add a 'close' event handler to this instance of socket

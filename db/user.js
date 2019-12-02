@@ -21,23 +21,23 @@ var user_dbo = mongoClient.Schema({
     //     type: String,
     //    // required: true
     // },
-    // device: {
-    //     ID_device: {
-    //       type: String,
-    //     //  required: true  
-    //     },
-    //     Lon: {
-    //       type: Number,
-    //      // required: true
-    //     },
-    //     Lati: {
-    //       type: Number,
-    //      // required: true
-    //     },
-    //     time: {
-    //       type: Date,
-    //     },
-    // },
+    device: {
+        ID_device: {
+          type: String,
+        //  required: true  
+        },
+        Lon: {
+          type: String,
+         // required: true
+        },
+        Lati: {
+          type: String,
+         // required: true
+        },
+        IP: {
+          type: String,
+        },
+    },
 });
 var user_db = mongoClient.model('user_db', user_dbo);
   
