@@ -32,7 +32,7 @@ net.createServer(function (sock) {
       socket.emit('news', line);
       var data_raw = data.toString();
       var data_split = data_raw.split("2c").length;
-      console.log(data_split[0]);
+      console.log(data_split);
       //console.log(data_filter[2].toString);
       /*
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
