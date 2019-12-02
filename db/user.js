@@ -4,7 +4,7 @@ var user_dbo = mongoClient.Schema({
     name : String,
     Lon: String,
     Lati: String,
-    IP: String
+    IP: String,
     // user: {
     //     mobile: {
     //         type: String,
