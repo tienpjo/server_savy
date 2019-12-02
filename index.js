@@ -20,28 +20,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-  // tao 1 user de test
-
-  
-
-      // user.create([
-      //   {
-      //     user: {
-      //       mobile: '+84989760173',
-      //       name: 'Tran Tien',
-      //       address: 'Thai Binh',
-      //     }
-      //   },
-      // {
-      //     device: {
-      //       Lon: '1512.13455',
-      //       Lati: '14566.113333',
-      //     }
-      //   },
-      // ])
-
-
 net.createServer(function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
@@ -58,10 +36,13 @@ net.createServer(function (sock) {
         //neu thanh cong thi log ra thong bao
         //console.log('Ket noi thanh cong');
         socket.emit('news', 'Ket Noi Thanh Cong Database');
-        user.create({
-          _id: new mongoClient.Types.ObjectId(),
-          name: "Lam Dev",
-        //  Age: 15
+        var user_test = new user({
+          _id: new mongoose.Types.ObjectId(),
+          name: "Lam Dev" 
+        });
+        user_test.save(function (error) {
+          if (err) throw err;
+          console.log('User Test successfully saved.');
         })
       });
       socket.on('my other event', function (data) {
