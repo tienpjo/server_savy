@@ -33,9 +33,9 @@ net.createServer(function (sock) {
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
       console.log(data_filter[0]);
-      console.log(data_filter[1]);
-      console.log(data_filter[2]);
-      console.log(data_filter[3]);
+      // console.log(data_filter[1]);
+      // console.log(data_filter[2]);
+      // console.log(data_filter[3]);
       /*
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
         //neu ket noi khong thanh cong thi in ra loi
