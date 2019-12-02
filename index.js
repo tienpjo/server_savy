@@ -30,13 +30,10 @@ net.createServer(function (sock) {
       // console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       socket.emit('news', line);
+      /* Split mang data */
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
-      console.log(data_filter[0]);
-      // console.log(data_filter[1]);
-      // console.log(data_filter[2]);
-      // console.log(data_filter[3]);
-      /*
+
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
         //neu ket noi khong thanh cong thi in ra loi
         if (err) throw err;
@@ -45,15 +42,18 @@ net.createServer(function (sock) {
         // socket.emit('news', 'Ket Noi Thanh Cong Database');
         var user_test = new user_db({
           _id: new mongoClient.Types.ObjectId(),
-          name: "Lam Dev"
+          device: [{
+            Lon: data_filter[0],
+            Lati: data_filter[2],
+            IP: sock.remoteAddress.toString()
+          }]
         });
         user_test.save(function (error) {
           if (err) throw err;
           console.log('User Test successfully saved.');
         })
-        
       });
-      */
+
       /* Sever - lang - nghe */
       // socket.on('my other event', function (data) {
       //   console.log(data);
