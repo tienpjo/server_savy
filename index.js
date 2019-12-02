@@ -30,7 +30,10 @@ net.createServer(function (sock) {
       // console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       socket.emit('news', line);
-      console.log(data);
+      var data_raw = data.toString();
+      var data_split = data_raw.split("2e").length;
+      console.log(data_split);
+      
       //console.log(data_filter[2].toString);
       /*
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
