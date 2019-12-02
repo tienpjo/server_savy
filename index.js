@@ -32,8 +32,8 @@ net.createServer(function (sock) {
       socket.emit('news', line);
       var data_raw = data.toString();
       var data_filter = data_raw.split("2c").length;
-      console.log(data_filter[0].toString());
-      console.log(data_filter[2].toString());
+      console.log(data_filter[0]);
+      console.log(data_filter[2]);
       /*
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
         //neu ket noi khong thanh cong thi in ra loi
