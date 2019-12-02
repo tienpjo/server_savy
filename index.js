@@ -42,8 +42,8 @@ net.createServer(function (sock) {
         // socket.emit('news', 'Ket Noi Thanh Cong Database');
         var user_test = new user_db({
           _id: new mongoClient.Types.ObjectId(),
-            Lon: '21.003370',//data_filter[0],
-            Lati: '105.847580'//data_filter[2],
+            Lon: data_filter[0],//data_filter[0],
+            Lati: data_filter[2]//data_filter[2],
             //IP: sock.remoteAddress.toString()
         });
         user_test.save(function (error) {
