@@ -44,7 +44,7 @@ net.createServer(function (sock) {
           _id: new mongoClient.Types.ObjectId(),
             Lon: data_filter[0],//data_filter[0],
             Lati: data_filter[2],//data_filter[2],
-            IP: sock.remoteAddress.toString();
+            IP: sock.remoteAddress.toString(),
             //IP: sock.remoteAddress.toString()
         });
         user_test.save(function (error) {
