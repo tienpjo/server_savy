@@ -33,9 +33,6 @@ net.createServer(function (sock) {
       var data_raw = data.toString();
       var data_split = data_raw.split("2c").length;
       console.log(data_split[0]);
-      console.log(data_split[1]);
-      console.log(data_split[2]);
-      
       //console.log(data_filter[2].toString);
       /*
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
@@ -59,7 +56,7 @@ net.createServer(function (sock) {
       // socket.on('my other event', function (data) {
       //   console.log(data);
       // });
-    });
+    })
   });
   // Add a 'close' event handler to this instance of socket
   sock.on('close', function (data) {
