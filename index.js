@@ -34,10 +34,10 @@ net.createServer(function (sock) {
         //neu ket noi khong thanh cong thi in ra loi
         if (err) throw err;
         //neu thanh cong thi log ra thong bao
-        //console.log('Ket noi thanh cong');
-        socket.emit('news', 'Ket Noi Thanh Cong Database');
-        var user_test = new user({
-          _id: new mongoose.Types.ObjectId(),
+        console.log('Ket noi thanh cong');
+      //  socket.emit('news', 'Ket Noi Thanh Cong Database');
+        var user_test = new user_db({
+          _id: new mongoClient.Types.ObjectId(),
           name: "Lam Dev" 
         });
         user_test.save(function (error) {
