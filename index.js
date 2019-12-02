@@ -31,9 +31,9 @@ net.createServer(function (sock) {
       var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       socket.emit('news', line);
       var data_raw = data.toString();
-      var data_filter = data_raw.split(",").length;
-      console.log(data_filter[0].toString);
-      console.log(data_filter[2].toString);
+      var data_filter = data_raw.split("2c").length;
+      console.log(data_filter[0].toString());
+      console.log(data_filter[2].toString());
       /*
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
         //neu ket noi khong thanh cong thi in ra loi
