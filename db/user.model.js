@@ -45,5 +45,5 @@ let user_dbo = new mongoClient.Schema({
     //     },
     // },
 });
-module.exports = mongoClient.model('user_dbo', user_dbo);
+module.exports = mongoClient.model('user', user_dbo);
   
