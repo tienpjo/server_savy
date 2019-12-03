@@ -1,6 +1,7 @@
-var mongoClient = require('mongoose');
-let user_dbo = new mongoClient.Schema({
-    _id: mongoClient.Types.ObjectId,
+var mongoose = require('mongoose');
+const unique = require('mongoose-unique-validator');
+const UserSchema = new mongoose.Schema({
+    _id: mongoose.Types.ObjectId,
     name : String,
     Lon: String,
     Lati: String,
@@ -45,5 +46,8 @@ let user_dbo = new mongoClient.Schema({
     //     },
     // },
 });
-module.exports = mongoClient.model('user', user_dbo);
+
+UserSchema.plugin(unique, { message: 'That {PATH} is already taken.' });
+
+const User = module.exports = mongoose.model('user', UserSchema);
   

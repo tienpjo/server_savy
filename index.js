@@ -3,13 +3,13 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var mongoClient = require('mongoose');
+const router = express.Router();
 
 var net = require('net');
 let bodyParser = require('body-parser');
 var cors = require('cors');
 var HOST = '103.137.185.94';
 var PORT = 9000;
-const userRoute = require('./db/user.routes')
 const config = require('./db/DB.js');
 
 app.options('*', cors());
@@ -22,9 +22,10 @@ mongoClient.connect(config.DB, { useNewUrlParser: true }).then(
 
 app.use(cors());
 
-app.use('/business', userRoute)
+app.use('/api/users', require('./routes/users'));
 
-const router = express.Router();
+//app.enable('trust proxy');
+
 server.listen(3000);
 
 app.use(bodyParser.json());
