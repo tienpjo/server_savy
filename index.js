@@ -10,7 +10,7 @@ var cors = require('cors');
 var HOST = '103.137.185.94';
 var PORT = 9000;
 const userRoute = require('./db/user.routes')
-const config = require('./DB.js');
+const config = require('./db/DB.js');
 
 app.options('*', cors());
 
