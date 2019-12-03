@@ -3,7 +3,7 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var mongoClient = require('mongoose');
-var user_db = require('./db/user.model.js/index.js');
+
 var net = require('net');
 let bodyParser = require('body-parser');
 var cors = require('cors');
