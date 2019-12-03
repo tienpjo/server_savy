@@ -2,7 +2,7 @@ let mongoose = require('mongoose'),
     express = require('express'),
     businessRoutes = express.Router();
 
-let user = require('../db/user');
+let user = require('./user.model');
 
 businessRoutes.route('/add').post(function (req, res) {
     let business = new user(req.body);
