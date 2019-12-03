@@ -14,7 +14,7 @@ const userRoute = require('./db/user.routes')
 app.options('*', cors());
 app.use(cors());
 
-app.use('/user_dbs', userRoute)
+app.use('/business', userRoute)
 
 const router = express.Router();
 server.listen(3000);

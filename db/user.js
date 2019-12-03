@@ -1,5 +1,5 @@
 var mongoClient = require('mongoose');
-var user_dbo = mongoClient.Schema({
+let user_dbo = new mongoClient.Schema({
     _id: mongoClient.Types.ObjectId,
     name : String,
     Lon: String,
@@ -45,6 +45,5 @@ var user_dbo = mongoClient.Schema({
     //     },
     // },
 });
-var user_db = mongoClient.model('user_db', user_dbo);
+module.exports = mongoClient.model('user_dbo', user_dbo);
   
-module.exports = user_db;
