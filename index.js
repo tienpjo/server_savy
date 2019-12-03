@@ -5,13 +5,24 @@ var io = require('socket.io')(server);
 var mongoClient = require('mongoose');
 var user_db = require('./db/user.js');
 var net = require('net');
+let bodyParser = require('body-parser');
 var cors = require('cors');
 var HOST = '103.137.185.94';
 var PORT = 9000;
+const userRoute = require('./db/user.routes')
 
 app.options('*', cors());
 app.use(cors());
+
+app.use('/user_dbs', userRoute)
+
+const router = express.Router();
 server.listen(3000);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
@@ -37,7 +48,7 @@ net.createServer(function (sock) {
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
         //neu ket noi khong thanh cong thi in ra loi
         if (err) throw err;
-        //neu thanh cong thi log ra thong bao
+        // neu thanh cong thi log ra thong bao
         console.log('Ket noi thanh cong');
         // socket.emit('news', 'Ket Noi Thanh Cong Database');
         var user_test = new user_db({
@@ -45,6 +56,7 @@ net.createServer(function (sock) {
             Lon: data_filter[0],//data_filter[0],
             Lati: data_filter[2],//data_filter[2],
             IP: sock.remoteAddress.toString(),
+            //ID_Device: data_filter[]
             //IP: sock.remoteAddress.toString()
         });
         user_test.save(function (error) {
@@ -67,6 +79,15 @@ net.createServer(function (sock) {
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
+});
+
+app.get('/quotes', (req, res) => {
+  db.collection('quotes').find({_name :'Henry'}).next(function(err, doc)
+{
+  if(err)
+  console.log(err);
+  res.json(doc);
+})
 });
 
 // app.use(function(req, res, next) {
