@@ -2,7 +2,7 @@ let mongoose = require('mongoose'),
     express = require('express'),
     router = express.Router();
 
-let user = require('../models/user-schema');
+let user = require('../db/user');
 
 router.route('/create').post((req, res, next) => {
     user.create(req.body, (error, data) => {
