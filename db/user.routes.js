@@ -2,7 +2,7 @@ let mongoose = require('mongoose'),
     express = require('express'),
     router = express.Router();
 
-let user = require('../db/user');
+let user = require('../user_dbs.model');
 
 router.route('/create').post((req, res, next) => {
     user.create(req.body, (error, data) => {
@@ -62,4 +62,4 @@ router.route('/delete/:id').delete((req, res, next) => {
     })
 })
 
-module.exports = router;
+module.exports = person_router;
