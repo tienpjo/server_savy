@@ -5,6 +5,7 @@ var user_dbo = mongoClient.Schema({
     Lon: String,
     Lati: String,
     IP: String,
+},
     {
         collection: 'user_dbs'
     // user: {
