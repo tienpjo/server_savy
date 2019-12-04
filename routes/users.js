@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const User = require('../models/user.model');
 
 router.get('/', (req, res) => {
-  User.find({})
+  User.find({}).lean()
     .then((result) => {
       res.json(result);
     })

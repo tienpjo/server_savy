@@ -4,7 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var mongoClient = require('mongoose');
 const router = express.Router();
-
+var user_db = require('./models/user.model')
 var net = require('net');
 let bodyParser = require('body-parser');
 var cors = require('cors');
@@ -14,11 +14,11 @@ const config = require('./db/DB.js');
 
 app.options('*', cors());
 
-mongoClient.Promise = global.Promise;
-mongoClient.connect(config.DB, { useNewUrlParser: true }).then(
-  () => {console.log('Database is connected') },
-  err => { console.log('Can not connect to the database'+ err)}
-);
+// mongoClient.Promise = global.Promise;
+// mongoClient.connect(config.DB, { useNewUrlParser: true }).then(
+//   () => {console.log('Database is connected') },
+//   err => { console.log('Can not connect to the database'+ err)}
+// );
 
 app.use(cors());
 
@@ -54,25 +54,23 @@ net.createServer(function (sock) {
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
 
-      // mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
-      //   //neu ket noi khong thanh cong thi in ra loi
-      //   if (err) throw err;
-      //   // neu thanh cong thi log ra thong bao
-      //   console.log('Ket noi thanh cong');
-      //   // socket.emit('news', 'Ket Noi Thanh Cong Database');
-      //   var user_test = new user_db({
-      //     _id: new mongoClient.Types.ObjectId(),
-      //       Lon: data_filter[0],//data_filter[0],
-      //       Lati: data_filter[2],//data_filter[2],
-      //       IP: sock.remoteAddress.toString(),
-      //       //ID_Device: data_filter[]
-      //       //IP: sock.remoteAddress.toString()
-      //   });
-      //   user_test.save(function (error) {
-      //     if (err) throw err;
-      //     console.log('User Test successfully saved.');
-      //   })
-      // });
+      mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
+        //neu ket noi khong thanh cong thi in ra loi
+        if (err) throw err;
+        // neu thanh cong thi log ra thong bao
+        console.log('Ket noi thanh cong');
+        // socket.emit('news', 'Ket Noi Thanh Cong Database');
+        var user_test = new user_db({
+          _id: new mongoClient.Types.ObjectId(),
+            Lon: data_filter[0],
+            Lati: data_filter[2],
+            IP: sock.remoteAddress.toString(),
+        });
+        user_test.save(function (error) {
+          if (err) throw err;
+          console.log('User Test successfully saved.');
+        })
+      });
 
       /* Sever - lang - nghe */
       // socket.on('my other event', function (data) {
