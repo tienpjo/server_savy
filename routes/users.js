@@ -25,10 +25,10 @@ router.get('/:id', (req, res) => {
 });
 
 // UPDATE
-router.route('/edit/:id').get(function (req, res) {
-  let id = req.params.ID_Device;
+router.route('/edit/:ID_Device').get(function (req, res) {
+  let ID_Device = req.params.ID_Device;
   console.log(req.params.ID_Device);
-  User.find(id, function (err, business){
+  User.find(ID_Device, function (err, business){
       res.json(business);
   });
 });
