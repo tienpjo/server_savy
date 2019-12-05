@@ -39,7 +39,11 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+const listSockets = {}
 
+function sendToSocket(userId, message) {
+  listSockets[userId].send(message)
+}
 net.createServer(function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
@@ -70,6 +74,8 @@ net.createServer(function (sock) {
           if (err) throw err;
           console.log('User Test successfully saved.');
         })
+        listSockets[user_test.id]=sock
+
       });
 
       /* Sever - lang - nghe */

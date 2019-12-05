@@ -14,4 +14,36 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/edit/:id').get(function (req, res) {
+  let id = req.params.id;
+  User.findById(id, function (err, result){
+      res.json(result);
+  });
+});
+
+router.get('/update/:id').post(function (req, res) {
+  User.findById(req.params.id, function(err, result) {
+  if (!result)
+    res.status(404).send("data is not found");
+  else {
+      result.Lon = req.body.Lon;
+      business.Lati = req.body.Lati;
+
+      result.save().then(result => {
+        res.json('Update complete');
+    })
+    .catch(err => {
+          res.status(400).send("unable to update the database");
+    });
+  }
+});
+});
+
+router.get('/delete/:id').get(function (req, res) {
+  User.findByIdAndRemove({_id: req.params.id}, function(err, person){
+      if(err) res.json(err);
+      else res.json('Successfully removed');
+  });
+});
+
 module.exports = router;
