@@ -27,9 +27,9 @@ router.get('/:id', (req, res) => {
 // UPDATE
 router.put('/edit/:id', (req, res) => {
   let updatedUser = {
-    Lon: sanitizeName(req.body.Lon),
-    Lati: sanitizeEmail(req.body.Lati),
-    IP: sanitizeAge(req.body.IP),
+    Lon: sanitizeLon(req.body.Lon),
+    Lati: sanitizeLati(req.body.Lati),
+    IP: sanitizeIP(req.body.IP),
     // gender: sanitizeGender(req.body.gender)
   };
 
