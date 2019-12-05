@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/edit/:id').get(function (req, res) {
+router.route('/edit/:id').get(function (req, res) {
   let id = req.params.id;
   User.findById(id, function (err, result){
       res.json(result);
@@ -23,7 +23,7 @@ router.get('/edit/:id').get(function (req, res) {
 
 
 // UPDATE
-router.put('/:id', (req, res) => {
+router.route('/update/:id', (req, res) => {
 
   let updatedUser = {
     Lon: sanitizeName(req.body.Lon),
