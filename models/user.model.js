@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
     name : String,
     Lon: String,
     Lati: String,
-    IP: String,
+    ID_Device: String,
 },
     {
         collection: 'user_dbs'

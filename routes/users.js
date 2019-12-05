@@ -25,16 +25,10 @@ router.get('/edit/:id').get(function (req, res) {
 // UPDATE
 router.put('/:id', (req, res) => {
 
-  // Validate the age
-  // let age = sanitizeAge(req.body.age);
-  // if (age < 5 && age != '') return res.status(403).json({ success: false, msg: `You're too young for this.` });
-  // else if (age > 130 && age != '') return res.status(403).json({ success: false, msg: `You're too old for this.` });
-
   let updatedUser = {
     Lon: sanitizeName(req.body.Lon),
     Lati: sanitizeEmail(req.body.Lati),
-    IP: sanitizeAge(req.body.Ip),
-    // gender: sanitizeGender(req.body.gender)
+    ID_Device: sanitizeAge(req.body.ID_Device),
   };
 
   User.findOneAndUpdate({ _id: req.params.id }, updatedUser, { runValidators: true, context: 'query' })
@@ -48,10 +42,7 @@ router.put('/:id', (req, res) => {
               _id: newResult._id,
               Lon: newResult.Lon,
               Lati: newResult.Lati,
-              // name: newResult.name,
-              // email: newResult.email,
-              // age: newResult.age,
-              // gender: newResult.gender
+              ID_Device: newResult.ID_Device
             }
           });
         })
@@ -74,18 +65,13 @@ router.put('/:id', (req, res) => {
           res.status(400).json({ success: false, msg: err.errors.IP.message });
           return;
         }
-        // if (err.errors.gender) {
-        //   res.status(400).json({ success: false, msg: err.errors.gender.message });
-        //   return;
-        // }
-        // Show failed if all else fails for some reasons
         res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
       }
     });
 });
 
 
-router.get('/delete/:id').get(function (req, res) {
+router.route('/delete/:id').get(function (req, res) {
   User.findByIdAndRemove({_id: req.params.id}, function(err, person){
       if(err) res.json(err);
       else res.json('Successfully removed');
