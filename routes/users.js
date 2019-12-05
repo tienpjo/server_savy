@@ -33,12 +33,13 @@ router.route('/update/:id').post(function (req, res) {
           user.Lati = req.body.Lati;
           user.IP = req.body.IP;
 
-          user.save().then(business => {
-              res.json('Update complete');
-          })
-              .catch(err => {
-                  res.status(400).send("unable to update the database");
-              });
+          user.save(function (error) {
+          if (err) throw err;
+          console.log('User Test successfully saved.');
+        })
+              // .catch(err => {
+              //     res.status(400).send("unable to update the database");
+              // });
       }
   });
 });
