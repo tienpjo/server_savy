@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
 });
 
 // UPDATE
-router.put('/edit/:id', (req, res) => {
+router.router('/edit/:id', (req, res) => {
   let updatedUser = {
     Lon: sanitizeName(req.body.Lon),
     Lati: sanitizeEmail(req.body.Lati),
