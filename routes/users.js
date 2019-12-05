@@ -33,7 +33,7 @@ router.route('/update/:id').post(function (req, res) {
           user.Lati = req.body.Lati;
           user.IP = req.body.IP;
 
-          person.save().then(business => {
+          user.save().then(business => {
               res.json('Update complete');
           })
               .catch(err => {
