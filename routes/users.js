@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
 router.route('/edit/:id').get(function (req, res) {
   let id = req.params.id;
   console.log(id);
-  User.find(ID_Device = id, function (err, business){
+  User.find({ID_Device: id}, function (err, business){
       res.json(business);
   });
 });
