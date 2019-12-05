@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
 
 // UPDATE
 router.route('/edit/:id').get(function (req, res) {
-  let id = req.params.id;
+  let id = req.params.ID_Device;
   User.findById(id, function (err, business){
       res.json(business);
   });
@@ -39,9 +39,9 @@ router.route('/update/:id').post(function (req, res) {
           res.status(404).send("data is not found");
       else {
           console.log(person);
-          // person.Lon = req.body.Lon;
-          // person.Lati = req.body.Lati;
-          // person.ID_Device = req.body.ID_Device;
+          person.Lon = req.body.Lon;
+          person.Lati = req.body.Lati;
+          person.ID_Device = req.body.ID_Device;
 
           person.save().then(business => {
               res.json('Update complete');
