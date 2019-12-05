@@ -25,53 +25,32 @@ router.get('/:id', (req, res) => {
 });
 
 // UPDATE
-router.put('/edit/:id', (req, res) => {
-  let updatedUser = {
-    Lon: sanitizeLon(req.body.Lon),
-    Lati: sanitizeLati(req.body.Lati),
-    IP: sanitizeIP(req.body.IP),
-    // gender: sanitizeGender(req.body.gender)
-  };
+router.route('/edit/:id').get(function (req, res) {
+  let id = req.params.id;
+  User.findById(id, function (err, business){
+      res.json(business);
+  });
+});
 
-  User.findOneAndUpdate({ _id: req.params.id }, updatedUser, { runValidators: true, context: 'query' })
-    .then((oldResult) => {
-      User.findOne({ _id: req.params.id })
-        .then((newResult) => {
-          res.json({
-            success: true,
-            msg: `Successfully updated!`,
-            result: {
-              _id: newResult._id,
-              Lon: newResult.Lon,
-              Lati: newResult.Lati,
-              IP: newResult.IP
-              // gender: newResult.gender
-            }
-          });
-        })
-        .catch((err) => {
-          res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
-          return;
-        });
-    })
-    .catch((err) => {
-      if (err.errors) {
-        if (err.errors.Lon) {
-          res.status(400).json({ success: false, msg: err.errors.Lon.message });
-          return;
-        }
-        if (err.errors.Lati) {
-          res.status(400).json({ success: false, msg: err.errors.Lati.message });
-          return;
-        }
-        if (err.errors.IP) {
-          res.status(400).json({ success: false, msg: err.errors.IP.message });
-          return;
-        }
-        // Show failed if all else fails for some reasons
-        res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
+//  Defined update route
+router.route('/update/:id').post(function (req, res) {
+  User.findById(req.params.id, function(err, person) {
+      if (!person)
+          res.status(404).send("data is not found");
+      else {
+          console.log(person);
+          person.Lon = req.body.Lon;
+          person.Lati = req.body.Lati;
+          person.ID_Device = req.body.ID_Device;
+
+          person.save().then(business => {
+              res.json('Update complete');
+          })
+              .catch(err => {
+                  res.status(400).send("unable to update the database");
+              });
       }
-    });
+  });
 });
 
 router.route('/delete/:id').get(function (req, res) {
