@@ -18,7 +18,7 @@ app.options('*', cors());
 
 app.use(cors());
 
-app.use('/api/device', require('./routes/users'));
+app.use('/api/device', require('./routes/device'));
 server.listen(3000);
 
 app.use(bodyParser.json());
