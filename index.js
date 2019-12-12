@@ -12,19 +12,20 @@ var HOST = '103.137.185.94';
 var PORT = 9000;
 const config = require('./db/DB.js');
 var session = require('express-session');
-
+var errHandler = require('_helpers/error-handler')
 
 app.options('*', cors());
-
-app.use(cors());
-
-app.use('/api/device', require('./routes/device'));
-server.listen(3000);
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(cors());
+
+app.use('/api/device', require('./routes/device'));
+app.use(jwt());
+app.use('users',require('./routes/user'));
+app.use(errHandler);
+server.listen(3000);
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect

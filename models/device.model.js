@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 const unique = require('mongoose-unique-validator');
 
-const UserSchema = new mongoose.Schema({
+const DeviceSchema = new mongoose.Schema({
     _id: mongoose.Types.ObjectId,
     Lon: String,
     Lati: String,
@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
         collection: 'device_dbs'
 });
 
-UserSchema.plugin(unique, { message: 'That {PATH} is already taken.' });
+DeviceSchema.plugin(unique, { message: 'That {PATH} is already taken.' });
 
-const User = module.exports = mongoose.model('user', UserSchema);
+const Device = module.exports = mongoose.model('device', DeviceSchema);
   

@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const User = require('../models/device.model');
+const Device = require('../models/device.model');
 const User_Login = require('../app/users_controller')
 
 // --------------------------GPS -DEVICE----------------------------
 router.get('/', (req, res) => {
-  User.find({}).lean()
+  Device.find({}).lean()
     .then((result) => {
       res.json(result);
     })
@@ -16,8 +16,8 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('device/find/:id', (req, res) => {
-  User.findById(req.params.id)
+router.get('/find/:id', (req, res) => {
+  Device.findById(req.params.id)
     .then((result) => {
       res.json(result);
     })
@@ -27,26 +27,25 @@ router.get('device/find/:id', (req, res) => {
 });
 
 // UPDATE
-router.route('device/edit/:id').get(function (req, res) {
+router.route('/edit/:id').get(function (req, res) {
   let id = req.params.id;
   console.log(id);
-  User.find({ ID_Device: id }, function (err, business) {
+  Device.find({ ID_Device: id }, function (err, business) {
     res.json(business);
   });
 });
 
 //  Defined update route
-router.route('device/update/:id').post(function (req, res) {
-  User.findById(req.params.id, function (err, person) {
-    if (!person)
+router.route('/update/:id').post(function (req, res) {
+  Device.findById(req.params.id, function (err, device) {
+    if (!device)
       res.status(404).send("data is not found");
     else {
       console.log(person);
-      person.Lon = req.body.Lon;
-      person.Lati = req.body.Lati;
-      person.ID_Device = req.body.ID_Device;
-
-      person.save().then(business => {
+      device.Lon = req.body.Lon;
+      device.Lati = req.body.Lati;
+      device.ID_Device = req.body.ID_Device;
+      device.save().then(business => {
         res.json('Update complete');
       })
         .catch(err => {
@@ -56,8 +55,8 @@ router.route('device/update/:id').post(function (req, res) {
   });
 });
 
-router.route('device/delete/:id').get(function (req, res) {
-  User.findByIdAndRemove({ _id: req.params.id }, function (err, person) {
+router.route('/delete/:id').get(function (req, res) {
+  Device.findByIdAndRemove({ _id: req.params.id }, function (err, person) {
     if (err) res.json(err);
     else res.json('Successfully removed');
   });
