@@ -101,7 +101,7 @@ router.post('/user_edit', function (req, res, result) {
         return result(error);
       } else {
         // ID_Device = id;
-        return res.redirect('device/edit/:ID_Device');
+        return res.redirect('/edit/:ID_Device');
       }
     });
   }

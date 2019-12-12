@@ -12,7 +12,6 @@ var HOST = '103.137.185.94';
 var PORT = 9000;
 const config = require('./db/DB.js');
 var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
 
 
 app.options('*', cors());
@@ -20,17 +19,6 @@ app.options('*', cors());
 app.use(cors());
 
 app.use('/api/device', require('./routes/users'));
-
-//app.enable('trust proxy');
-app.use(session ({
-    secret: 'work-hard',
-    resave: true,
-    saveUninitialized: false,
-    store: new MongoStore({
-      mongooseConnection: db
-    })
-}));
-net.write(ID,data);
 server.listen(3000);
 
 app.use(bodyParser.json());
