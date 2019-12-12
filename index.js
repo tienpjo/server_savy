@@ -12,7 +12,7 @@ var HOST = '103.137.185.94';
 var PORT = 9000;
 const config = require('./db/DB.js');
 var session = require('express-session');
-var errHandler = require('_helpers/error-handler')
+var errHandler = require('._helpers/error-handler')
 
 app.options('*', cors());
 app.use(bodyParser.json());
