@@ -12,7 +12,7 @@ var HOST = '103.137.185.94';
 var PORT = 9000;
 var session = require('express-session');
 var errHandler = require('./_helpers/error-handler')
-const jwt = require('_helpers/jwt');
+const jwt = require('./_helpers/jwt');
 
 app.options('*', cors());
 app.use(bodyParser.json());
