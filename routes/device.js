@@ -3,7 +3,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Device = require('../models/device.model');
-const User_Login = require('../app/users_controller')
 
 // --------------------------GPS -DEVICE----------------------------
 router.get('/', (req, res) => {
