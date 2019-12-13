@@ -17,13 +17,13 @@ const jwt = require('./_helpers/jwt');
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: false
 }));
 app.use(cors());
 
 app.use('/api/device', require('./routes/device'));
 app.use(jwt());
-app.use('/api/users',require('./routes/user'));
+app.use('/users',require('./routes/user'));
 app.use(errHandler);
 server.listen(3000);
 
