@@ -11,8 +11,9 @@ var cors = require('cors');
 var HOST = '103.137.185.94';
 var PORT = 9000;
 var session = require('express-session');
-var errHandler = require('./_helpers/error-handler')
 const jwt = require('./_helpers/jwt');
+var errHandler = require('./_helpers/error-handler')
+
 
 app.options('*', cors());
 app.use(bodyParser.json());
