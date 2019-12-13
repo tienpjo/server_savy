@@ -24,7 +24,7 @@ app.use(cors());
 app.use('/api/device', require('./routes/device'));
 app.use(jwt());
 app.use('/api/users',require('./routes/user'));
-app.use(errHandler());
+app.use(errHandler);
 server.listen(3000);
 
 app.use(function (req, res, next) {
