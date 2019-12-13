@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema ({
     lastName: {type:String,required:true},
     mobile: {type:String,required:true},
     address: {type:String,required:true},
+},
     {
         collection: 'user_dbs'
     
