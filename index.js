@@ -23,7 +23,7 @@ app.use(cors());
 
 app.use('/api/device', require('./routes/device'));
 app.use(jwt());
-app.use('users',require('./routes/user'));
+app.use('/api/users',require('./routes/user'));
 app.use(errHandler);
 server.listen(3000);
 
