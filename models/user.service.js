@@ -43,7 +43,7 @@ async function create(userParam) {
     //hash PassWord
 
     if (userParam.password) {
-        user.hash = bcrypt.hashSync(\userParam.password,10);
+        user.hash = bcrypt.hashSync(userParam.password,10);
     }
     
     await user.save();
