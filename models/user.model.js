@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const unique = require('mongoose-unique-validator');
-const UserSchema = new mongoose.Schema ({
+const UserSchema = new mongoose.Schema({
     username: {type:String,unique:true,required:true},
     hash: {type:String,required:true},
     firstName:{type: String,required:true},
@@ -12,6 +12,6 @@ const UserSchema = new mongoose.Schema ({
         collection: 'user_dbs'
     
 });
-
+UserSchema.plugin(unique, { message: 'That {PATH} is already taken.' });
 UserSchema.set('toJSON',{virtuals: true});
 module.exports = mongoose.model('User',UserSchema);
