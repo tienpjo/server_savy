@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../models/user.service');
 
-router.post('/authenticate', authenticate);
+router.post('/login', login);
 router.post('/register', register);
 router.get('/', getAll);
 router.get('/current', getCurrent);
@@ -22,61 +22,13 @@ const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 module.exports = router;
 
- function authenticate(req, res, next) {
+ function login(req, res, next) {
     userService.authenticate(req.body)
         .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({message: 'Username or password is incorrect'}))
         .catch(err => next(err));
-        // .then(mobile => {
-        //     console.log(mobile);
-        //     if (!mobile) {
-        //         res.status(400).json({ message: 'Username or password is incorrect' });
-        //     }
-        //     if (mobile) {
-        //         const accessToken = mobile;
-        //         const refreshToken = userService.authenticate(req.body, refreshToken);
-        //         tokenList[refreshToken] = { accessToken, refreshToken };
-        //         console.log(`Gửi Token và Refresh Token về cho client...`);
-        //         return res.status(200).json({ accessToken, refreshToken });
-        //     } if (error) {
-        //         return res.status(500).json(error);
-        //     }
-        // })
-        // .catch(err => next(err));
+        
 }
 
- function refreshToken ({req, res}) {
-    // User gửi mã refresh token kèm theo trong body
-    const refreshTokenFromClient = req.body.refreshToken;
-    // debug("tokenList: ", tokenList);
-    
-    // Nếu như tồn tại refreshToken truyền lên và nó cũng nằm trong tokenList của chúng ta
-    if (refreshTokenFromClient && (tokenList[refreshTokenFromClient])) {
-      try {
-        // Verify kiểm tra tính hợp lệ của cái refreshToken và lấy dữ liệu giải mã decoded 
-        const decoded = userService.verifyToken(refreshTokenFromClient, refreshTokenSecret);
-        // Thông tin user lúc này các bạn có thể lấy thông qua biến decoded.data
-        // có thể mở comment dòng debug bên dưới để xem là rõ nhé.
-        // debug("decoded: ", decoded);
-        const userFakeData = decoded.data;
-        debug(`Thực hiện tạo mã Token trong bước gọi refresh Token, [thời gian sống vẫn là 1 giờ.]`);
-        const accessToken = userService.generateToken(userFakeData, accessTokenSecret, accessTokenLife);
-        // gửi token mới về cho người dùng
-        return res.status(200).json({accessToken});
-      } catch (error) {
-        // Lưu ý trong dự án thực tế hãy bỏ dòng debug bên dưới, mình để đây để debug lỗi cho các bạn xem thôi
-        debug(error);
-        res.status(403).json({
-          message: 'Invalid refresh token.',
-        });
-      }
-    } else {
-      // Không tìm thấy token trong request
-      return res.status(403).send({
-        message: 'No token provided.',
-      });
-    }
-  }
-  
 
 function register(req, res, next) {
     userService.create(req.body)

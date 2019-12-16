@@ -1,7 +1,10 @@
 const config = require('../config.json');
 const expressJwt = require('express-jwt');
 const userService = require('../models/user.service');
-module.exports = jwt;
+module.exports = {
+    jwt: jwt,
+    verifyToken: verifyToken,
+}
 function jwt() {
     const secret = config.secret;
     return expressJwt({secret,isRevoked}).unless({
@@ -20,3 +23,13 @@ async function isRevoked(req,payload,done) {
     done();
 };
 
+async function verifyToken(token, secretKey) {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, secretKey, (error, decoded) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(decoded);
+        });
+    });
+}
