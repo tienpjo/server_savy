@@ -74,7 +74,7 @@ module.exports = router;
         message: 'No token provided.',
       });
     }
-  };
+  }
   
 
 function register(req, res, next) {
