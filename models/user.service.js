@@ -14,7 +14,7 @@ module.exports = {
     delete: _delete
 }
 
-async function authenticate({ mobile, password,tokenLife }) {
+async function authenticate({ mobile, password }) {
     const mobi = await User.findOne({ mobile });
     console.log(mobi);
     if (!mobi) {
@@ -27,7 +27,7 @@ async function authenticate({ mobile, password,tokenLife }) {
          config.secret,
          {
              algorithm: "HS256",
-             expiresIn: tokenLife,
+            //  expiresIn: tokenLife,
          });
         return {
             // ...userWithoutHash,
