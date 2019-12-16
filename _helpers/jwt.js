@@ -2,8 +2,8 @@ const config = require('../config.json');
 const expressJwt = require('express-jwt');
 const userService = require('../models/user.service');
 module.exports = {
-    jwt: jwt,
-    verifyToken: verifyToken,
+    jwt,
+    verifyToken,
 }
 function jwt() {
     const secret = config.secret;
