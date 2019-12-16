@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const userService = require('../models/user.service');
+const AuthMiddleWare = require("../middleware/AuthMiddleware");
 
 router.post('/login', login);
 router.post('/register', register);
+router.use(AuthMiddleWare.isAuth);
 router.get('/', getAll);
 router.get('/current', getCurrent);
 router.get('/:id', getById);
