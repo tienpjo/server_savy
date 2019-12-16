@@ -1,5 +1,6 @@
 const jwtHelper = require("../_helpers/jwt");
 const userService = require('../models/user.service');
+const config = require('../config.json');
 const debug = console.log.bind(console);
 // Mã secretKey này phải được bảo mật tuyệt đối, các bạn có thể lưu vào biến môi trường hoặc file
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
@@ -16,7 +17,7 @@ let isAuth = async (req, res, next) => {
     // Nếu tồn tại token
     try {
       // Thực hiện giải mã token xem có hợp lệ hay không?
-      const decoded = await userService.verifyToken(tokenFromClient, accessTokenSecret);
+      const decoded = await userService.verifyToken(tokenFromClient, config.secret);
       // Nếu token hợp lệ, lưu thông tin giải mã được vào đối tượng req, dùng cho các xử lý ở phía sau.
       req.jwtDecoded = decoded;
       // Cho phép req đi tiếp sang controller.
