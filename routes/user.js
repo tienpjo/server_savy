@@ -22,7 +22,7 @@ const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 module.exports = router;
 
-async function login(req, res, next) {
+async function login({req, res, next}) {
     userService.authenticate(req.body, accessTokenLife)
         // .then(mobile => mobile ? res.json(mobile) : res.status(400).json({message: 'Username or password is incorrect'}))
         // .catch(err => next(err));
@@ -42,7 +42,7 @@ async function login(req, res, next) {
         })
 }
 
-async function refreshToken (req, res) {
+async function refreshToken ({req, res}) {
     // User gửi mã refresh token kèm theo trong body
     const refreshTokenFromClient = req.body.refreshToken;
     // debug("tokenList: ", tokenList);

@@ -20,7 +20,7 @@ async function authenticate({ mobile, password,tokenLife }) {
         res.status(400).json({message: 'User Not Found'});
     }
     if (mobile && bcrypt.compareSync(password, mobile.hash)) {
-        const { hash, ...userWithoutHash } = user.toObject();
+        // const { hash, ...userWithoutHash } = user.toObject();
         const token = jwt.sign(
         { sub: mobile.id },
          config.secret,
