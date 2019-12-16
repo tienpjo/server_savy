@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const unique = require('mongoose-unique-validator');
 const UserSchema = new mongoose.Schema({
     name:{type: String,required:true},
-    mobile: {type:String,unique:true,required:true},
+    mobile: {type:Number,unique:true,required:true},
     hash: {type:String,required:true},
     address: {type:String,required:true},
 },
@@ -12,4 +12,4 @@ const UserSchema = new mongoose.Schema({
 });
 UserSchema.plugin(unique, { message: 'That {PATH} is already taken.' });
 UserSchema.set('toJSON',{virtuals: true});
-module.exports = mongoose.model('User',UserSchema);
+const User = module.exports = mongoose.model('User',UserSchema);

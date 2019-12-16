@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userService = require('../models/user.service');
+const userService = require('../_service/user.service');
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 
 let initAPIs = (app) => {
@@ -23,7 +23,6 @@ function login(req, res, next) {
         .catch(err => next(err));
 
 }
-
 
 function register(req, res, next) {
     userService.create(req.body)

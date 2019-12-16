@@ -2,10 +2,8 @@ var mongoose = require('mongoose');
 const unique = require('mongoose-unique-validator');
 
 const DeviceSchema = new mongoose.Schema({
-    _id: mongoose.Types.ObjectId,
-    Lon: String,
-    Lati: String,
-    ID_Device: String,
+    id_device: Number,
+    id_owner: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 },
     {
         collection: 'device_dbs'

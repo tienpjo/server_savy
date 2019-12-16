@@ -1,5 +1,5 @@
 const jwtHelper = require("../_helpers/jwt");
-const userService = require('../models/user.service');
+const userService = require('../_service/user.service');
 const config = require('../config.json');
 const debug = console.log.bind(console);
 // Mã secretKey này phải được bảo mật tuyệt đối, các bạn có thể lưu vào biến môi trường hoặc file
