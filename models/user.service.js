@@ -14,13 +14,13 @@ module.exports = {
     delete: _delete
 }
 
-async function authenticate({ username, password }) {
-    const user = await User.findOne({ username });
-    if (user && bcrypt.compareSync(password, user.hash)) {
-        const { hash, ...userWithoutHash } = user.toObject();
-        const token = jwt.sign({ sub: user.id }, config.secret);
+async function authenticate({ mobile, password }) {
+    const user_mobi = await User.findOne({ mobile });
+    if (user_mobi && bcrypt.compareSync(password, user_mobi.hash)) {
+        // const { hash, ...userWithoutHash } = user.toObject();
+        const token = jwt.sign({ sub: user_mobi.id }, config.secret);
         return {
-            ...userWithoutHash,
+            // ...userWithoutHash,
             token
         };
     }
