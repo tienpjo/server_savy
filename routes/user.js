@@ -22,7 +22,7 @@ const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 module.exports = router;
 
-async function login({req, res, next}) {
+ function login({req, res, next}) {
     userService.authenticate(req.body, accessTokenLife)
         // .then(mobile => mobile ? res.json(mobile) : res.status(400).json({message: 'Username or password is incorrect'}))
         // .catch(err => next(err));
@@ -32,7 +32,7 @@ async function login({req, res, next}) {
             }
             if (mobile) {
                 const accessToken = mobile;
-                const refreshToken = await userService.authenticate(req.body, refreshToken);
+                const refreshToken = userService.authenticate(req.body, refreshToken);
                 tokenList[refreshToken] = { accessToken, refreshToken };
                 console.log(`Gửi Token và Refresh Token về cho client...`);
                 return res.status(200).json({ accessToken, refreshToken });
@@ -40,9 +40,10 @@ async function login({req, res, next}) {
                 return res.status(500).json(error);
             }
         })
+        .catch(err => next(err));
 }
 
-async function refreshToken ({req, res}) {
+ function refreshToken ({req, res}) {
     // User gửi mã refresh token kèm theo trong body
     const refreshTokenFromClient = req.body.refreshToken;
     // debug("tokenList: ", tokenList);
@@ -51,13 +52,13 @@ async function refreshToken ({req, res}) {
     if (refreshTokenFromClient && (tokenList[refreshTokenFromClient])) {
       try {
         // Verify kiểm tra tính hợp lệ của cái refreshToken và lấy dữ liệu giải mã decoded 
-        const decoded = await userService.verifyToken(refreshTokenFromClient, refreshTokenSecret);
+        const decoded = userService.verifyToken(refreshTokenFromClient, refreshTokenSecret);
         // Thông tin user lúc này các bạn có thể lấy thông qua biến decoded.data
         // có thể mở comment dòng debug bên dưới để xem là rõ nhé.
         // debug("decoded: ", decoded);
         const userFakeData = decoded.data;
         debug(`Thực hiện tạo mã Token trong bước gọi refresh Token, [thời gian sống vẫn là 1 giờ.]`);
-        const accessToken = await userService.generateToken(userFakeData, accessTokenSecret, accessTokenLife);
+        const accessToken = userService.generateToken(userFakeData, accessTokenSecret, accessTokenLife);
         // gửi token mới về cho người dùng
         return res.status(200).json({accessToken});
       } catch (error) {
