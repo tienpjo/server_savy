@@ -9,7 +9,6 @@ router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.get('/:id', update);
 router.delete('/:id', _delete);
-router.post('/refreshToken',refreshToken);
 
 // Thời gian sống của token
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || "1h";
