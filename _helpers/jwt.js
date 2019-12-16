@@ -1,7 +1,10 @@
 const config = require('../config.json');
 const expressJwt = require('express-jwt');
 const userService = require('../models/user.service');
-module.exports = jwt;
+module.exports = {
+    verifyToken,
+    jwt
+}
     // jwt,
     // verifyToken,
 // }
