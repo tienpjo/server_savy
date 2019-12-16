@@ -24,7 +24,7 @@ module.exports = router;
 
  function login({req, res, next}) {
     userService.authenticate(req.body)
-        .then(mobi => mobi ? res.json(mobi) : res.status(400).json({message: 'Username or password is incorrect'}))
+        .then(user => user ? res.json(user) : res.status(400).json({message: 'Username or password is incorrect'}))
         .catch(err => next(err));
         // .then(mobile => {
         //     console.log(mobile);

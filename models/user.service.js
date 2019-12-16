@@ -14,23 +14,13 @@ module.exports = {
     delete: _delete
 }
 
-async function authenticate({ mobile, password }) {
-    const mobi = await User.findOne({ mobile });
-    console.log(mobi);
-    if (!mobi) {
-        res.status(400).json({message: 'User Not Found'});
-    }
-    if (mobi && bcrypt.compareSync(password, mobi.hash)) {
-         const { hash, ...mobiWithoutHash } = mobi.toObject();
-        const token = jwt.sign(
-        { sub: mobi.id },
-         config.secret,
-         {
-             algorithm: "HS256",
-            //  expiresIn: tokenLife,
-         });
+async function authenticate({ username, password }) {
+    const user = await User.findOne({ username });
+    if (user && bcrypt.compareSync(password, user.hash)) {
+        const { hash, ...userWithoutHash } = user.toObject();
+        const token = jwt.sign({ sub: user.id }, config.secret);
         return {
-            // ...userWithoutHash,
+            ...userWithoutHash,
             token
         };
     }
