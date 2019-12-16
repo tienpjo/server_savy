@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../models/user.service');
 
-router.post('/login', login);
+router.post('/authenticate', authenticate);
 router.post('/register', register);
 router.get('/', getAll);
 router.get('/current', getCurrent);
@@ -22,7 +22,7 @@ const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 module.exports = router;
 
- function login({req, res, next}) {
+ function authenticate({req, res, next}) {
     userService.authenticate(req.body)
         .then(user => user ? res.json(user) : res.status(400).json({message: 'Username or password is incorrect'}))
         .catch(err => next(err));
