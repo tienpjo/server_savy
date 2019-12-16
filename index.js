@@ -13,7 +13,7 @@ var PORT = 9000;
 var session = require('express-session');
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
-
+const initAPIs = require('./routes/user');
 
 app.options('*', cors());
 app.use(bodyParser.json());
@@ -24,7 +24,9 @@ app.use(cors());
 
 app.use('/api/device', require('./routes/device'));
 app.use(jwt());
-app.use('/users',require('./routes/user'));
+
+initAPIs(app);
+
 app.use(errHandler);
 server.listen(3000);
 

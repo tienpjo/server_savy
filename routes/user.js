@@ -3,31 +3,25 @@ const router = express.Router();
 const userService = require('../models/user.service');
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 
-router.post('/login', login);
-router.post('/register', register);
-router.use(AuthMiddleWare.isAuth);
-router.get('/', getAll);
-router.get('/current', getCurrent);
-router.get('/:id', getById);
-router.get('/:id', update);
-router.delete('/:id', _delete);
+let initAPIs = (app) => {
+    router.post('/login', login);
+    router.post('/register', register);
+    router.use(AuthMiddleWare.isAuth);
+    router.get('/', getAll);
+    router.get('/current', getCurrent);
+    router.get('/:id', getById);
+    router.get('/:id', update);
+    router.delete('/:id', _delete);
+    return app.use("/users", router);
+}
 
-// Thời gian sống của token
-const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || "1h";
-// Mã secretKey này phải được bảo mật tuyệt đối, các bạn có thể lưu vào biến môi trường hoặc file
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || "access-token-secret-example-trungquandev.com-green-cat-a@";
-// Thời gian sống của refreshToken
-const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE || "3650d";
-// Mã secretKey này phải được bảo mật tuyệt đối, các bạn có thể lưu vào biến môi trường hoặc file
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+module.exports = initAPIs;
 
-module.exports = router;
-
- function login(req, res, next) {
+function login(req, res, next) {
     userService.authenticate(req.body)
-        .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({message: 'Username or password is incorrect'}))
+        .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))
         .catch(err => next(err));
-        
+
 }
 
 
