@@ -15,14 +15,15 @@ module.exports = {
 }
 
 async function authenticate({ mobile, password,tokenLife }) {
-    const mobile = await User.findOne({ mobile });
-    if (!mobile) {
+    const mobi = await User.findOne({ mobile });
+    console.log(mobi);
+    if (!mobi) {
         res.status(400).json({message: 'User Not Found'});
     }
-    if (mobile && bcrypt.compareSync(password, user.hash)) {
-         const { hash, ...userWithoutHash } = user.toObject();
+    if (mobi && bcrypt.compareSync(password, mobi.hash)) {
+         const { hash, ...mobiWithoutHash } = mobi.toObject();
         const token = jwt.sign(
-        { sub: mobile.id },
+        { sub: mobi.id },
          config.secret,
          {
              algorithm: "HS256",
