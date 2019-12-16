@@ -117,7 +117,7 @@ async function refreshToken (req, res) {
     }
   }
   
-  let verifyToken = (token, secretKey) => {
+  async function verifyToken (token, secretKey){
     return new Promise((resolve, reject) => {
       jwt.verify(token, secretKey, (error, decoded) => {
         if (error) {
