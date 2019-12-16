@@ -24,9 +24,11 @@ module.exports = router;
 
  function login({req, res, next}) {
     userService.authenticate(req.body, accessTokenLife)
+    console.log(req.body)
         // .then(mobile => mobile ? res.json(mobile) : res.status(400).json({message: 'Username or password is incorrect'}))
         // .catch(err => next(err));
         .then(mobile => {
+            console.log(mobile);
             if (!mobile) {
                 res.status(400).json({ message: 'Username or password is incorrect' });
             }
