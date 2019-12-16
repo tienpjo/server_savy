@@ -25,24 +25,24 @@ module.exports = router;
  function login({req, res, next}) {
     userService.authenticate(req.body, accessTokenLife)
     console.log(req.body)
-        // .then(mobile => mobile ? res.json(mobile) : res.status(400).json({message: 'Username or password is incorrect'}))
-        // .catch(err => next(err));
-        .then(mobile => {
-            console.log(mobile);
-            if (!mobile) {
-                res.status(400).json({ message: 'Username or password is incorrect' });
-            }
-            if (mobile) {
-                const accessToken = mobile;
-                const refreshToken = userService.authenticate(req.body, refreshToken);
-                tokenList[refreshToken] = { accessToken, refreshToken };
-                console.log(`Gửi Token và Refresh Token về cho client...`);
-                return res.status(200).json({ accessToken, refreshToken });
-            } if (error) {
-                return res.status(500).json(error);
-            }
-        })
+        .then(mobile => mobile ? res.json(mobile) : res.status(400).json({message: 'Username or password is incorrect'}))
         .catch(err => next(err));
+        // .then(mobile => {
+        //     console.log(mobile);
+        //     if (!mobile) {
+        //         res.status(400).json({ message: 'Username or password is incorrect' });
+        //     }
+        //     if (mobile) {
+        //         const accessToken = mobile;
+        //         const refreshToken = userService.authenticate(req.body, refreshToken);
+        //         tokenList[refreshToken] = { accessToken, refreshToken };
+        //         console.log(`Gửi Token và Refresh Token về cho client...`);
+        //         return res.status(200).json({ accessToken, refreshToken });
+        //     } if (error) {
+        //         return res.status(500).json(error);
+        //     }
+        // })
+        // .catch(err => next(err));
 }
 
  function refreshToken ({req, res}) {
