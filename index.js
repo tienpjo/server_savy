@@ -41,6 +41,7 @@ function sendToSocket(userId, message) {
 }
 net.createServer(function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
+
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
   // Add a 'data' event handler to this instance of socket
   io.on('connection', function (socket) {

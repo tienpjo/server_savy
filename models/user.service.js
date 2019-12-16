@@ -10,16 +10,26 @@ module.exports = {
     getById,
     create,
     update,
+    verifyToken,
     delete: _delete
 }
 
-async function authenticate({ username,password}) {
-    const user = await User.findOne({username});
-    if (user && bcrypt.compareSync(password,user.hash)) {
-        const {hash, ...userWithoutHash} = user.toObject();
-        const token = jwt.sign({sub:user.id},config.secret);
+async function authenticate({ mobile, password,tokenLife }) {
+    const mobile = await User.findOne({ mobile });
+    if (!mobile) {
+        res.status(400).json({message: 'User Not Found'});
+    }
+    if (mobile && bcrypt.compareSync(password, mobile.hash)) {
+        const { hash, ...userWithoutHash } = user.toObject();
+        const token = jwt.sign(
+        { sub: mobile.id },
+         config.secret,
+         {
+             algorithm: "HS256",
+             expiresIn: tokenLife,
+         });
         return {
-            ...userWithoutHash,
+            // ...userWithoutHash,
             token
         };
     }
@@ -29,12 +39,12 @@ async function getAll() {
     return await User.find().select('-hash');
 }
 
-async function getById() {
+async function getById(id) {
     return await User.findById(id).select('-hash');
 }
 
 async function create(userParam) {
-    if (await User.findOne({username: userParam.username})) {
+    if (await User.findOne({ username: userParam.username })) {
         throw 'Username "' + userParam.username + '" is already taken';
     }
 
@@ -43,27 +53,38 @@ async function create(userParam) {
     //hash PassWord
 
     if (userParam.password) {
-        user.hash = bcrypt.hashSync(userParam.password,10);
+        user.hash = bcrypt.hashSync(userParam.password, 10);
     }
-    
+
     await user.save();
 }
 
-async function update(id,userParam) {
+async function update(id, userParam) {
     const user = await User.findById(id);
 
     if (!user) throw 'User not found';
-    if (user.username !== userParam.username && await User.findOne ({username: userParam.username})){
+    if (user.username !== userParam.username && await User.findOne({ username: userParam.username })) {
         throw 'Username "' + userParam.username + '" is already taken';
     }
     if (userParam.password) {
-        userParam.hash = bcrypt.hashSync(userParam.password,10);
+        userParam.hash = bcrypt.hashSync(userParam.password, 10);
     }
 
-    Object.assign(user,userParam);
+    Object.assign(user, userParam);
     await user.save;
 }
 
 async function _delete(id) {
     await User.findByIdAndRemove(id);
+}
+
+async function verifyToken(token, secretKey) {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, secretKey, (error, decoded) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(decoded);
+        });
+    });
 }
