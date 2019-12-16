@@ -14,6 +14,7 @@ module.exports = {
     create,
     update,
     refreshToken,
+    verifyToken,
     delete: _delete
 }
 
@@ -116,3 +117,15 @@ async function refreshToken (req, res) {
     }
   }
   
+  let verifyToken = (token, secretKey) => {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, secretKey, (error, decoded) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve(decoded);
+      });
+    });
+  }
+
+
