@@ -3,7 +3,7 @@ const unique = require('mongoose-unique-validator');
 
 const DeviceSchema = new mongoose.Schema({
     id_device: Number,
-    id_owner: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    id_owner: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 },
     {
         collection: 'device_dbs'
