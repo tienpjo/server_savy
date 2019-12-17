@@ -61,11 +61,7 @@ const deviceService = require('../_service/device.service');
 //   });
 // });
 
-async function add (req, res, next) {
-  deviceService.addDevice(req.body)
-      .then(() => res.json({}))
-      .catch(err => next(err));
-};
+
 
 // --------------------------USER - LOGIN----------------------------
 // get toan bo nguoi dung
