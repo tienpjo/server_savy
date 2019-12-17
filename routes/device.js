@@ -63,7 +63,7 @@ const deviceService = require('../_service/device.service');
 // });
 
 router.route('/add').post(function (req, res) {
-  deviceService.create(req.body)
+  deviceService.addDevice(req.body)
       .then(() => res.json({}))
       .catch(err => next(err));
 });
