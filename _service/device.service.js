@@ -16,6 +16,8 @@ async function addDevice(req,deviceParam) {
     if (tokenFromClient) {
         const device = new Device(deviceParam);
         const decoded = await userService.verifyToken(tokenFromClient, config.secret);
+        console.log(decoded);
+        console.log(sub._id);
         console.log(decoded.sub._id);
         device.id_owner = decoded.sub._id;
         await device.save();
