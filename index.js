@@ -10,10 +10,9 @@ let bodyParser = require('body-parser');
 var cors = require('cors');
 var HOST = '103.137.185.94';
 var PORT = 9000;
-var session = require('express-session');
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
-const init_user_API = require('./routes/api');
+const initAPIs = require('./routes/api');
 
 app.options('*', cors());
 app.use(bodyParser.json());
@@ -25,7 +24,7 @@ app.use(cors());
 
 app.use(jwt());
 
-init_user_API(app);
+initAPIs(app);
 
 app.use(errHandler);
 server.listen(3000);
