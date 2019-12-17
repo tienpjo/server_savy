@@ -21,6 +21,7 @@ let isAuth = async (req, res, next) => {
       // Nếu token hợp lệ, lưu thông tin giải mã được vào đối tượng req, dùng cho các xử lý ở phía sau.
       req.jwtDecoded = decoded;
       // Cho phép req đi tiếp sang controller.
+      console.log(decoded);
       next();
     } catch (error) {
       // Nếu giải mã gặp lỗi: Không đúng, hết hạn...etc:
