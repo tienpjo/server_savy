@@ -25,7 +25,7 @@ app.use(cors());
 
 app.use(jwt());
 
-initAPIs(init_user_API);
+init_user_API(app);
 
 app.use(errHandler);
 server.listen(3000);
