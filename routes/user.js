@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../_service/user.service');
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
-
+const apiDevice = require("../routes/device");
 let initAPIs = (app) => {
     router.post('/login', login);
     router.post('/register', register);
     router.use(AuthMiddleWare.isAuth);
+    router.post('/add',apiDevice.add);
     router.get('/', getAll);
     router.get('/current', getCurrent);
     router.get('/:id', getById);

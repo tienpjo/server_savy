@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const deviceService = require('../_service/device.service');
-
-// module.exports = add_device;
+ module.exports = add;
 
 // --------------------------GPS -DEVICE----------------------------
 // router.get('/', (req, res) => {
@@ -62,11 +61,11 @@ const deviceService = require('../_service/device.service');
 //   });
 // });
 
-router.route('/add').post(function (req, res) {
+function add (req, res, next) {
   deviceService.addDevice(req.body)
       .then(() => res.json({}))
       .catch(err => next(err));
-});
+};
 
 // --------------------------USER - LOGIN----------------------------
 // get toan bo nguoi dung
