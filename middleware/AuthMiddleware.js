@@ -3,7 +3,7 @@ const userService = require('../_service/user.service');
 const config = require('../config.json');
 const debug = console.log.bind(console);
 // Mã secretKey này phải được bảo mật tuyệt đối, các bạn có thể lưu vào biến môi trường hoặc file
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+
 /**
  * Middleware: Authorization user by Token
  * @param {*} req 
@@ -39,8 +39,16 @@ let isAuth = async (req, res, next) => {
   }
 }
 
-
+async function getToken (req,res,next) {
+  const tokenFromClient = req.body.token || req.query.token || req.headers["x-access-token"];
+  if (tokenFromClient) {
+    const decoded = await userService.verifyToken(tokenFromClient, config.secret);
+    // Nếu token hợp lệ, lưu thông tin giải mã được vào đối tượng req, dùng cho các xử lý ở phía sau.
+    return decoded.sub._id;
+  }
+}
 
 module.exports = {
   isAuth: isAuth,
+  getToken: getToken,
 };
