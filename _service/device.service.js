@@ -16,8 +16,7 @@ async function addDevice(req,deviceParam) {
     if (tokenFromClient) {
         const device = new Device(deviceParam);
         const decoded = await userService.verifyToken(tokenFromClient, config.secret);
-        // Nếu token hợp lệ, lưu thông tin giải mã được vào đối tượng req, dùng cho các xử lý ở phía sau.
-        // req.jwtDecoded = decoded;
+        console.log(decoded.sub._id);
         device.id_owner = decoded.sub._id;
         await device.save();
     }
