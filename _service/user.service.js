@@ -34,6 +34,7 @@ async function authenticate({ mobile, password }) {
                 algorithm: "HS256",
                 expiresIn: accessTokenLife,
             });
+          id_token = token;
         return {
             // ...userWithoutHash,
             token

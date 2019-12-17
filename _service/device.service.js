@@ -13,7 +13,6 @@ async function addDevice(deviceParam) {
         throw 'Device "' + deviceParam.id_device + '" is already taken';
     }
         const device = new Device(deviceParam);
-        console.log(sub._id);
         await device.save();
 
 }

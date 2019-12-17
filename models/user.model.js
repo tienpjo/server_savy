@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
     mobile: {type:Number,unique:true,required:true},
     hash: {type:String,required:true},
     address: {type:String,required:true},
+    id_token:{type:String},
 },
     {
         collection: 'user_dbs'
