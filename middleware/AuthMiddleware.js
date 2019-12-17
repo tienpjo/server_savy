@@ -44,6 +44,7 @@ async function getToken (req,res,next) {
   if (tokenFromClient) {
     const decoded = await userService.verifyToken(tokenFromClient, config.secret);
     // Nếu token hợp lệ, lưu thông tin giải mã được vào đối tượng req, dùng cho các xử lý ở phía sau.
+    console.log(decoded.sub._id);
     return decoded.sub._id;
   }
 }
