@@ -8,7 +8,7 @@ const User = dbs.User;
 module.exports = {
     addDevice
 }
-async function addDevice(deviceParam) {
+async function addDevice(req,deviceParam) {
     if (await Device.findOne({ id_device: deviceParam.id_device })) {
         throw 'Device "' + deviceParam.id_device + '" is already taken';
     }
