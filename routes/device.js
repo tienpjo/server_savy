@@ -66,7 +66,7 @@ router.route('/add').post(function (req, res) {
   deviceService.create(req.body)
       .then(() => res.json({}))
       .catch(err => next(err));
-}
+});
 
 // --------------------------USER - LOGIN----------------------------
 // get toan bo nguoi dung
