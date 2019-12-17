@@ -5,8 +5,8 @@ const apiUser = require("../controller/UserController");
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 
 let init_user_API = (app) => {
-    router.post('/register', apiUser.register);
-    router.post('/login', apiUser.login);
+    router.post('/login', login);
+    router.post('/register', register);
     router.use(AuthMiddleWare.isAuth);
     router.post('/add',apiDevice.add);
     return app.use("/", router);
