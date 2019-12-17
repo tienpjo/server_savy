@@ -36,7 +36,7 @@ async function authenticate({ mobile, password }) {
       });
     const id_token = await Token.findById(_id);
     if (!id_token) {
-      id_token.id_own = _id;
+      id_token.id_own = userData._id;
       id_token.token = token;
       id_token.save();
     }
