@@ -44,8 +44,9 @@ async function authenticate({ mobile, password }) {
       });
       token_collect.save();
     }
-    else {
-      // id_token.token = token;
+    if (id_token)
+    {
+      id_token.token = token;
       Object.assign(id_token,token);
     }
     return {
