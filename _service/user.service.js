@@ -46,8 +46,8 @@ async function authenticate({ mobile, password }) {
     }
     if (id_token)
     {
-      id_token.token = token;
-      Object.assign(id_token,token);
+      // token = token;
+      token_collect.update(token);
     }
     return {
       // ...userWithoutHash,
