@@ -1,14 +1,15 @@
 const express = require('express');
+const router = express.Router();
 const userService = require('../_service/user.service');
 
 module.exports = {
-    login: login,
-    register: register,
-    getAll: getAll,
-    getCurrent: getCurrent,
-    getById: getById,
-    update: update,
-    delete: _delete,
+    login,
+    register,
+    getAll,
+    getCurrent,
+    getById,
+    update,
+    delete: _delete
 };
 
 function login(req, res, next) {

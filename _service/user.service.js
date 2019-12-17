@@ -15,7 +15,7 @@ module.exports = {
   update,
   refreshToken,
   verifyToken,
-  delete: _delete
+  _delete
 }
 
 async function authenticate({ mobile, password }) {
