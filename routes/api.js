@@ -9,6 +9,7 @@ let init_user_API = (app) => {
     router.post("/login", apiUser.login);
     router.use(AuthMiddleWare.isAuth);
     router.post('/add',apiDevice.add);
+    return app.use("/", router);
 }
 
 module.exports = init_user_API;
