@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const deviceService = require('../_service/device.service');
- module.exports = add;
+//  module.exports = add;
 
 // --------------------------GPS -DEVICE----------------------------
 // router.get('/', (req, res) => {
@@ -124,4 +124,4 @@ const deviceService = require('../_service/device.service');
 //   }
 // })
 
-module.exports = router;
+// module.exports = router;
