@@ -1,65 +1,72 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Device = require('../models/device.model');
+const deviceService = require('../_service/device.service');
+
+module.exports = add_device;
 
 // --------------------------GPS -DEVICE----------------------------
-router.get('/', (req, res) => {
-  Device.find({}).lean()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
-    });
-});
+// router.get('/', (req, res) => {
+//   Device.find({}).lean()
+//     .then((result) => {
+//       res.json(result);
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
+//     });
+// });
 
-router.get('/find/:id', (req, res) => {
-  Device.findById(req.params.id)
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.status(404).json({ success: false, msg: `No such user.` });
-    });
-});
+// router.get('/find/:id', (req, res) => {
+//   Device.findById(req.params.id)
+//     .then((result) => {
+//       res.json(result);
+//     })
+//     .catch((err) => {
+//       res.status(404).json({ success: false, msg: `No such user.` });
+//     });
+// });
 
-// UPDATE
-router.route('/edit/:id').get(function (req, res) {
-  let id = req.params.id;
-  console.log(id);
-  Device.find({ ID_Device: id }, function (err, business) {
-    res.json(business);
-  });
-});
+// // UPDATE
+// router.route('/edit/:id').get(function (req, res) {
+//   let id = req.params.id;
+//   console.log(id);
+//   Device.find({ ID_Device: id }, function (err, business) {
+//     res.json(business);
+//   });
+// });
 
-//  Defined update route
-router.route('/update/:id').post(function (req, res) {
-  Device.findById(req.params.id, function (err, device) {
-    if (!device)
-      res.status(404).send("data is not found");
-    else {
-      console.log(person);
-      device.Lon = req.body.Lon;
-      device.Lati = req.body.Lati;
-      device.ID_Device = req.body.ID_Device;
-      device.save().then(business => {
-        res.json('Update complete');
-      })
-        .catch(err => {
-          res.status(400).send("unable to update the database");
-        });
-    }
-  });
-});
+// //  Defined update route
+// router.route('/update/:id').post(function (req, res) {
+//   Device.findById(req.params.id, function (err, device) {
+//     if (!device)
+//       res.status(404).send("data is not found");
+//     else {
+//       console.log(person);
+//       device.Lon = req.body.Lon;
+//       device.Lati = req.body.Lati;
+//       device.ID_Device = req.body.ID_Device;
+//       device.save().then(business => {
+//         res.json('Update complete');
+//       })
+//         .catch(err => {
+//           res.status(400).send("unable to update the database");
+//         });
+//     }
+//   });
+// });
 
-router.route('/delete/:id').get(function (req, res) {
-  Device.findByIdAndRemove({ _id: req.params.id }, function (err, person) {
-    if (err) res.json(err);
-    else res.json('Successfully removed');
-  });
-});
+// router.route('/delete/:id').get(function (req, res) {
+//   Device.findByIdAndRemove({ _id: req.params.id }, function (err, person) {
+//     if (err) res.json(err);
+//     else res.json('Successfully removed');
+//   });
+// });
 
+function add_device(req, res, next) {
+  deviceService.create(req.body)
+      .then(() => res.json({}))
+      .catch(err => next(err));
+}
 
 // --------------------------USER - LOGIN----------------------------
 // get toan bo nguoi dung
