@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const dbs = require('../_helpers/database');
 const User = dbs.User;
-
+const Token = dbs.Token;
 // Thời gian sống của token
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || "1h";
 
@@ -34,10 +34,16 @@ async function authenticate({ mobile, password }) {
         algorithm: "HS256",
         expiresIn: accessTokenLife,
       });
-      const user = new User();
-      user.id_token = token;
-      await user.save();
-      
+    const id_token = await Token.findById(_id);
+    if (!id_token) {
+      id_token.id_own = _id;
+      id_token.token = token;
+      id_token.save();
+    }
+    else {
+      // id_token.token = token;
+      Object.assign(id_token,token);
+    }
     return {
       // ...userWithoutHash,
       token,
