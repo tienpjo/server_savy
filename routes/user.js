@@ -26,10 +26,10 @@ function add (req, res, next) {
   };
 
 function login(req, res, next) {
-    const user = userService.authenticate(req.body)
+         userService.authenticate(req.body)
         .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))
         .catch(err => next(err));
-    console.log(user);
+    // console.log(user);
 }
 
 function register(req, res, next) {
