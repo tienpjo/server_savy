@@ -34,8 +34,6 @@ async function authenticate({ mobile, password }) {
         algorithm: "HS256",
         expiresIn: accessTokenLife,
       });
-     user_mobi.id_token = token;
-      await user_mobi.save();
     return {
       // ...userWithoutHash,
       token
