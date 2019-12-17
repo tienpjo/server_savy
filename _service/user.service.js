@@ -36,7 +36,7 @@ async function authenticate({ mobile, password }) {
       });
     return {
       // ...userWithoutHash,
-      token
+      token,
     };
   }
 }
