@@ -61,7 +61,7 @@ const deviceService = require('../_service/device.service');
 //   });
 // });
 
-function add (req, res, next) {
+async function add (req, res, next) {
   deviceService.addDevice(req.body)
       .then(() => res.json({}))
       .catch(err => next(err));
