@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors());
 
-// app.use('/api/device', require('./routes/device'));
+app.use('/api/device', require('./routes/device'));
 app.use(jwt());
 
 initAPIs(app);

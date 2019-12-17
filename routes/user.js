@@ -7,7 +7,6 @@ let initAPIs = (app) => {
     router.post('/login', login);
     router.post('/register', register);
     router.use(AuthMiddleWare.isAuth);
-    router.post('/add-device',api_device.add_device);
     router.get('/', getAll);
     router.get('/current', getCurrent);
     router.get('/:id', getById);

@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const deviceService = require('../_service/device.service');
 
-module.exports = add_device;
+// module.exports = add_device;
 
 // --------------------------GPS -DEVICE----------------------------
 // router.get('/', (req, res) => {
@@ -62,7 +62,7 @@ module.exports = add_device;
 //   });
 // });
 
-function add_device(req, res, next) {
+router.route('/add').post(function (req, res) {
   deviceService.create(req.body)
       .then(() => res.json({}))
       .catch(err => next(err));
