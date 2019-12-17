@@ -36,7 +36,7 @@ async function authenticate({ mobile, password }) {
       });
     const id2 = userData._id;
     const id_token = await Token.findOne({id2});
-    console.log(userData._id);
+    console.log(id_token);
     if (!id_token) {
       var token_collect = new Token({
         id_own: userData._id,
