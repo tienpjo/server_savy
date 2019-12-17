@@ -15,8 +15,9 @@ async function addDevice( deviceParam) {
     if (await Device.findOne({ id_device: deviceParam.id_device })) {
         throw 'Device "' + deviceParam.id_device + '" is already taken';
     }
-    // const id__1 = authMiddleware.getToken();
-    // console.log(id__1);
+    const id__1 = authMiddleware.getToken();
+    console.log(id__1);
     const device = new Device(deviceParam);
+    device.id_owner = id__1;
     await device.save();
 }
