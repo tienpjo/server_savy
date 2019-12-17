@@ -8,19 +8,12 @@ const User = dbs.User;
 module.exports = {
     addDevice
 }
-async function addDevice(req,deviceParam) {
+async function addDevice(deviceParam) {
     if (await Device.findOne({ id_device: deviceParam.id_device })) {
         throw 'Device "' + deviceParam.id_device + '" is already taken';
     }
-    const tokenFromClient = req.body.token || req.query.token || req.headers["x-access-token"];
-    if (tokenFromClient) {
         const device = new Device(deviceParam);
-        const decoded = await userService.verifyToken(tokenFromClient, config.secret);
-        console.log(decoded);
         console.log(sub._id);
-        console.log(decoded.sub._id);
-        device.id_owner = decoded.sub._id;
         await device.save();
-    }
 
 }
