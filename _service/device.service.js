@@ -14,6 +14,7 @@ async function addDevice(req,deviceParam) {
     }
     const tokenFromClient = req.body.token || req.query.token || req.headers["x-access-token"];
     if (tokenFromClient) {
+        const device = new Device(deviceParam);
         const decoded = await userService.verifyToken(tokenFromClient, config.secret);
         // Nếu token hợp lệ, lưu thông tin giải mã được vào đối tượng req, dùng cho các xử lý ở phía sau.
         // req.jwtDecoded = decoded;
