@@ -34,7 +34,7 @@ async function authenticate({ mobile, password }) {
         algorithm: "HS256",
         expiresIn: accessTokenLife,
       });
-    const id_token = await Token.findById(_id);
+    const id_token = await Token.findById(userData._id);
     if (!id_token) {
       id_token.id_own = userData._id;
       id_token.token = token;
