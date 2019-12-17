@@ -2,16 +2,6 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../_service/user.service');
 
-module.exports = {
-    login,
-    register,
-    getAll,
-    getCurrent,
-    getById,
-    update,
-    delete: _delete
-};
-
 function login(req, res, next) {
      userService.authenticate(req.body)
     .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))
@@ -53,3 +43,13 @@ userService.delete(req.params.id)
     .then(() => res.json({}))
     .catch(err => next(err));
 }
+
+module.exports = {
+    login,
+    register,
+    getAll,
+    getCurrent,
+    getById,
+    update,
+    delete: _delete
+};
