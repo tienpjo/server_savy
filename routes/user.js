@@ -20,6 +20,7 @@ let initAPIs = (app) => {
 module.exports = initAPIs;
 
 function add (req, res, next) {
+    console.log(req.jwtDecoded);
     deviceService.addDevice(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
@@ -29,7 +30,6 @@ function login(req, res, next) {
          userService.authenticate(req.body)
         .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))
         .catch(err => next(err));
-    // console.log(user);
 }
 
 function register(req, res, next) {
