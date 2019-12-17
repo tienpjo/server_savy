@@ -11,11 +11,12 @@ const Token = dbs.Token;
 module.exports = {
     addDevice
 }
-async function addDevice(deviceParam) {
+async function addDevice(uuid , deviceParam) {
     if (await Device.findOne({ id_device: deviceParam.id_device })) {
         throw 'Device "' + deviceParam.id_device + '" is already taken';
     }
     // console.log(req.jwtDecoded);
     const device = new Device(deviceParam);
+    device.id_owner = uuid;
     await device.save();
 }

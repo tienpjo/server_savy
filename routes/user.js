@@ -20,8 +20,8 @@ let initAPIs = (app) => {
 module.exports = initAPIs;
 
 function add (req, res, next) {
-    console.log(req.jwtDecoded);
-    deviceService.addDevice(req.body)
+    console.log(req.jwtDecoded.sub._id);
+    deviceService.addDevice(req.jwtDecoded.sub._id,req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
   };
