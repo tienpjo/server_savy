@@ -6,5 +6,6 @@ mongoose.Promise = global.Promise;
 module.exports = {
     User: require('../models/user.model'),
     Device: require('../models/device.model'),
-    Token :require('../models/token.model')
+    Token :require('../models/token.model'),
+    Tracking: require('../models/token.model')
 };

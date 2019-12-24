@@ -9,16 +9,19 @@ let initAPIs = (app) => {
     router.post('/register', register);
     router.use(AuthMiddleWare.isAuth);
     router.post('/add',add);
-    router.get('/', getAll);
-    router.get('/current', getCurrent);
-    router.get('/:id', getById);
-    router.get('/:id', update);
-    router.delete('/:id', _delete);
+    router.post('/delete_device',delete_device);
+
+    // router.get('/', getAll);
+    // router.get('/current', getCurrent);
+    // router.get('/:id', getById);
+    // router.get('/:id', update);
+    // router.delete('/:id', _delete);
+    router.post('/logout',logout);
     return app.use("/users", router);
 }
 
 module.exports = initAPIs;
-
+    /* DEVICE */
 function add (req, res, next) {
     console.log(req.jwtDecoded.sub._id);
     deviceService.addDevice(req.jwtDecoded.sub._id,req.body)
@@ -26,6 +29,16 @@ function add (req, res, next) {
         .catch(err => next(err));
   };
 
+function delete_device(req,res,next){
+    deviceService.delete_device(req.params.id)
+    .then(() => res.json({}))
+    .catch(err => next(err));
+}
+
+/* BIKE TRACKING */
+
+
+    /* END DEVICE */
 function login(req, res, next) {
          userService.authenticate(req.body)
         .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))
@@ -66,4 +79,8 @@ function _delete(req, res, next) {
     userService.delete(req.params.id)
         .then(() => res.json({}))
         .catch(err => next(err));
+}
+
+function logout (req,res,) {
+    res.status(200).send({ auth: false, token: null });
 }

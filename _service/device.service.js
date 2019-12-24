@@ -9,7 +9,8 @@ const User = dbs.User;
 const Token = dbs.Token;
 
 module.exports = {
-    addDevice
+    addDevice,
+    delete_device
 }
 async function addDevice(uuid , deviceParam) {
     if (await Device.findOne({ id_device: deviceParam.id_device })) {
@@ -19,4 +20,8 @@ async function addDevice(uuid , deviceParam) {
     const device = new Device(deviceParam);
     device.id_owner = uuid;
     await device.save();
+}
+
+async function delete_device(id) {
+    await User.findByIdAndRemove(id);
 }
