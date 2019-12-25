@@ -3,7 +3,7 @@ const unique = require('mongoose-unique-validator');
 
 const SocketSchema = new mongoose.Schema({
     id_device: {type: Number,required:true},
-    hw_connect: {type: String,required:true}
+    hw_connect: [{type: Array,required:true}]
 },
     {
         collection: 'socket_dbs'
@@ -11,5 +11,5 @@ const SocketSchema = new mongoose.Schema({
 
 SocketSchema.plugin(unique, { message: 'That {PATH} is already taken.' });
 
-const Socket = module.exports = mongoose.model('device', SocketSchema);
+const Socket = module.exports = mongoose.model('socket', SocketSchema);
   

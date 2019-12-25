@@ -60,7 +60,7 @@ net.createServer(function (sock) {
         hw_connect: sock
       });
       listSocket.save(function (error) {
-        if (err) throw err;
+        if (error) throw error;
         console.log(' Save socket successfully saved.');
       });
       bike_tracking.save(function (error) {
