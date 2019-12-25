@@ -5,10 +5,9 @@ const apiUser = require("../controller/UserController");
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const apiDevice = require("../routes/device");
 let initAPIs = (app) => {
-    router.post('/login', apiUser.login);
-    router.post('/register', apiUser.register);
+    router.post('/login',login);
+    router.post('/register',register);
     router.use(AuthMiddleWare.isAuth);
-<<<<<<< HEAD
     router.post('/add',add);
     router.post('/delete_device',delete_device);
 
@@ -18,19 +17,10 @@ let initAPIs = (app) => {
     // router.get('/:id', update);
     // router.delete('/:id', _delete);
     router.post('/logout',logout);
-=======
-    router.post('/add',apiUser.add);
-    router.get('/', apiUser.getAll);
-    router.get('/current', apiUser.getCurrent);
-    // router.get('/:id', getById);
-    // router.get('/:id', update);
-    // router.delete('/:id', _delete);
->>>>>>> 0f06f011ef7e4ae7bc30b464371d0e0e375222b7
     return app.use("/users", router);
 }
 
 module.exports = initAPIs;
-<<<<<<< HEAD
     /* DEVICE */
 function add (req, res, next) {
     console.log(req.jwtDecoded.sub._id);
@@ -94,6 +84,3 @@ function _delete(req, res, next) {
 function logout (req,res,) {
     res.status(200).send({ auth: false, token: null });
 }
-=======
-
->>>>>>> 0f06f011ef7e4ae7bc30b464371d0e0e375222b7

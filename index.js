@@ -4,7 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var mongoClient = require('mongoose');
 const router = express.Router();
-const dbs = require('../_helpers/database');
+const dbs = require('./_helpers/database');
 var net = require('net');
 let bodyParser = require('body-parser');
 var cors = require('cors');
@@ -47,17 +47,19 @@ net.createServer(function (sock) {
       /* Split mang data */
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
-      var bike_tracking = new Tracking({
-        _id: new mongoClient.Types.ObjectId(),
-        id_device: data_filter[0],
-        long: data_filter[1],
-        lati: data_filter[2],
-        date: Date.now()
+      mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
+        var bike_tracking = new Tracking({
+          _id: new mongoClient.Types.ObjectId(),
+          id_device: data_filter[0],
+          long: data_filter[1],
+          lati: data_filter[2],
+          date: Date.now()
+        });
+        bike_tracking.save(function (error) {
+          if (err) throw err;
+          console.log('User Test successfully saved.');
+        })
       });
-      bike_tracking.save(function (error) {
-        if (err) throw err;
-        console.log('User Test successfully saved.');
-      })
     });
   });
   sock.on('close', function (data) {
