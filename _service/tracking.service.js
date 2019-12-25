@@ -13,14 +13,14 @@ function save_tracking(data_idDevice, data_long, data_lati) {
             lati: data_lati,
             date: Date.now()
         });
-        find_device_id(data_idDevice, done);
+        find_device_id(data_idDevice);
     });
 }
-function find_device_id(id_device, done) {
+function find_device_id(id_device) {
     Device.findOne({ id_device: id_device }, function (err, user) {
-        if (err) { return done(err); }
+        if (err) { return false }
         if (!id_device) {
-            return done(null, false, { message: 'Device not Found.' });
+            return false;
         }
         if (id_device) {
             bike_tracking.save(function (error) {
