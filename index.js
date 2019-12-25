@@ -5,6 +5,7 @@ var io = require('socket.io')(server);
 var mongoClient = require('mongoose');
 const router = express.Router();
 const tracking = require('./models/tracking');
+const socket = require('./models/socket.model');
 var net = require('net');
 let bodyParser = require('body-parser');
 var cors = require('cors');
@@ -53,6 +54,15 @@ net.createServer(function (sock) {
         lati: data_filter[2],
         date: Date.now()
       });
+      var listSocket = new socket({
+        _id: new mongoClient.Types.ObjectId(),
+        id_device: data_filter[0],
+        hw_connect: sock
+      });
+      listSocket.save(function (error) {
+        if (err) throw err;
+        console.log(' Save socket successfully saved.');
+      });
       bike_tracking.save(function (error) {
         if (err) throw err;
         console.log('User Test successfully saved.');
@@ -62,8 +72,13 @@ net.createServer(function (sock) {
 
   sock.on('close', function (data) {
     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+    var idx = listSockets.indexOf(sock);
+    if (idx != -1) {
+      delete listSockets[idx];
+    }
   });
 }).listen(PORT, HOST);
+
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
