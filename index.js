@@ -41,7 +41,7 @@ net.createServer(function (sock) {
   // Add a 'data' event handler to this instance of socket
   sock.on('data', function (data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    listSockets[0].write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+    // listSockets[0].write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
     // var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
     /* Split mang data */
     var data_raw = data.toString();

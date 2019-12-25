@@ -7,6 +7,7 @@ const authMiddleware = require('../middleware/AuthMiddleware')
 const Device = dbs.Device;
 const User = dbs.User;
 const Token = dbs.Token;
+var rand = require("generate-key");
 
 module.exports = {
     addDevice,
@@ -19,6 +20,7 @@ async function addDevice(uuid , deviceParam) {
     // console.log(req.jwtDecoded);
     const device = new Device(deviceParam);
     device.id_owner = uuid;
+    device.smk = rand.generateKey(9);
     await device.save();
 }
 
