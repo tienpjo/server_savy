@@ -4,7 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var mongoClient = require('mongoose');
 const router = express.Router();
-const tracking = require('./models/tracking');
+const dbs = require('./_helpers/database');
 var net = require('net');
 let bodyParser = require('body-parser');
 var cors = require('cors');
@@ -13,8 +13,7 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-
-
+const Tracking = dbs.Tracking;
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -42,13 +41,11 @@ net.createServer(function (sock) {
   io.on('connection', function (socket) {
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
-      var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-      socket.emit('news', line);
+      // var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       /* Split mang data */
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
-      mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
-        var bike_tracking = new tracking({
+        var bike_tracking = new Tracking({
           _id: new mongoClient.Types.ObjectId(),
           id_device: data_filter[0],
           long: data_filter[1],
@@ -61,7 +58,6 @@ net.createServer(function (sock) {
         })
       });
     });
-  });
   sock.on('close', function (data) {
     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
   });
