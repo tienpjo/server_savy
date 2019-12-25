@@ -41,7 +41,7 @@ net.createServer(function (sock) {
   // Add a 'data' event handler to this instance of socket
   io.on('connection', function (socket) {
     sock.on('data', function (data) {
-      // console.log('DATA ' + sock.remoteAddress + ': ' + data);
+      console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       socket.emit('news', line);
       /* Split mang data */
