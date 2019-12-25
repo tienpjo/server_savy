@@ -14,7 +14,6 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-const Tracking = dbs.Tracking;
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

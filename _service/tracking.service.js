@@ -13,15 +13,14 @@ function save_tracking(data_idDevice, data_long, data_lati) {
             lati: data_lati,
             date: Date.now()
         });
-        find_device_id(data_idDevice);
+        bike_tracking.save(function (error) {
+            if (err) throw err;
+            console.log('User Test successfully saved.');
+        })
     });
 }
 function find_device_id(id_device) {
-    Device.findOne({ id_device: id_device }, function (err, user) {
-        if (err) { return false }
-        if (!id_device) {
-            return false;
-        }
+    Device.findOne({ id_device: id_device }, function (err, id_device) {
         if (id_device) {
             bike_tracking.save(function (error) {
                 if (err) throw err;
