@@ -14,8 +14,7 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-
-
+const Tracking = dbs.Tracking;
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -42,13 +41,13 @@ net.createServer(function (sock) {
   // Add a 'data' event handler to this instance of socket
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
-      var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-      socket.emit('news', line);
+      // var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       /* Split mang data */
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
       save_tracking(data_filter[0],data_filter[1],data_filter[2]);
-    });
+      });
+    
   sock.on('close', function (data) {
     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
   });
