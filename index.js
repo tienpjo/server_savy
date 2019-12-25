@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-const listSockets = {}
+var listSockets = [];
 
 net.createServer(function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
