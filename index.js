@@ -49,27 +49,27 @@ net.createServer(function (sock) {
       /* Split mang data */
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
-      mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
-        var bike_tracking = new tracking({
-          _id: new mongoClient.Types.ObjectId(),
-          id_device: data_filter[0],
-          long: data_filter[1],
-          lati: data_filter[2],
-          date: Date.now()
-        });
-        var listSocket = new socket({
-          _id: bike_tracking._id,
-          id_device: data_filter[0],
-          hw_connect: sock
-        });
-        listSocket.save(function (error) {
-          if (error) throw error;
-          console.log(' Save socket successfully saved.');
-        });
-        bike_tracking.save(function (error) {
-          if (err) throw err;
-          console.log('User Test successfully saved.');
-        })
+      // mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
+      //   var bike_tracking = new tracking({
+      //     _id: new mongoClient.Types.ObjectId(),
+      //     id_device: data_filter[0],
+      //     long: data_filter[1],
+      //     lati: data_filter[2],
+      //     date: Date.now()
+      //   });
+      //   var listSocket = new socket({
+      //     _id: bike_tracking._id,
+      //     id_device: data_filter[0],
+      //     hw_connect: sock
+      //   });
+      //   listSocket.save(function (error) {
+      //     if (error) throw error;
+      //     console.log(' Save socket successfully saved.');
+      //   });
+      //   bike_tracking.save(function (error) {
+      //     if (err) throw err;
+      //     console.log('User Test successfully saved.');
+      //   })
         // socket.on('bat-xe-tu-xa', function (data) {
         //   console.log(data);
         //  const socket_hw = Socket_Get.findById(data);
@@ -81,7 +81,7 @@ net.createServer(function (sock) {
 
         // });
       // });
-    });
+    // });
   });
 
   sock.on('close', function () {
