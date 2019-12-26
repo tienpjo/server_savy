@@ -43,6 +43,18 @@ server.listen(port, host, () => {
 server.on('connection',function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
+  sock.on('close', function (data) {
+    console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
+    // const socket_del = Socket_Get.find(sock);
+    // if (socket_del)
+    // {
+    //   Socket_Get.findByIdAndRemove(socket_del._id);
+    // }
+    // var idx = listSockets.indexOf(sock);
+    // if (idx != -1) {
+    //   delete listSockets[idx];
+    // }
+  });
   // listSockets.push(sock);
   // Add a 'data' event handler to this instance of socket
   // io.on('connection', function (socket) {
@@ -88,18 +100,7 @@ server.on('connection',function (sock) {
     // });
   });
 
-  sock.on('end', function (data) {
-    console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
-    // const socket_del = Socket_Get.find(sock);
-    // if (socket_del)
-    // {
-    //   Socket_Get.findByIdAndRemove(socket_del._id);
-    // }
-    // var idx = listSockets.indexOf(sock);
-    // if (idx != -1) {
-    //   delete listSockets[idx];
-    // }
-  });
+
 });
 
 
