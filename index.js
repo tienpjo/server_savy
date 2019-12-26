@@ -51,14 +51,7 @@ server_tcp.on('connection', function (sock) {
     //   Socket_Get.findByIdAndRemove(socket_del._id);
     // }
   });
-  sock.on('timeout', () => {
-    console.log('socket time out');
-    sock.end();
-    const socket_del = Socket_Get.find(sock);
-    if (socket_del) {
-      Socket_Get.findByIdAndRemove(socket_del._id);
-    }
-  });
+
   // listSockets.push(sock);
   // Add a 'data' event handler to this instance of socket
   // io.on('connection', function (socket) {
@@ -90,15 +83,22 @@ server_tcp.on('connection', function (sock) {
         if (err) throw err;
         console.log('User Test successfully saved.');
       })
-    // socket.on('bat-xe-tu-xa', function (data) {
-    //   console.log(data);
-       const socket_hw = Socket_Get.findById(data);
-       socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
-    // });
-    // socket.on('tat-xe-tu-xa', function (data) {
-    //   console.log(data);
-    // });
-    // });
+      sock.setTimeout(5000);
+      // socket.on('bat-xe-tu-xa', function (data) {
+      //   console.log(data);
+      //  const socket_hw = Socket_Get.findById(data);
+      //  socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+      // });
+      // socket.on('tat-xe-tu-xa', function (data) {
+      //   console.log(data);
+      // });
+      // });
+    });
+  });
+  sock.on('timeout', () => {
+    console.log('socket time out');
+    sock.end();
+      Socket_Get.findOneAndRemove(bike_tracking._id);
   });
 });
 
