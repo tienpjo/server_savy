@@ -7,5 +7,6 @@ module.exports = {
     User: require('../models/user.model'),
     Device: require('../models/device.model'),
     Token :require('../models/token.model'),
-    Tracking: require('../models/tracking')
+    Tracking: require('../models/tracking'),
+    Socket: require('../models/socket.model')
 };
