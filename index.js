@@ -35,8 +35,12 @@ app.use(function (req, res, next) {
   next();
 });
 var listSockets = {};
+const server = net.createServer();
+server.listen(port, host, () => {
+    console.log('TCP Server is running on port ' + port + '.');
+});
 
-net.createServer(function (sock) {
+server.on('connection',function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
   // listSockets.push(sock);
@@ -84,7 +88,7 @@ net.createServer(function (sock) {
     // });
   });
 
-  sock.on('close', function () {
+  sock.on('close', function (data) {
     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     // const socket_del = Socket_Get.find(sock);
     // if (socket_del)
@@ -96,7 +100,7 @@ net.createServer(function (sock) {
     //   delete listSockets[idx];
     // }
   });
-}).listen(PORT, HOST);
+});
 
 
 app.get('/', function (req, res) {
