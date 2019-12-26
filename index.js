@@ -35,72 +35,67 @@ app.use(function (req, res, next) {
   next();
 });
 var listSockets = {};
-const server = net.createServer();
-server.listen(port, host, () => {
-    console.log('TCP Server is running on port ' + port + '.');
+const server_tcp = net.createServer();
+server_tcp.listen(PORT, HOST, () => {
+  console.log('TCP Server is running on port ' + PORT + '.');
 });
 
-server.on('connection',function (sock) {
+server_tcp.on('connection', function (sock) {
   // We have a connection - a socket object is assigned to the connection automatically
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
-  sock.on('close', function (data) {
+  sock.on('error', function (data) {
+    console.log('Connection closed');
     console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
-    // const socket_del = Socket_Get.find(sock);
-    // if (socket_del)
-    // {
-    //   Socket_Get.findByIdAndRemove(socket_del._id);
-    // }
-    // var idx = listSockets.indexOf(sock);
-    // if (idx != -1) {
-    //   delete listSockets[idx];
-    // }
+    const socket_del = Socket_Get.find(sock);
+    if (socket_del) {
+      Socket_Get.findByIdAndRemove(socket_del._id);
+    }
   });
+  sock.on('timeout',() =>{
+      console.log('socket time out');
+      sock.end();
+  })
   // listSockets.push(sock);
   // Add a 'data' event handler to this instance of socket
   // io.on('connection', function (socket) {
-    sock.on('data', function (data) {
-      console.log('DATA ' + sock.remoteAddress + ': ' + data);
-      // listSockets[0].write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
-      // var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-      /* Split mang data */
-      var data_raw = data.toString();
-      var data_filter = data_raw.split(',');
-      // mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
-      //   var bike_tracking = new tracking({
-      //     _id: new mongoClient.Types.ObjectId(),
-      //     id_device: data_filter[0],
-      //     long: data_filter[1],
-      //     lati: data_filter[2],
-      //     date: Date.now()
-      //   });
-      //   var listSocket = new socket({
-      //     _id: bike_tracking._id,
-      //     id_device: data_filter[0],
-      //     hw_connect: sock
-      //   });
-      //   listSocket.save(function (error) {
-      //     if (error) throw error;
-      //     console.log(' Save socket successfully saved.');
-      //   });
-      //   bike_tracking.save(function (error) {
-      //     if (err) throw err;
-      //     console.log('User Test successfully saved.');
-      //   })
-        // socket.on('bat-xe-tu-xa', function (data) {
-        //   console.log(data);
-        //  const socket_hw = Socket_Get.findById(data);
-        //  socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
-          
-        // });
-        // socket.on('tat-xe-tu-xa', function (data) {
-        //   console.log(data);
-
-        // });
-      // });
-    // });
+  sock.on('data', function (data) {
+    console.log('DATA ' + sock.remoteAddress + ': ' + data);
+    // listSockets[0].write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+    // var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
+    /* Split mang data */
+    var data_raw = data.toString();
+    var data_filter = data_raw.split(',');
+    mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
+      var bike_tracking = new tracking({
+        _id: new mongoClient.Types.ObjectId(),
+        id_device: data_filter[0],
+        long: data_filter[1],
+        lati: data_filter[2],
+        date: Date.now()
+      });
+      var listSocket = new socket({
+        _id: bike_tracking._id,
+        id_device: data_filter[0],
+        hw_connect: sock
+      });
+      listSocket.save(function (error) {
+        if (error) throw error;
+        console.log(' Save socket successfully saved.');
+      });
+      bike_tracking.save(function (error) {
+        if (err) throw err;
+        console.log('User Test successfully saved.');
+      })
+      socket.on('bat-xe-tu-xa', function (data) {
+        console.log(data);
+        const socket_hw = Socket_Get.findById(data);
+        socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+      });
+      socket.on('tat-xe-tu-xa', function (data) {
+        console.log(data);
+      });
+    });
   });
-
-
 });
 
 
