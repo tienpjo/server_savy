@@ -41,6 +41,7 @@ server_tcp.listen(PORT, HOST, () => {
 });
 
 server_tcp.on('connection', function (sock) {
+  var id_socket;
   // We have a connection - a socket object is assigned to the connection automatically
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
   sock.on('end', function (data) {
@@ -75,6 +76,7 @@ server_tcp.on('connection', function (sock) {
         id_device: data_filter[0],
         hw_connect: sock
       });
+      id_socket = listSockets._id;
       listSocket.save(function (error) {
         if (error) throw error;
         console.log(' Save socket successfully saved.');
@@ -98,7 +100,7 @@ server_tcp.on('connection', function (sock) {
   sock.on('timeout', () => {
     console.log('socket time out');
     sock.end();
-      Socket_Get.findOneAndRemove(bike_tracking._id);
+      Socket_Get.findByIdAndDelete(id_socket);
   });
 });
 
