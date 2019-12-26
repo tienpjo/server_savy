@@ -41,7 +41,7 @@ net.createServer(function (sock) {
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
   // listSockets.push(sock);
   // Add a 'data' event handler to this instance of socket
-  io.on('connection', function (socket) {
+  // io.on('connection', function (socket) {
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
       // listSockets[0].write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
@@ -70,27 +70,27 @@ net.createServer(function (sock) {
           if (err) throw err;
           console.log('User Test successfully saved.');
         })
-        socket.on('bat-xe-tu-xa', function (data) {
-          console.log(data);
-         const socket_hw = Socket_Get.findById(data);
-         socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+        // socket.on('bat-xe-tu-xa', function (data) {
+        //   console.log(data);
+        //  const socket_hw = Socket_Get.findById(data);
+        //  socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
           
-        });
-        socket.on('tat-xe-tu-xa', function (data) {
-          console.log(data);
+        // });
+        // socket.on('tat-xe-tu-xa', function (data) {
+        //   console.log(data);
 
-        });
-      });
+        // });
+      // });
     });
   });
 
-  sock.on('close', function (data) {
+  sock.on('close', function () {
     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
-    const socket_del = Socket_Get.find(sock);
-    if (socket_del)
-    {
-      Socket_Get.findByIdAndRemove(socket_del._id);
-    }
+    // const socket_del = Socket_Get.find(sock);
+    // if (socket_del)
+    // {
+    //   Socket_Get.findByIdAndRemove(socket_del._id);
+    // }
     // var idx = listSockets.indexOf(sock);
     // if (idx != -1) {
     //   delete listSockets[idx];
