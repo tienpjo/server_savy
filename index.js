@@ -88,8 +88,8 @@ server.on('connection',function (sock) {
     // });
   });
 
-  sock.on('close', function (data) {
-    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+  sock.on('end', function (data) {
+    console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
     // const socket_del = Socket_Get.find(sock);
     // if (socket_del)
     // {
