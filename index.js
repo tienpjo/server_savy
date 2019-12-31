@@ -72,7 +72,7 @@ server_tcp.on('connection', function (sock) {
         date: Date.now()
       });
       var listSocket = new socket({
-        _id: bike_tracking._id,
+        _id: bike_trackbing._id,
         id_device: data_filter[0],
         hw_connect: sock
       });
@@ -87,8 +87,9 @@ server_tcp.on('connection', function (sock) {
       })
       sock.setTimeout(5000);
       // socket.on('bat-xe-tu-xa', function (data) {
-      //   console.log(data);
-      //  const socket_hw = Socket_Get.findById(data);
+        console.log(data);
+        const socket_hw = Socket_Get.find({"hw_connect":data});
+        console.log(socket_hw);
       //  socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
       // });
       // socket.on('tat-xe-tu-xa', function (data) {
@@ -100,7 +101,7 @@ server_tcp.on('connection', function (sock) {
   sock.on('timeout', () => {
     console.log('socket time out');
     sock.end();
-      Socket_Get.findByIdAndDelete(id_socket);
+    ///  Socket_Get.findByIdAndRemove(id_socket);
   });
 });
 

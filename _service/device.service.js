@@ -13,6 +13,7 @@ module.exports = {
     addDevice,
     delete_device
 }
+
 async function addDevice(uuid , deviceParam) {
     if (await Device.findOne({ id_device: deviceParam.id_device })) {
         throw 'Device "' + deviceParam.id_device + '" is already taken';
