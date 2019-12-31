@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const apiUser = require("../controller/UserController");
-
+const userService = require('../_service/user.service');
+const trackingService = require('../_service/tracking.service');
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const apiDevice = require("../routes/device");
 let initAPIs = (app) => {
@@ -10,7 +11,7 @@ let initAPIs = (app) => {
     router.use(AuthMiddleWare.isAuth);
     router.post('/add',add);
     router.post('/delete_device',delete_device);
-
+    router.post('/find_tracking',find_tracking);
     // router.get('/', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
@@ -21,6 +22,7 @@ let initAPIs = (app) => {
 }
 
 module.exports = initAPIs;
+
     /* DEVICE */
 function add (req, res, next) {
     console.log(req.jwtDecoded.sub._id);
@@ -35,7 +37,13 @@ function delete_device(req,res,next){
     .catch(err => next(err));
 }
 
+
 /* BIKE TRACKING */
+function find_tracking(req,res,next) {
+    trackingService.find_device_tracking(req.jwtDecoded.sub._id,req.body)
+        .then(()=>res.json({}))
+        .catch(err => next(err));
+}
 
 
     /* END DEVICE */

@@ -84,8 +84,8 @@ server_tcp.on('connection', function (sock) {
       sock.setTimeout(5000);
       // socket.on('bat-xe-tu-xa', function (data) {
       console.log(data);
-      const socket_hw = Socket_Get.find({ "hw_connect": data });
-      console.log(socket_hw);
+      //const socket_hw = Socket_Get.find({ "hw_connect": data });
+      //console.log(socket_hw);
       //  socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
       // });
       // socket.on('tat-xe-tu-xa', function (data) {
@@ -98,7 +98,7 @@ server_tcp.on('connection', function (sock) {
     console.log('socket time out');
     console.log('Connection closed');
     console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
-    const socket_del = Socket_Get.find({"hw_connect":sock});
+    const socket_del = Socket_Get.find({"hw_connect._server._connectionKey":sock.remoteAddress});
     console.log(socket_del);
     if (socket_del) {
       Socket_Get.findByIdAndRemove(socket_del._id);
