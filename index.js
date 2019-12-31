@@ -44,14 +44,10 @@ server_tcp.on('connection', function (sock) {
   var id_socket;
   // We have a connection - a socket object is assigned to the connection automatically
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
-  sock.on('end', function (data) {
-    console.log('Connection closed');
-    console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
-    // const socket_del = Socket_Get.find(sock);
-    // if (socket_del) {
-    //   Socket_Get.findByIdAndRemove(socket_del._id);
-    // }
-  });
+  // sock.on('end', function (data) {
+
+  //   }
+  // });
 
   // listSockets.push(sock);
   // Add a 'data' event handler to this instance of socket
@@ -72,7 +68,7 @@ server_tcp.on('connection', function (sock) {
         date: Date.now()
       });
       var listSocket = new socket({
-        _id: bike_trackbing._id,
+        _id: bike_tracking._id,
         id_device: data_filter[0],
         hw_connect: sock
       });
@@ -87,9 +83,9 @@ server_tcp.on('connection', function (sock) {
       })
       sock.setTimeout(5000);
       // socket.on('bat-xe-tu-xa', function (data) {
-        console.log(data);
-        const socket_hw = Socket_Get.find({"hw_connect":data});
-        console.log(socket_hw);
+      console.log(data);
+      const socket_hw = Socket_Get.find({ "hw_connect": data });
+      console.log(socket_hw);
       //  socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
       // });
       // socket.on('tat-xe-tu-xa', function (data) {
@@ -100,7 +96,14 @@ server_tcp.on('connection', function (sock) {
   });
   sock.on('timeout', () => {
     console.log('socket time out');
-    sock.end();
+    console.log('Connection closed');
+    console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
+    const socket_del = Socket_Get.find({"hw_connect":sock});
+    console.log(socket_del);
+    if (socket_del) {
+      Socket_Get.findByIdAndRemove(socket_del._id);
+      sock.end();
+    }
     ///  Socket_Get.findByIdAndRemove(id_socket);
   });
 });
