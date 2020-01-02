@@ -11,7 +11,8 @@ var rand = require("generate-key");
 
 module.exports = {
     addDevice,
-    delete_device
+    delete_device,
+    find_tracking_device
 }
 
 async function addDevice(uuid , deviceParam) {
@@ -27,4 +28,14 @@ async function addDevice(uuid , deviceParam) {
 
 async function delete_device(id) {
     await User.findByIdAndRemove(id);
+}
+
+async function find_tracking_device(id_owner,device) {
+    if (!(await Device.findOne({ id_owner: id_owner }))) {
+        throw 'Owner "' + id_owner + '" not found';
+    }
+    if (!(await Device.findOne({ id_device: device }))) {
+        throw 'Device "' + device + '" not found';
+    }
+    return await Tracking.findOne();
 }
