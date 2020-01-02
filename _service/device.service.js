@@ -7,6 +7,7 @@ const authMiddleware = require('../middleware/AuthMiddleware')
 const Device = dbs.Device;
 const User = dbs.User;
 const Token = dbs.Token;
+const Tracking = dbs.Tracking;
 var rand = require("generate-key");
 
 module.exports = {
@@ -37,5 +38,5 @@ async function find_tracking_device(device) {
     // if (!(await Device.findOne({ id_device: device }))) {
     //     throw 'Device "' + device + '" not found';
     // }
-     Tracking.find({id_device:device});
+    return await Tracking.findOne({device});
 }
