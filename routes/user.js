@@ -8,47 +8,59 @@ const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const apiDevice = require("../routes/device");
 
 let initAPIs = (app) => {
-    router.post('/login',login);
-    router.post('/register',register);
+    router.post('/login', login);
+    router.post('/register', register);
     router.use(AuthMiddleWare.isAuth);
-    router.post('/add',add);
-    router.post('/delete_device',delete_device);
-    router.get('/find_tracking',find_tracking);
+    router.post('/add', add);
+    router.post('/delete_device', delete_device);
+    router.get('/tracking', (req, res) => {
+        deviceService.find_tracking_device(req.body)
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
+            });
+    });
     // router.get('/', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
     // router.get('/:id', update);
     // router.delete('/:id', _delete);
-    router.post('/logout',logout);
+    router.post('/logout', logout);
     return app.use("/users", router);
 }
 
 module.exports = initAPIs;
 
-    /* DEVICE */
-function add (req, res, next) {
+/* DEVICE */
+function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
-    deviceService.addDevice(req.jwtDecoded.sub._id,req.body)
+    deviceService.addDevice(req.jwtDecoded.sub._id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
-  };
+};
 
-function delete_device(req,res,next){
+function delete_device(req, res, next) {
     deviceService.delete_device(req.params.id)
-    .then(() => res.json({}))
-    .catch(err => next(err));
+        .then(() => res.json({}))
+        .catch(err => next(err));
 }
 
 /* BIKE TRACKING */
-function find_tracking(req,res,next) {
-        deviceService.find_tracking_device(req.jwtDecoded.sub._id,req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+function find_tracking(req, res) {
+    deviceService.find_tracking_device(req.body)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            res.status(404).json({ success: false, msg: `No such user.` });
+        });
 }
 
-    /* END DEVICE */
+/* END DEVICE */
 function login(req, res, next) {
-         userService.authenticate(req.body)
+    userService.authenticate(req.body)
         .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))
         .catch(err => next(err));
 }
@@ -89,6 +101,6 @@ function _delete(req, res, next) {
         .catch(err => next(err));
 }
 
-function logout (req,res,) {
+function logout(req, res, ) {
     res.status(200).send({ auth: false, token: null });
 }

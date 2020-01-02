@@ -30,12 +30,12 @@ async function delete_device(id) {
     await User.findByIdAndRemove(id);
 }
 
-async function find_tracking_device(id_owner,device) {
-    if (!(await Device.findOne({ id_owner: id_owner }))) {
-        throw 'Owner "' + id_owner + '" not found';
-    }
-    if (!(await Device.findOne({ id_device: device }))) {
-        throw 'Device "' + device + '" not found';
-    }
-    return await Tracking.findOne();
+async function find_tracking_device(device) {
+    // if (!(await Device.findOne({ id_owner: id_owner }))) {
+    //     throw 'Owner "' + id_owner + '" not found';
+    // }
+    // if (!(await Device.findOne({ id_device: device }))) {
+    //     throw 'Device "' + device + '" not found';
+    // }
+     Tracking.find({id_device:device});
 }
