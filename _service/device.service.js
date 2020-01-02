@@ -38,5 +38,5 @@ async function find_tracking_device(device) {
     // if (!(await Device.findOne({ id_device: device }))) {
     //     throw 'Device "' + device + '" not found';
     // }
-    return await Tracking.findOne({device});
+    return await Tracking.find({"id_device":device});
 }
