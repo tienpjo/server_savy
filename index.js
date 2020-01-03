@@ -37,11 +37,8 @@ server_tcp.on('connection', function (sock) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
-      let client_socket = ({
-        id_device: data_filter[0],
-        hw_connect: sock
-      });
-      mapSockets[data_filter[0]].push(sock);
+      var id = parseInt(data_filter[0],10);      
+      mapSockets[id] = sock;
       // Add a 'close' event handler to this instance of socket
       sock.on('close', function (data) {
         console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
