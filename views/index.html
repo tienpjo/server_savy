@@ -43,7 +43,8 @@
 </head>
 
 <body>
-  <button onclick="buttonClicked()">Event</button>
+  <button onclick="buttonClicked()">TURN ON</button>
+  <button onclick="buttonOffClicked()">TURN ONF</button>
   <script>
     var socket = io.connect('http://103.137.185.94:3000');
     var count = 0;
@@ -63,7 +64,10 @@
       //  $('#content').append('' + data + '</li>')
     });
     function buttonClicked() {
-      socket.emit('bat-xe-tu-xa', { hello: 'world' });
+      socket.emit('bat-xe-tu-xa',1512199512);
+    }
+    function buttonOffClicked() {
+      socket.emit('tat-xe-tu-xa',1512199512);
     }
   </script>
 </body>

@@ -23,17 +23,17 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cors());
-app.use(jwt());
+//app.use(jwt());
 
 // initAPIs(app);
 // app.use(errHandler);
 server.listen(3000);
-
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
 let mapSockets = {};
 const server_tcp = net.createServer();
 server_tcp.listen(PORT, HOST, () => {
@@ -41,63 +41,27 @@ server_tcp.listen(PORT, HOST, () => {
 });
 
 server_tcp.on('connection', function (sock) {
-  // listSockets.push(sock);
-  // Add a 'data' event handler to this instance of socket
   io.on('connection', function (socket) {
-
     socket.on('bat-xe-tu-xa', function (data) {
       console.log(data);
-      mapSockets[data].write('From server with love :' + sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+      mapSockets[data].write('MOTO_ON');
     });
-
+    socket.on('tat-xe-tu-xa', function (data) {
+      console.log(data);
+      mapSockets[data].write('MOTO_OFF');
+    });
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
-      var id_device_gps = parseInt(data_filter[0],10);
+      var id_device_gps = parseInt(data_filter[0], 10);
       mapSockets[id_device_gps] = client_socket;
-      // mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
-      //   var bike_tracking = new tracking({
-      //     _id: new mongoClient.Types.ObjectId(),
-      //     id_device: data_filter[0],
-      //     long: data_filter[1],
-      //     lati: data_filter[2],
-      //     date: Date.now()
-      //   });
-      //   var listSocket = new socket({
-      //     _id: bike_tracking._id,
-      //     id_device: data_filter[0],
-      //     hw_connect: sock
-      //   });
-      //   id_socket = listSockets._id;
-      //   listSocket.save(function (error) {
-      //     if (error) throw error;
-      //     console.log(' Save socket successfully saved.');
-      //   });
-      //   // listSockets.id = bike_tracking._id;
-      //   // listSockets.
-      //   bike_tracking.save(function (error) {
-      //     if (err) throw err;
-      //     console.log('User Test successfully saved.');
-      //   })
-      //   sock.setTimeout(5000);
-      //   socket.on('bat-xe-tu-xa', function (data) {
-      //     // console.log(data);
-      //     const socket_hw = Socket_Get.find({ "hw_connect": data });
-      // console.log(socket_hw);
-      // socket_hw.hw_connect.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
-      // });
-      // socket.on('tat-xe-tu-xa', function (data) {
-      //   console.log(data);
-      // });
-      // });
     });
   });
   sock.on('timeout', () => {
     console.log('socket time out');
     console.log('Connection closed');
     console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
-    const socket_del = Socket_Get.find({ hw_connect: [sock] });
     console.log(socket_del);
     if (socket_del) {
       Socket_Get.findByIdAndRemove(socket_del._id);
