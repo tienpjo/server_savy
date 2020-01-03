@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use(jwt());
 
-initAPIs(app);
+//initAPIs(app);
 app.use(errHandler);
 server.listen(3000);
 
