@@ -25,8 +25,8 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use(jwt());
 
-initAPIs(app);
-app.use(errHandler);
+// initAPIs(app);
+// app.use(errHandler);
 server.listen(3000);
 
 app.use(function (req, res, next) {
@@ -47,20 +47,15 @@ server_tcp.on('connection', function (sock) {
 
     socket.on('bat-xe-tu-xa', function (data) {
       console.log(data);
-      const socket_hw = mapSockets[data];
-      socket_hw.sock.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+      mapSockets[data].write('From server with love :' + sock.remoteAddress + ':' + sock.remotePort + ':' + data);
     });
 
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
-      let client_socket = ({
-        id_device: data_filter[0],
-        hw_connect: sock
-      });
-
-      mapSockets[client_socket.id_device] = client_socket;
+      var id_device_gps = parseInt(data_filter[0],10);
+      mapSockets[id_device_gps] = client_socket;
       // mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
       //   var bike_tracking = new tracking({
       //     _id: new mongoClient.Types.ObjectId(),
