@@ -11,31 +11,35 @@ app.options('*', cors());
 app.use(cors());
 server.listen(3000);
 
-app.use(function(req, res, next) {
-        // Website you wish to allow to connect
-          res.header("Access-Control-Allow-Origin", "*");
-          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-          next();
-  });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+let mapSockets = {};
 
-net.createServer(function(sock) {
-  // We have a connection - a socket object is assigned to the connection automatically
- console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
-  // Add a 'data' event handler to this instance of socket
+net.createServer(function (sock) {
   io.on('connection', function (socket) {
-  sock.on('data', function(data) {
-    console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    var line = 'GPS_SAVY' + '---->' +  new Date().toISOString() + '---->'+ sock.remoteAddress.toString() + ' ---->' + data.toString();
-      socket.emit('news', line);
-      socket.on('my other event', function (data) {
-        console.log(data);
+    socket.on('bat-xe-tu-xa', function (data) {
+      console.log(data);
+      const socket_hw = mapSockets[data];
+      socket_hw.sock.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+    });
+    sock.on('data', function (data) {
+      console.log('DATA ' + sock.remoteAddress + ': ' + data);
+      var data_raw = data.toString();
+      var data_filter = data_raw.split(',');
+      let client_socket = ({
+        id_device: data_filter[0],
+        hw_connect: sock
       });
+      mapSockets[client_socket.id_device] = client_socket;
     });
   });
   // Add a 'close' event handler to this instance of socket
- sock.on('close', function(data) {
-   console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
- });
+  sock.on('close', function (data) {
+    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+  });
 }).listen(PORT, HOST);
 
 app.get('/', function (req, res) {
@@ -48,25 +52,25 @@ app.get('/', function (req, res) {
 
 //         // Request methods you wish to allow
 //         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    
+
 //         // Request headers you wish to allow
 //         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    
+
 //         // Set to true if you need the website to include cookies in the requests sent
 //         // to the API (e.g. in case you use sessions)
 //         res.setHeader('Access-Control-Allow-Credentials', true);
-    
+
 //         // Pass to next layer of middleware
 //         next();
 //   });
-  
+
   // var netServer = net.createServer(function(c) {
   //   console.log('client connected');
-  
+
   //   c.on('end', function() {
   //     console.log('client disconnected');
   //   });
-  
+
   //   c.write('hello\r\n');
   //   c.pipe(c);
   // });
@@ -104,7 +108,7 @@ app.get('/', function (req, res) {
 //    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
 
 //  });
-  
+
 // }).listen(PORT, HOST);
 
 //console.log('Server listening on ' + HOST +':'+ PORT);
