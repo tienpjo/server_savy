@@ -30,6 +30,9 @@ net.createServer(function (sock) {
         console.log(data);
       });
     });
+    sock.on('bat-xe-tu-xa',function (data) {
+      console.log(data);
+    }
   });
   // Add a 'close' event handler to this instance of socket
   sock.on('close', function (data) {
