@@ -17,29 +17,56 @@ app.use(function (req, res, next) {
   next();
 });
 let mapSockets = {};
+const server_tcp = net.createServer();
 
-net.createServer(function (sock) {
+server_tcp.listen(PORT, HOST, () => {
+  console.log('TCP Server is running on port ' + PORT + '.');
+});
+
+server_tcp.on('connection', function (sock) {
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
   // Add a 'data' event handler to this instance of socket
   io.on('connection', function (socket) {
+
+    socket.on('bat-xe-tu-xa', function (data) {
+      console.log(data);
+      const socket_hw = mapSockets[data];
+      socket_hw.sock.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+    });
+
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
-      var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-      socket.emit('news', line);
-      socket.on('my other event', function (data) {
-        console.log(data);
+      var data_raw = data.toString();
+      var data_filter = data_raw.split(',');
+      let client_socket = ({
+        id_device: data_filter[0],
+        hw_connect: sock
+      });
+      mapSockets[client_socket.id_device] = client_socket;
+      // Add a 'close' event handler to this instance of socket
+      sock.on('close', function (data) {
+        console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
       });
     });
-    sock.on('bat-xe-tu-xa',function (data) {
-      console.log(data);
+  });
+  sock.on('timeout', () => {
+    console.log('socket time out');
+    console.log('Connection closed');
+    console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
+    const socket_del = Socket_Get.find({ hw_connect: [sock] });
+    console.log(socket_del);
+    if (socket_del) {
+      Socket_Get.findByIdAndRemove(socket_del._id);
+      sock.end();
     }
   });
-  // Add a 'close' event handler to this instance of socket
-  sock.on('close', function (data) {
-    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+  sock.on('end', () => {
+    var idx = mapSockets.indexOf(sock);
+    if (idx != -1) {
+      delete sockets[idx];
+    }
   });
-}).listen(PORT, HOST);
-
+});
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
