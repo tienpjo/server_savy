@@ -30,8 +30,7 @@ server_tcp.on('connection', function (sock) {
 
     socket.on('bat-xe-tu-xa', function (data) {
       console.log(data);
-      const socket_hw = mapSockets[data];
-      socket_hw.sock.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
+      mapSockets[data].write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
     });
 
     sock.on('data', function (data) {
@@ -42,7 +41,7 @@ server_tcp.on('connection', function (sock) {
         id_device: data_filter[0],
         hw_connect: sock
       });
-      mapSockets[client_socket.id_device] = client_socket;
+      mapSockets[data_filter[0]].push(sock);
       // Add a 'close' event handler to this instance of socket
       sock.on('close', function (data) {
         console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
