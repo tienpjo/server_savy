@@ -19,21 +19,16 @@ app.use(function (req, res, next) {
 let mapSockets = {};
 
 net.createServer(function (sock) {
+  console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
+  // Add a 'data' event handler to this instance of socket
   io.on('connection', function (socket) {
-    socket.on('bat-xe-tu-xa', function (data) {
-      console.log(data);
-      const socket_hw = mapSockets[data];
-      socket_hw.sock.write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
-    });
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
-      var data_raw = data.toString();
-      var data_filter = data_raw.split(',');
-      let client_socket = ({
-        id_device: data_filter[0],
-        hw_connect: sock
+      var line = 'GPS_SAVY' + '---->' + new Date().toISOString() + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
+      socket.emit('news', line);
+      socket.on('my other event', function (data) {
+        console.log(data);
       });
-      mapSockets[client_socket.id_device] = client_socket;
     });
   });
   // Add a 'close' event handler to this instance of socket
