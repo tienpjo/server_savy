@@ -24,6 +24,7 @@ let initAPIs = (app) => {
                 res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
             });
     });
+    router.get('/find_device',find_device);
     // router.get('/', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
@@ -47,6 +48,16 @@ function delete_device(req, res, next) {
     deviceService.delete_device(req.params.id)
         .then(() => res.json({}))
         .catch(err => next(err));
+}
+
+function find_device(req, res, next) {
+    deviceService.find_device(req.jwtDecoded.sub._id)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
+        });
 }
 
 /* BIKE TRACKING */
