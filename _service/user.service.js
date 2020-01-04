@@ -6,7 +6,7 @@ const User = dbs.User;
 const Token = dbs.Token;
 // Thời gian sống của token
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || "1h";
-
+const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE || "3650d";
 module.exports = {
   authenticate,
   getAll,
@@ -34,24 +34,32 @@ async function authenticate({ mobile, password }) {
         algorithm: "HS256",
         expiresIn: accessTokenLife,
       });
-    const id_own = userData._id;
-    const id_token = await Token.findOne({id_own});
-    if (!id_token) {
-      var token_collect = new Token({
-        id_own: userData._id,
-        token: token,
-      });
-      token_collect.save();
-    }
-    if (id_token)
-    {
-      id_token.token = token;
-      // Object.assign(id_token, token);
-      await id_token.save();
-    }
+      const refreshToken = jwt.sign(
+          { sub: userData },
+          config.secret,
+          {
+            algorithm: "HS256",
+            expiresIn: refreshTokenLife,
+          });
+    // const id_own = userData._id;
+    // const id_token = await Token.findOne({id_own});
+    // if (!id_token) {
+    //   var token_collect = new Token({
+    //     id_own: userData._id,
+    //     token: token,
+    //   });
+    //   token_collect.save();
+    // }
+    // if (id_token)
+    // {
+    //   id_token.token = token;
+    //   // Object.assign(id_token, token);
+    //   await id_token.save();
+    // }
     return {
       // ...userWithoutHash,
       token,
+      refreshToken,
     };
   }
 }

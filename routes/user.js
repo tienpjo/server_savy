@@ -8,8 +8,9 @@ const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const apiDevice = require("../routes/device");
 
 let initAPIs = (app) => {
-    router.post('/login', login);
     router.post('/register', register);
+    router.post('/login', login);
+    router.post('/refresh-token',userService.refreshToken)
     router.use(AuthMiddleWare.isAuth);
     router.post('/add', add);
     router.post('/delete_device', delete_device);

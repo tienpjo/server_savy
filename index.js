@@ -87,7 +87,7 @@ server_tcp.on('connection', function (sock) {
       }
     });
   });
-
-  app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/views/index.html');
-  });
+});
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/views/index.html');
+});
