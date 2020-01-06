@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 const unique = require('mongoose-unique-validator');
 
 const TrackingSchema = new mongoose.Schema({
-    deviceId: [{type: Number,required:true}],
+    deviceId: [{type: Int32Array,required:true}],
     long: {type: String,required:true},
     lati: {type: String, required:true},
     bat: {type:String},
