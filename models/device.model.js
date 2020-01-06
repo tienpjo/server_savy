@@ -2,12 +2,14 @@ var mongoose = require('mongoose');
 const unique = require('mongoose-unique-validator');
 
 const DeviceSchema = new mongoose.Schema({
-    deviceId: { type: Number, required: true },
+    deviceId: [[{ type: Number, required: true }]],
     ownerId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    smartKey: { type: String },
-    mobileSim: { type: String, required: true },
+    smartKey: [[{ type: String }]],
+    mobileSim: {type: String, required: true },
     bikeName: { type: String, required: true },
-    pairKey: { type: Number, required: true }
+    deviceType: [[{type:Number,required:true}]],
+    pairKey: [[{ type: Number, required: true }]]
+
 },
     {
         collection: 'device_dbs'
