@@ -16,7 +16,7 @@ module.exports = {
     find_device
 }
 
-async function addDevice(uuid , deviceParam,pairKey) {
+async function addDevice(uuid ,deviceParam,pairKey) {
     if (await Device.findOne({ deviceId: deviceParam.deviceId })) {
         throw 'Device "' + deviceParam.deviceId + '" is already';
     }
