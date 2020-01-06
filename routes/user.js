@@ -43,7 +43,7 @@ function add(req, res, next) {
     
     deviceService.addDevice(req.jwtDecoded.sub._id, req.body, pairKey)
         .then(() => {
-            res.json(Array.from(pairKey.toString(2)).map(Number));
+            res.json(pairKey.match(str.length  % 2 ? /^\d|\d{2}/g : /\d{2}/g).map(Number).reverse());
         })
         .catch(err => next(err));
 };
