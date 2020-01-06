@@ -15,9 +15,9 @@ let initAPIs = (app) => {
     router.post('/add', add);
     router.post('/delete_device', delete_device);
     router.get('/tracking', (req, res) => {
-        console.log(req.body.id_device);
+        console.log(req.body.deviceId);
         console.log(req.body);
-        deviceService.find_tracking_device(req.body.id_device)
+        deviceService.find_tracking_device(req.body.deviceId)
             .then((result) => {
                 res.json(result);
             })

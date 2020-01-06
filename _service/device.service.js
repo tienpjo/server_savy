@@ -18,13 +18,13 @@ module.exports = {
 }
 
 async function addDevice(uuid , deviceParam) {
-    if (await Device.findOne({ id_device: deviceParam.id_device })) {
-        throw 'Device "' + deviceParam.id_device + '" is already taken';
+    if (await Device.findOne({ deviceId: deviceParam.deviceId })) {
+        throw 'Device "' + deviceParam.deviceId + '" is already taken';
     }
     // console.log(req.jwtDecoded);
     const device = new Device(deviceParam);
-    device.id_owner = uuid;
-    device.smk = rand.generateKey(9);
+    device.ownerId = uuid;
+    device.smartKey = rand.generateKey(9);
     await device.save();
 }
 
@@ -33,15 +33,9 @@ async function delete_device(id) {
 }
 
 async function find_device(uuid){
-    await Device.find({"id_owner":uuid});
+    await Device.find({"ownerId":uuid});
 }
 
 async function find_tracking_device(device) {
-    // if (!(await Device.findOne({ id_owner: id_owner }))) {
-    //     throw 'Owner "' + id_owner + '" not found';
-    // }
-    // if (!(await Device.findOne({ id_device: device }))) {
-    //     throw 'Device "' + device + '" not found';
-    // }
-    return await Tracking.find({"id_device":device});
+    return await Tracking.find({"deviceId":device});
 }

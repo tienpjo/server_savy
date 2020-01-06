@@ -32,34 +32,10 @@ async function authenticate({ mobile, password }) {
       config.secret,
       {
         algorithm: "HS256",
-        expiresIn: accessTokenLife,
+        expiresIn: refreshTokenLife,
       });
-      const refreshToken = jwt.sign(
-          { sub: userData },
-          config.secret,
-          {
-            algorithm: "HS256",
-            expiresIn: refreshTokenLife,
-          });
-    // const id_own = userData._id;
-    // const id_token = await Token.findOne({id_own});
-    // if (!id_token) {
-    //   var token_collect = new Token({
-    //     id_own: userData._id,
-    //     token: token,
-    //   });
-    //   token_collect.save();
-    // }
-    // if (id_token)
-    // {
-    //   id_token.token = token;
-    //   // Object.assign(id_token, token);
-    //   await id_token.save();
-    // }
     return {
-      // ...userWithoutHash,
       token,
-      refreshToken,
     };
   }
 }
@@ -73,8 +49,8 @@ async function getById(id) {
 }
 
 async function create(userParam) {
-  if (await User.findOne({ username: userParam.username })) {
-    throw 'Username "' + userParam.username + '" is already taken';
+  if (await User.findOne({ mobile: userParam.mobile })) {
+    throw 'Mobile "' + userParam.mobile + '" is already taken';
   }
 
   const user = new User(userParam);

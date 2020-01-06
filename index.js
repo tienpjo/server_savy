@@ -60,7 +60,7 @@ server_tcp.on('connection', function (sock) {
       mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
         var bike_tracking = new tracking({
           _id: new mongoClient.Types.ObjectId(),
-          id_device: data_filter[0],
+          deviceId: data_filter[0],
           long: data_filter[1],
           lati: data_filter[2],
           date: Date.now()
