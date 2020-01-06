@@ -17,7 +17,7 @@ module.exports = {
 }
 
 async function addDevice(uuid ,deviceParam,pairKey) {
-    if (await Device.findOne({ deviceId: deviceParam.deviceId })) {
+    if (await Device.findOne({ deviceId: [deviceParam.deviceId] })) {
         throw 'Device "' + deviceParam.deviceId + '" is already';
     }
     // console.log(req.jwtDecoded);
