@@ -6,9 +6,9 @@ const deviceService = require('../_service/device.service')
 const trackService = require("../_service/tracking.service");
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const apiDevice = require("../routes/device");
-
+const rand = require("random-int");
 let initAPIs = (app) => {
-    router.post('/register', register);
+    router.post('/register',AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, register);
     router.post('/login', login);
     router.use(AuthMiddleWare.isAuth);
     router.post('/add', add);
@@ -45,7 +45,6 @@ function add(req, res, next) {
             res.json({"pairKey":pairKey});
         })
         .catch(err => next(err));
-    //console.log(deviceService.pairKey);
 };
 
 function delete_device(req, res, next) {

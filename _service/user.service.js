@@ -5,7 +5,7 @@ const dbs = require('../_helpers/database');
 const User = dbs.User;
 const Token = dbs.Token;
 // Thời gian sống của token
-const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || "1h";
+
 const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE || "3650d";
 module.exports = {
   authenticate,
@@ -52,15 +52,10 @@ async function create(userParam) {
   if (await User.findOne({ mobile: userParam.mobile })) {
     throw 'Mobile "' + userParam.mobile + '" is already taken';
   }
-
   const user = new User(userParam);
-
-  //hash PassWord
-
   if (userParam.password) {
     user.hash = bcrypt.hashSync(userParam.password, 10);
   }
-
   await user.save();
 }
 

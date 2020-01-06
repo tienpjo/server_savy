@@ -8,7 +8,6 @@ const Device = dbs.Device;
 const User = dbs.User;
 const Token = dbs.Token;
 const Tracking = dbs.Tracking;
-var rand = require("generate-key");
 
 module.exports = {
     addDevice,
@@ -33,7 +32,7 @@ async function delete_device(id) {
 }
 
 async function find_device(uuid){
-    await Device.find({"ownerId":uuid});
+   return await Device.find({"ownerId":uuid}).select('-ownerId','-_id','-mobileSim');
 }
 
 async function find_tracking_device(device) {
