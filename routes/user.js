@@ -7,8 +7,10 @@ const trackService = require("../_service/tracking.service");
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const apiDevice = require("../routes/device");
 const rand = require("random-int");
+const { check, validationResult } = require('express-validator');
+
 let initAPIs = (app) => {
-    router.post('/register',AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, register);
+    router.post('/register', register);
     router.post('/login', login);
     router.use(AuthMiddleWare.isAuth);
     router.post('/add', add);
@@ -40,9 +42,9 @@ module.exports = initAPIs;
 function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
     var pairKey = rand.generateKey(9);
-    deviceService.addDevice(req.jwtDecoded.sub._id, req.body,pairKey)
+    deviceService.addDevice(req.jwtDecoded.sub._id, req.body, pairKey)
         .then(() => {
-            res.json({"pairKey":pairKey});
+            res.json({ "pairKey": pairKey });
         })
         .catch(err => next(err));
 };
@@ -82,6 +84,13 @@ function login(req, res, next) {
 }
 
 function register(req, res, next) {
+    [check('mobile').isMobilePhone(),
+    // password must be at least 8 chars long
+    check('password').isLength({ min: 8 })]
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
     userService.create(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));

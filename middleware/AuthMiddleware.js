@@ -2,7 +2,7 @@ const jwtHelper = require("../_helpers/jwt");
 const userService = require('../_service/user.service');
 const config = require('../config.json');
 const debug = console.log.bind(console);
-const { body, validationResult } = require('express-validator');
+
 
 // Mã secretKey này phải được bảo mật tuyệt đối, các bạn có thể lưu vào biến môi trường hoặc file
 
@@ -41,31 +41,6 @@ let isAuth = async (req, res, next) => {
   }
 }
 
-const userValidationRules = () => {
-  return [
-    // username must be an email
-    body('mobile').isMobilePhone(),
-    // password must be at least 5 chars long
-    body('password').isLength({ min: 8 }),
-  ]
-}
-
-const validate = (req, res, next) => {
-  const errors = validationResult(req)
-  if (errors.isEmpty()) {
-    return next()
-  }
-  const extractedErrors = []
-  errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }))
-
-  return res.status(422).json({
-    errors: extractedErrors,
-  })
-}
-
-
 module.exports = {
   isAuth: isAuth,
-  userValidationRules,
-  validate
 };
