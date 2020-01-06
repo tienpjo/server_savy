@@ -17,16 +17,15 @@ module.exports = {
     find_device
 }
 
-async function addDevice(uuid , deviceParam) {
+async function addDevice(uuid , deviceParam,pairKey) {
     if (await Device.findOne({ deviceId: deviceParam.deviceId })) {
         throw 'Device "' + deviceParam.deviceId + '" is already taken';
     }
     // console.log(req.jwtDecoded);
     const device = new Device(deviceParam);
     device.ownerId = uuid;
-    device.pairKey = rand.generateKey(9);
+    device.pairKey = pairKey;
     await device.save();
-    return device.pairKey;
 }
 
 async function delete_device(id) {

@@ -24,7 +24,7 @@ let initAPIs = (app) => {
                 res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
             });
     });
-    router.get('/find_device',find_device);
+    router.get('/find_device', find_device);
     // router.get('/', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
@@ -39,10 +39,13 @@ module.exports = initAPIs;
 /* DEVICE */
 function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
-   const pairKey = deviceService.addDevice(req.jwtDecoded.sub._id, req.body)
-        .then(() => res.json(pairKey))
+    var pairKey = rand.generateKey(9);
+    deviceService.addDevice(req.jwtDecoded.sub._id, req.body,pairKey)
+        .then(() => {
+            res.json({"pairKey":pairKey});
+        })
         .catch(err => next(err));
-        //console.log(deviceService.pairKey);
+    //console.log(deviceService.pairKey);
 };
 
 function delete_device(req, res, next) {
