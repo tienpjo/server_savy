@@ -23,10 +23,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cors());
-//app.use(jwt());
+app.use(jwt());
 
-// initAPIs(app);
-// app.use(errHandler);
+ initAPIs(app);
+ app.use(errHandler);
 server.listen(3000);
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

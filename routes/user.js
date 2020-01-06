@@ -10,7 +10,6 @@ const apiDevice = require("../routes/device");
 let initAPIs = (app) => {
     router.post('/register', register);
     router.post('/login', login);
-    router.post('/refresh-token',userService.refreshToken)
     router.use(AuthMiddleWare.isAuth);
     router.post('/add', add);
     router.post('/delete_device', delete_device);
@@ -41,7 +40,7 @@ module.exports = initAPIs;
 function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
     deviceService.addDevice(req.jwtDecoded.sub._id, req.body)
-        .then(() => res.json({}))
+        .then(() => res.json({pairKey}))
         .catch(err => next(err));
 };
 
