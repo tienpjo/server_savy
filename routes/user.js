@@ -42,7 +42,7 @@ function add(req, res, next) {
     var pairKey = rand(1000000000,9999999999);
     deviceService.addDevice(req.jwtDecoded.sub._id, req.body, pairKey)
         .then(() => {
-            res.json();
+            res.json(Array(String(pairKey)).map(Number));
         })
         .catch(err => next(err));
 };

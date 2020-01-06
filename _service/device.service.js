@@ -17,13 +17,13 @@ module.exports = {
 }
 
 async function addDevice(uuid ,deviceParam,pairKey) {
-    if (await Device.findOne({ deviceId: [deviceParam.deviceId] })) {
+    if (await Device.findOne( {deviceId:deviceParam.deviceId })) {
         throw 'Device "' + deviceParam.deviceId + '" is already';
     }
     // console.log(req.jwtDecoded);
     const device = new Device(deviceParam);
     device.ownerId = uuid;
-    device.pairKey = pairKey;
+    device.pairKey = Array(String(pairKey)).map(Number);
     await device.save();
 }
 
