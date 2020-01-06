@@ -40,10 +40,10 @@ module.exports = initAPIs;
 function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
     var pairKey = rand(1000000000,9999999999);
-    console.log(Array.from(pairKey));
+    
     deviceService.addDevice(req.jwtDecoded.sub._id, req.body, pairKey)
         .then(() => {
-            res.json(Array.from(pairKey));
+            res.json(Array.from(pairKey.toString(2)).map(Number));
         })
         .catch(err => next(err));
 };
