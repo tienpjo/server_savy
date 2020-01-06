@@ -22,12 +22,17 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/views/index.html');
+});
+server.listen(3000);
+
 app.use(cors());
 app.use(jwt());
 
- initAPIs(app);
- app.use(errHandler);
-server.listen(3000);
+initAPIs(app);
+app.use(errHandler);
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -87,7 +92,4 @@ server_tcp.on('connection', function (sock) {
       }
     });
   });
-});
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
 });

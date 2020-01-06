@@ -18,7 +18,7 @@ module.exports = {
 
 async function addDevice(uuid , deviceParam,pairKey) {
     if (await Device.findOne({ deviceId: deviceParam.deviceId })) {
-        throw 'Device "' + deviceParam.deviceId + '" is already taken';
+        throw 'Device "' + deviceParam.deviceId + '" is already';
     }
     // console.log(req.jwtDecoded);
     const device = new Device(deviceParam);
@@ -32,7 +32,7 @@ async function delete_device(id) {
 }
 
 async function find_device(uuid){
-   return await Device.find({"ownerId":uuid}).select('-ownerId','-_id','-mobileSim');
+   return await Device.find({"ownerId":uuid}).select('-ownerId').select('-_id').select('-smartKey').select('-mobileSim').select('-__v');
 }
 
 async function find_tracking_device(device) {

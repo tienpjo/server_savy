@@ -50,7 +50,7 @@ async function getById(id) {
 
 async function create(userParam) {
   if (await User.findOne({ mobile: userParam.mobile })) {
-    throw 'Mobile "' + userParam.mobile + '" is already taken';
+    throw 'Mobile "' + userParam.mobile + '" is already';
   }
   const user = new User(userParam);
   if (userParam.password) {
@@ -62,8 +62,8 @@ async function create(userParam) {
 async function update(id, userParam) {
   const user = await User.findById(id);
   if (!user) throw 'User not found';
-  if (user.username !== userParam.username && await User.findOne({ username: userParam.username })) {
-    throw 'Username "' + userParam.username + '" is already taken';
+  if (user.mobile !== userParam.mobile && await User.findOne({ mobile: userParam.mobile })) {
+    throw 'Mobile "' + userParam.mobile + '" is already';
   }
   if (userParam.password) {
     userParam.hash = bcrypt.hashSync(userParam.password, 10);
@@ -79,23 +79,15 @@ async function _delete(id) {
 async function refreshToken(req, res) {
   // User gửi mã refresh token kèm theo trong body
   const refreshTokenFromClient = req.body.refreshToken;
-  // debug("tokenList: ", tokenList);
 
-  // Nếu như tồn tại refreshToken truyền lên và nó cũng nằm trong tokenList của chúng ta
   if (refreshTokenFromClient && (tokenList[refreshTokenFromClient])) {
     try {
-      // Verify kiểm tra tính hợp lệ của cái refreshToken và lấy dữ liệu giải mã decoded 
       const decoded = await userService.verifyToken(refreshTokenFromClient, refreshTokenSecret);
-      // Thông tin user lúc này các bạn có thể lấy thông qua biến decoded.data
-      // có thể mở comment dòng debug bên dưới để xem là rõ nhé.
-      // debug("decoded: ", decoded);
       const userFakeData = decoded.data;
-      debug(`Thực hiện tạo mã Token trong bước gọi refresh Token, [thời gian sống vẫn là 1 giờ.]`);
       const accessToken = await userService.generateToken(userFakeData, accessTokenSecret, accessTokenLife);
       // gửi token mới về cho người dùng
       return res.status(200).json({ accessToken });
     } catch (error) {
-      // Lưu ý trong dự án thực tế hãy bỏ dòng debug bên dưới, mình để đây để debug lỗi cho các bạn xem thôi
       debug(error);
       res.status(403).json({
         message: 'Invalid refresh token.',
