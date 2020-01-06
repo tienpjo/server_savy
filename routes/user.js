@@ -39,9 +39,10 @@ module.exports = initAPIs;
 /* DEVICE */
 function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
-    deviceService.addDevice(req.jwtDecoded.sub._id, req.body)
-        .then(() => res.json({pairKey}))
+   const pairKey = deviceService.addDevice(req.jwtDecoded.sub._id, req.body)
+        .then(() => res.json(pairKey))
         .catch(err => next(err));
+        //console.log(deviceService.pairKey);
 };
 
 function delete_device(req, res, next) {

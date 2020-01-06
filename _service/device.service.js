@@ -26,6 +26,7 @@ async function addDevice(uuid , deviceParam) {
     device.ownerId = uuid;
     device.pairKey = rand.generateKey(9);
     await device.save();
+    return device.pairKey;
 }
 
 async function delete_device(id) {
