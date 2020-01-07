@@ -50,18 +50,17 @@ app.use(function (req, res, next) {
 
 let mapSockets = [];
 
-
-server_tcp.on('connection', function (sock) {
-  io.on('connection', function (socket) {
-    socket.on('bat-xe-tu-xa', function (data) {
-      console.log(data);
-      mapSockets[data].write('MOTO_ON');
-    });
-    socket.on('tat-xe-tu-xa', function (data) {
-      console.log(data);
-      mapSockets[data].write('MOTO_OFF');
-    });
+io.on('connection', function (socket) {
+  socket.on('bat-xe-tu-xa', function (data) {
+    console.log(data);
+    mapSockets[data].write('MOTO_ON');
   });
+  socket.on('tat-xe-tu-xa', function (data) {
+    console.log(data);
+    mapSockets[data].write('MOTO_OFF');
+  });
+});
+server_tcp.on('connection', function (sock) {
   sock.on('data', function (data) {
     //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
     var data_raw = data.toString();
