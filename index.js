@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-server.listen(3000);
+
 
 app.use(cors());
 app.use(jwt());
@@ -40,9 +40,7 @@ app.use(function (req, res, next) {
 
 let mapSockets = [];
 const server_tcp = net.createServer();
-server_tcp.listen(PORT, HOST, () => {
-  console.log('TCP Server is running on port ' + PORT + '.');
-});
+
 
 server_tcp.on('connection', function (sock) {
   io.on('connection', function (socket) {
@@ -97,4 +95,7 @@ server_tcp.on('connection', function (sock) {
 
   });
 });
-
+server_tcp.listen(PORT, HOST, () => {
+  console.log('TCP Server is running on port ' + PORT + '.');
+});
+server.listen(3000);
