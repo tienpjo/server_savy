@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-let mapSockets = {};
+let mapSockets = [];
 const server_tcp = net.createServer();
 server_tcp.listen(PORT, HOST, () => {
   console.log('TCP Server is running on port ' + PORT + '.');
@@ -74,22 +74,24 @@ server_tcp.on('connection', function (sock) {
           if (err) throw err;
           console.log('User Test successfully saved.');
         })
-        sock.setTimeout(5000);
+        sock.setTimeout(25000);
       });
     });
     sock.on('timeout', () => {
       console.log('socket time out');
       console.log('Connection closed');
-      var idx = mapSockets.indexOf(sock);
-      if (idx != -1) {
-        delete mapSockets[idx];
-      }
-    });
-    sock.on('end', () => {
-      var idx = mapSockets.indexOf(sock);
-      if (idx != -1) {
-        delete mapSockets[idx];
-      }
+      let index = mapSockets.findIndex(function (o) {
+        return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
+      })
+      if (index !== -1) mapSockets.splice(index, 1);
+      console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     });
   });
+  sock.on('end', () => {
+    var idx = mapSockets.indexOf(sock);
+    if (idx != -1) {
+      delete mapSockets[idx];
+    }
+  });
+});
 });
