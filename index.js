@@ -5,7 +5,6 @@ var io = require('socket.io')(server);
 var mongoClient = require('mongoose');
 const router = express.Router();
 const tracking = require('./models/tracking');
-const socket = require('./models/socket.model');
 const dbs = require('./_helpers/database');
 const Socket_Get = dbs.Socket;
 var net = require('net');
@@ -80,18 +79,15 @@ server_tcp.on('connection', function (sock) {
     sock.on('timeout', () => {
       console.log('socket time out');
       console.log('Connection closed');
-      let index = mapSockets.findIndex(function (o) {
-        return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
-      })
-      if (index !== -1) mapSockets.splice(index, 1);
-      console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+      sock.end();
     });
   });
-  sock.on('end', () => {
-    var idx = mapSockets.indexOf(sock);
-    if (idx != -1) {
-      delete mapSockets[idx];
-    }
+  sock.on('close', () => {
+    let index = mapSockets.findIndex(function (o) {
+      return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
+    })
+    if (index !== -1) mapSockets.splice(index, 1);
+    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
   });
 });
-});
+
