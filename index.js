@@ -79,12 +79,15 @@ server_tcp.on('connection', function (sock) {
     sock.on('timeout', () => {
       console.log('socket time out');
       console.log('Connection closed');
-      delete mapSockets[sock];
-      console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+      var index = mapSockets.findIndex(sock);
+      if (index !== -1) {
+       delete mapSockets[index];
+        console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+      }
     });
   });
   sock.on('close', () => {
-    
+
   });
 });
 
