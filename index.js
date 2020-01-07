@@ -52,55 +52,56 @@ let mapSockets = [];
 
 
 server_tcp.on('connection', function (sock) {
-  // io.on('connection', function (socket) {
-  //   socket.on('bat-xe-tu-xa', function (data) {
-  //     console.log(data);
-  //     mapSockets[data].write('MOTO_ON');
-  //   });
-  //   socket.on('tat-xe-tu-xa', function (data) {
-  //     console.log(data);
-  //     mapSockets[data].write('MOTO_OFF');
-  //   });
-    sock.on('data', function (data) {
-      //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
-      var data_raw = data.toString();
-      var data_filter = data_raw.split(',');
-      var id_device_gps = parseInt(data_filter[0], 10);
-      mapSockets[id_device_gps] = sock;
-      // action save mongodb
-      // mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
-      // var bike_tracking = new tracking({
-      //   _id: new mongoClient.Types.ObjectId(),
-      //   deviceId: data_filter[0],
-      //   long: data_filter[1],
-      //   lati: data_filter[2],
-      //   date: Date.now()
-      // });
-      var bike_tracking = {
-        deviceId: data_filter[0],
-        long: data_filter[1],
-        lati: data_filter[2],
-        date: Date.now()
-      };
-      var track = new Tracking(bike_tracking);
-        track.save(function (err) {
-        if (err) throw err;
-        console.log('User Test successfully saved.');
-      })
-      sock.setTimeout(15000);
-      // });
-    // });
-    sock.on('timeout', () => {
-      console.log('socket time out');
-      console.log('Connection closed');
-      var index = mapSockets.indexOf(sock);
-      if (index !== -1) {
-        delete mapSockets[index];
-        console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
-      }
+  io.on('connection', function (socket) {
+    socket.on('bat-xe-tu-xa', function (data) {
+      console.log(data);
+      mapSockets[data].write('MOTO_ON');
+    });
+    socket.on('tat-xe-tu-xa', function (data) {
+      console.log(data);
+      mapSockets[data].write('MOTO_OFF');
     });
   });
-  sock.on('close', () => {
+  sock.on('data', function (data) {
+    //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
+    var data_raw = data.toString();
+    var data_filter = data_raw.split(',');
+    var id_device_gps = parseInt(data_filter[0], 10);
+    mapSockets[id_device_gps] = sock;
+    // action save mongodb
+    // mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
+    // var bike_tracking = new tracking({
+    //   _id: new mongoClient.Types.ObjectId(),
+    //   deviceId: data_filter[0],
+    //   long: data_filter[1],
+    //   lati: data_filter[2],
+    //   date: Date.now()
+    // });
+    var bike_tracking = {
+      deviceId: data_filter[0],
+      long: data_filter[1],
+      lati: data_filter[2],
+      date: Date.now()
+    };
+    var track = new Tracking(bike_tracking);
+    track.save(function (err) {
+      if (err) throw err;
+      console.log('User Test successfully saved.');
+    })
+    sock.setTimeout(15000);
+  });
+
+  sock.on('timeout', () => {
+    sock.end();
+    console.log('socket time out');
+    console.log('Connection closed');
+    var index = mapSockets.indexOf(sock);
+    if (index !== -1) {
+      delete mapSockets[index];
+      console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+    }
+  });
+  sock.on('error', () => {
 
   });
 });
