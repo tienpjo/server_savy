@@ -15,11 +15,21 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
+
+server.listen(3000);
+const server_tcp = net.createServer();
+server_tcp.listen(PORT, HOST, () => {
+  console.log('TCP Server is running on port ' + PORT + '.');
+});
+
+
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+
+
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
@@ -39,7 +49,6 @@ app.use(function (req, res, next) {
 });
 
 let mapSockets = [];
-const server_tcp = net.createServer();
 
 
 server_tcp.on('connection', function (sock) {
@@ -95,7 +104,4 @@ server_tcp.on('connection', function (sock) {
 
   });
 });
-server_tcp.listen(PORT, HOST, () => {
-  console.log('TCP Server is running on port ' + PORT + '.');
-});
-server.listen(3000);
+
