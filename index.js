@@ -6,7 +6,7 @@ var mongoClient = require('mongoose');
 const router = express.Router();
 const tracking = require('./models/tracking');
 const dbs = require('./_helpers/database');
-const Socket_Get = dbs.Socket;
+const Tracking = dbs.Tracking;
 var net = require('net');
 let bodyParser = require('body-parser');
 var cors = require('cors');
@@ -55,33 +55,40 @@ server_tcp.on('connection', function (sock) {
       mapSockets[data].write('MOTO_OFF');
     });
     sock.on('data', function (data) {
-      console.log('DATA ' + sock.remoteAddress + ': ' + data);
+      //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
       var data_raw = data.toString();
       var data_filter = data_raw.split(',');
       var id_device_gps = parseInt(data_filter[0], 10);
       mapSockets[id_device_gps] = sock;
       // action save mongodb
-      mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
-        var bike_tracking = new tracking({
-          _id: new mongoClient.Types.ObjectId(),
-          deviceId: data_filter[0],
-          long: data_filter[1],
-          lati: data_filter[2],
-          date: Date.now()
-        });
-        bike_tracking.save(function (error) {
-          if (err) throw err;
-          console.log('User Test successfully saved.');
-        })
-        sock.setTimeout(25000);
-      });
+      // mongoClient.connect('mongodb://127.0.0.1:27017/db_server', function (err, db) {
+      // var bike_tracking = new tracking({
+      //   _id: new mongoClient.Types.ObjectId(),
+      //   deviceId: data_filter[0],
+      //   long: data_filter[1],
+      //   lati: data_filter[2],
+      //   date: Date.now()
+      // });
+      var bike_tracking = {
+        deviceId: data_filter[0],
+        long: data_filter[1],
+        lati: data_filter[2],
+        date: Date.now()
+      };
+      var track = new Tracking(bike_tracking);
+        track.save(function (error) {
+        if (err) throw err;
+        console.log('User Test successfully saved.');
+      })
+      sock.setTimeout(15000);
+      // });
     });
     sock.on('timeout', () => {
       console.log('socket time out');
       console.log('Connection closed');
-      var index = mapSockets.findIndex(sock);
+      var index = mapSockets.indexOf(sock);
       if (index !== -1) {
-       delete mapSockets[index];
+        delete mapSockets[index];
         console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
       }
     });
