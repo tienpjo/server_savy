@@ -13,7 +13,7 @@ let initAPIs = (app) => {
     router.use(AuthMiddleWare.isAuth);
     router.post('/add', add);
     router.post('/delete_device', delete_device);
-    router.get('/tracking', (req, res) => {
+    router.get('/get_tracking', (req, res) => {
         console.log(req.body.deviceId);
         console.log(req.body);
         deviceService.find_tracking_device(req.body.deviceId)

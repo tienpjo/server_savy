@@ -37,5 +37,5 @@ async function find_device(uuid){
 }
 
 async function find_tracking_device(device) {
-    return await Tracking.find({"deviceId":device});
+    return await Tracking.findOne({deviceId:device}).select('-deviceId').select('-__v').select('-_id');
 }
