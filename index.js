@@ -64,9 +64,11 @@ function ctrlClientOff(hw_connect) {
     hw_connect.write('MOTO_OFF');
   });
 }
-
+let listSockets = [];
 server_tcp.on('connection', function (sock) {
   var data_filter;
+  var hwConnect;
+  listSockets = sock;
   sock.on('data', function (data) {
     //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
     var data_raw = data.toString();
@@ -79,6 +81,11 @@ server_tcp.on('connection', function (sock) {
       lati: data_filter[2],
       date: Date.now()
     };
+    hwConnect = {
+      deviceId: data_filter[0],
+      hwConnect: listSockets,
+    };
+
     var track = new Tracking(bike_tracking);
     track.save(function (err) {
       if (err) throw err;
@@ -100,10 +107,6 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
 
   });
-  var hwConnect = {
-    deviceId: data_filter[0],
-    hwConnect: sock
-  };
   var hwConnect_save = new hw(hwConnect);
   hwConnect_save.save(function (err) {
     if (err) throw err;
