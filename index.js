@@ -59,11 +59,9 @@ function ctrlClientOn(hw_connect) {
 }
 
 function ctrlClientOff(hw_connect) {
-  io.on('connection', function (socket) {
     socket.on('tat-xe-tu-xa', function () {
       console.log(data);
       hw_connect.write('MOTO_OFF');
-    });
   });
 }
 
