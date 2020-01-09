@@ -8,23 +8,15 @@ module.exports = {
     controlDevice,
 }
 
+// function ctrlClientOn(hw_connect) {
+//     io.on('connection', function (socket) {
+//       console.log(hw_connect);
+//      hw_connect.write('MOTO_ON');
+//     });
+// }
+
 async function controlDevice(deviceParam) {
-    const user_mobi = await hwConnect.findOne({"deviceId":deviceParam.deviceId});
-    console.log(deviceParam.actionCtrl);
-    if (user_mobi) {
-        console.log(user_mobi);
-        if (deviceParam.actionCtrl === "ON") {
-            console.log(OK);
-            hwCtrl.ctrlClientOn(user_mobi.hwConnect);
-        }
-        if (deviceParam.actionCtrl === "OFF") {
-            hwCtrl.ctrlClientOff(user_mobi.hwConnect);
-        }
-    }
-    else {
-        throw 'Device "' + deviceId + '" is not found';
-    }
-    return user_mobi;
+    return await hwConnect.findOne({"deviceId":deviceParam.deviceId});
 }
 
 

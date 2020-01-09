@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const apiUser = require("../controller/UserController");
 const userService = require('../_service/user.service');
-const deviceService = require('../_service/device.service')
+const deviceService = require('../_service/device.service');
 const trackService = require("../_service/socket.service");
 const hwConnect = require("../_service/socket.service");
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
@@ -27,7 +27,7 @@ let initAPIs = (app) => {
             });
     });
     router.get('/find_device', find_device);
-    router.post('/controlDevice',actionCtrl);
+    
     // router.get('/', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
@@ -67,14 +67,9 @@ function find_device(req, res, next) {
 }
 
 /* CONTROL MOTO */
-function actionCtrl(req, res) {
-    hwConnect.controlDevice(req.body)
-        .then(() => {
-            res.json();
-        })
-        .catch((err) => {
-            res.status(404).json({ success: false, msg: `No such user.` });
-        });
+function actionCtrl(req, res,next) {
+    var user_mobi = hwConnect.controlDevice(req.body)
+    
 }
 
 /* END DEVICE */

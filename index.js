@@ -16,6 +16,7 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
+const hwConnect = require("./_service/socket.service");
 
 server.listen(3000);
 
@@ -24,14 +25,11 @@ server_tcp.listen(PORT, HOST, () => {
   console.log('TCP Server is running on port ' + PORT + '.');
 });
 
-
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-
-
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
@@ -49,23 +47,13 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-function ctrlClientOn(hw_connect) {
-  io.on('connection', function (socket) {
-    console.log(hw_connect);
-    socket.on('bat-xe-tu-xa', function () {
-      hw_connect.write('MOTO_ON');
-    });
-  });
-}
+
+app.post('/users/actionCtrl', function(req, res) {
+  var user_mobi = hwConnect.controlDevice(req.body)
+  user_mobi.hwConnect.write('MOTO_ON');
+});
 
 
-function ctrlClientOff(hw_connect) {
-
-  socket.on('tat-xe-tu-xa', function () {
-    console.log(hw_connect);
-    hw_connect.write('MOTO_OFF');
-  });
-}
 let listSockets = [];
 server_tcp.on('connection', function (sock) {
   var data_filter;
