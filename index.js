@@ -68,6 +68,7 @@ let listSockets = [];
 server_tcp.on('connection', function (sock) {
   var data_filter;
   var hwConnect;
+  listSockets.push(sock);
   sock.on('data', function (data) {
     //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
     var data_raw = data.toString();
@@ -82,9 +83,13 @@ server_tcp.on('connection', function (sock) {
     };
     hwConnect = {
       deviceId: data_filter[0],
-      hwConnect: sock
+      hwConnect: listSockets[0]
     };
-
+    var hwConnect_save = new hw(hwConnect);
+    hwConnect_save.save(function (err) {
+      if (err) throw err;
+      console.log('Save hw SOCKet.');
+    });
     var track = new Tracking(bike_tracking);
     track.save(function (err) {
       if (err) throw err;
@@ -106,11 +111,7 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
 
   });
-  var hwConnect_save = new hw(hwConnect);
-  hwConnect_save.save(function (err) {
-    if (err) throw err;
-    console.log('Save hw SOCKet.');
-  });
+
 });
 
 module.exports = {
