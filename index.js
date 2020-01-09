@@ -47,10 +47,10 @@ app.use(function (req, res, next) {
   next();
 });
 let mapSockets = [];
-app.post('/users/actionCtrl', function (req, res) {
- var user_mobi = hw.findOne({deviceId});
-  console.log(user_mobi);
- // mapSockets[user_mobi.deviceId].write('MOTO_ON');
+
+app.post('/users/actionCtrl', function (req, res) { 
+  console.log(req.body.deviceId);
+  mapSockets[1512199512].write('MOTO_ON');
 });
 
 
