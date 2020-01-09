@@ -59,17 +59,18 @@ function ctrlClientOn(hw_connect) {
 }
 
 function ctrlClientOff(hw_connect) {
-    socket.on('tat-xe-tu-xa', function () {
-      console.log(data);
-      hw_connect.write('MOTO_OFF');
+  socket.on('tat-xe-tu-xa', function () {
+    console.log(data);
+    hw_connect.write('MOTO_OFF');
   });
 }
 
 server_tcp.on('connection', function (sock) {
+  var data_filter;
   sock.on('data', function (data) {
     //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
     var data_raw = data.toString();
-    var data_filter = data_raw.split(',');
+    data_filter = data_raw.split(',');
     // var id_device_gps = parseInt(data_filter[0], 10);
     // mapSockets[id_device_gps] = sock;
     var bike_tracking = {
@@ -78,16 +79,6 @@ server_tcp.on('connection', function (sock) {
       lati: data_filter[2],
       date: Date.now()
     };
-    var hwConnect = {
-      deviceId: data_filter[0],
-      hwConnect: sock
-    };
-    var hwConnect_save = new hw(hwConnect);
-    hwConnect_save.save(function (err) {
-      if (err) throw err;
-      console.log('Save hw SOCKet.');
-    });
-
     var track = new Tracking(bike_tracking);
     track.save(function (err) {
       if (err) throw err;
@@ -108,6 +99,15 @@ server_tcp.on('connection', function (sock) {
   });
   sock.on('error', () => {
 
+  });
+  var hwConnect = {
+    deviceId: data_filter[0],
+    hwConnect: sock
+  };
+  var hwConnect_save = new hw(hwConnect);
+  hwConnect_save.save(function (err) {
+    if (err) throw err;
+    console.log('Save hw SOCKet.');
   });
 });
 
