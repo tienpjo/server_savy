@@ -7,4 +7,5 @@ module.exports = {
     User: require('../models/user.model'),
     Device: require('../models/device.model'),
     Tracking: require('../models/tracking'),
+    HwConnect: require('../models/socket.model'),
 };

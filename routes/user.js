@@ -3,10 +3,12 @@ const router = express.Router();
 const apiUser = require("../controller/UserController");
 const userService = require('../_service/user.service');
 const deviceService = require('../_service/device.service')
-const trackService = require("../_service/tracking.service");
+const trackService = require("../_service/socket.service");
+const hwConnect = require("../_service/socket.service");
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const apiDevice = require("../routes/device");
 const rand = require("random-int");
+
 let initAPIs = (app) => {
     router.post('/register',AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, register);
     router.post('/login', login);
@@ -16,7 +18,7 @@ let initAPIs = (app) => {
     router.get('/get_tracking', (req, res) => {
         console.log(req.body.deviceId);
         console.log(req.body);
-        deviceService.find_tracking_device(req.body.deviceId)
+        deviceService.find_tracking_device(req.params.deviceId)
             .then((result) => {
                 res.json(result);
             })
@@ -25,6 +27,7 @@ let initAPIs = (app) => {
             });
     });
     router.get('/find_device', find_device);
+    router.post('/controlDevice',actionCtrl);
     // router.get('/', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
@@ -63,9 +66,9 @@ function find_device(req, res, next) {
         });
 }
 
-/* BIKE TRACKING */
-function find_tracking(req, res) {
-    deviceService.find_tracking_device(req.body)
+/* CONTROL MOTO */
+function actionCtrl(req, res) {
+    hwConnect.controlDevice(req.body)
         .then((result) => {
             res.json(result);
         })

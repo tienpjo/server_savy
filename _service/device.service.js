@@ -33,9 +33,9 @@ async function delete_device(id) {
 }
 
 async function find_device(uuid){
-   return await Device.find({"ownerId":uuid}).select('-ownerId').select('-_id').select('-smartKey').select('-mobileSim').select('-__v');
+   return await Device.find({"ownerId":uuid}).select('-ownerId').select('-_id').select('-smartKey').select('-__v');
 }
 
 async function find_tracking_device(device) {
-    return await Tracking.findOne({deviceId:device}).select('-deviceId').select('-__v').select('-_id');
+    return await Tracking.findOne({device}).select('-deviceId').select('-__v').select('-_id');
 }

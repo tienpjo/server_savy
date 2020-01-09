@@ -7,7 +7,7 @@ const DeviceSchema = new mongoose.Schema({
     smartKey: [{ type: String }],
     mobileSim: {type: String, required: true },
     bikeName: { type: String, required: true },
-    deviceType: [{type:Number,required:true}],
+    deviceType: {type:Number,required:true},
     pairKey: [{ type: Array, required: true }]
 
 },
