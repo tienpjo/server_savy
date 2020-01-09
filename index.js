@@ -68,7 +68,7 @@ let listSockets = [];
 server_tcp.on('connection', function (sock) {
   var data_filter;
   var hwConnect;
-  listSockets = sock;
+  listSockets[0] = sock;
   sock.on('data', function (data) {
     //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
     var data_raw = data.toString();
@@ -83,7 +83,7 @@ server_tcp.on('connection', function (sock) {
     };
     hwConnect = {
       deviceId: data_filter[0],
-      hwConnect: listSockets,
+      hwConnect: listSockets[0]
     };
 
     var track = new Tracking(bike_tracking);
