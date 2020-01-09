@@ -9,7 +9,8 @@ module.exports = {
 }
 
 async function controlDevice(deviceParam) {
-    const user_mobi = hwConnect.findOne({ deviceId: deviceParam.deviceId });
+    const user_mobi = await hwConnect.findOne({ deviceParam});
+    console.log(user_mobi.hwConnect);
     if (user_mobi) {
         if (deviceParam.actionCtrl === "ON") {
             hwCtrl.ctrlClientOn(user_mobi.hwConnect);

@@ -68,7 +68,7 @@ function find_device(req, res, next) {
 
 /* CONTROL MOTO */
 function actionCtrl(req, res) {
-    hwConnect.controlDevice(req.body)
+    hwConnect.controlDevice(req.body.deviceId)
         .then((result) => {
             res.json(result);
         })
