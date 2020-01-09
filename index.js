@@ -16,7 +16,6 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-const hwConnect = require("./_service/socket.service");
 
 server.listen(3000);
 
@@ -49,8 +48,9 @@ app.use(function (req, res, next) {
 });
 let mapSockets = [];
 app.post('/users/actionCtrl', function (req, res) {
-  var user_mobi = hwConnect.controlDevice(req.body)
-  mapSockets[user_mobi.deviceId].write('MOTO_ON');
+ var user_mobi = hw.findOne({deviceId});
+  console.log(user_mobi);
+ // mapSockets[user_mobi.deviceId].write('MOTO_ON');
 });
 
 
@@ -92,8 +92,3 @@ server_tcp.on('connection', function (sock) {
   });
 
 });
-
-module.exports = {
-  ctrlClientOff,
-  ctrlClientOn
-}

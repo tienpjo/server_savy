@@ -16,7 +16,7 @@ module.exports = {
 // }
 
 async function controlDevice(deviceParam) {
-    return await hwConnect.findOne({"deviceId":deviceParam.deviceId});
+    return await hwConnect.findOne({deviceId});
 }
 
 
