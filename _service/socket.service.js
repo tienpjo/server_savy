@@ -8,8 +8,8 @@ module.exports = {
     controlDevice,
 }
 
-async function controlDevice(deviceid,deviceParam) {
-    const user_mobi = await hwConnect.findOne(deviceid);
+async function controlDevice(deviceParam) {
+    const user_mobi = await hwConnect.findOne({"deviceId":deviceParam.deviceId});
     console.log(deviceParam.actionCtrl);
     if (user_mobi) {
         console.log(user_mobi);
@@ -24,7 +24,7 @@ async function controlDevice(deviceid,deviceParam) {
     else {
         throw 'Device "' + deviceId + '" is not found';
     }
-
+    return user_mobi;
 }
 
 
