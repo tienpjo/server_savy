@@ -50,17 +50,16 @@ app.use(function (req, res, next) {
   next();
 });
 
-function ctrlClientOn(hw_connect) {
-  io.on('connection', function () {
-    console.log(hw_connect);
-    socket.on('bat-xe-tu-xa', function () {
-      hw_connect.write('MOTO_ON');
-    });
+io.on('connection', function ctrlClientOn(hw_connect) {
+  console.log(hw_connect);
+  socket.on('bat-xe-tu-xa', function () {
+    hw_connect.write('MOTO_ON');
   });
-}
+});
+
 
 function ctrlClientOff(hw_connect) {
-  
+
   socket.on('tat-xe-tu-xa', function () {
     console.log(hw_connect);
     hw_connect.write('MOTO_OFF');
