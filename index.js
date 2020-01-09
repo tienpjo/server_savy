@@ -49,13 +49,14 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
-io.on('connection', function ctrlClientOn(hw_connect) {
-  console.log(hw_connect);
-  socket.on('bat-xe-tu-xa', function () {
-    hw_connect.write('MOTO_ON');
+function ctrlClientOn(hw_connect) {
+  io.on('connection', function (socket) {
+    console.log(hw_connect);
+    socket.on('bat-xe-tu-xa', function () {
+      hw_connect.write('MOTO_ON');
+    });
   });
-});
+}
 
 
 function ctrlClientOff(hw_connect) {
