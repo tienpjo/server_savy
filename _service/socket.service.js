@@ -8,9 +8,9 @@ module.exports = {
     controlDevice,
 }
 
-async function controlDevice(deviceParam) {
-    const user_mobi = await hwConnect.findOne({ deviceId:deviceParam.deviceId});
-    
+async function controlDevice(deviceid,deviceParam) {
+    const user_mobi = await hwConnect.findOne(deviceid);
+    console.log(deviceParam.actionCtrl);
     if (user_mobi) {
         console.log(user_mobi);
         if (deviceParam.actionCtrl === "ON") {

@@ -68,9 +68,9 @@ function find_device(req, res, next) {
 
 /* CONTROL MOTO */
 function actionCtrl(req, res) {
-    hwConnect.controlDevice(req.body.deviceId)
-        .then((result) => {
-            res.json(result);
+    hwConnect.controlDevice(req.params.deviceId,req.body)
+        .then(() => {
+            res.json();
         })
         .catch((err) => {
             res.status(404).json({ success: false, msg: `No such user.` });

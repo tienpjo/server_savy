@@ -52,6 +52,7 @@ app.use(function (req, res, next) {
 
 function ctrlClientOn(hw_connect) {
   io.on('connection', function () {
+    console.log(hw_connect);
     socket.on('bat-xe-tu-xa', function () {
       hw_connect.write('MOTO_ON');
     });
@@ -59,8 +60,9 @@ function ctrlClientOn(hw_connect) {
 }
 
 function ctrlClientOff(hw_connect) {
+  
   socket.on('tat-xe-tu-xa', function () {
-    console.log(data);
+    console.log(hw_connect);
     hw_connect.write('MOTO_OFF');
   });
 }
