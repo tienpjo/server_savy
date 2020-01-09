@@ -18,6 +18,7 @@ var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
 
 server.listen(3000);
+
 const server_tcp = net.createServer();
 server_tcp.listen(PORT, HOST, () => {
   console.log('TCP Server is running on port ' + PORT + '.');
@@ -49,18 +50,23 @@ app.use(function (req, res, next) {
   next();
 });
 
-let mapSockets = [];
+function ctrlClientOn(hw_connect) {
+  io.on('connection', function () {
+    socket.on('bat-xe-tu-xa', function () {
+      hw_connect.write('MOTO_ON');
+    });
+  });
+}
 
-io.on('connection', function (socket) {
-  socket.on('bat-xe-tu-xa', function (data) {
-    console.log(data);
-    mapSockets[data].write('MOTO_ON');
+function ctrlClientOff(hw_connect) {
+  io.on('connection', function (socket) {
+    socket.on('tat-xe-tu-xa', function () {
+      console.log(data);
+      hw_connect.write('MOTO_OFF');
+    });
   });
-  socket.on('tat-xe-tu-xa', function (data) {
-    console.log(data);
-    mapSockets[data].write('MOTO_OFF');
-  });
-});
+}
+
 server_tcp.on('connection', function (sock) {
   sock.on('data', function (data) {
     //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
@@ -107,3 +113,7 @@ server_tcp.on('connection', function (sock) {
   });
 });
 
+module.exports = {
+  ctrlClientOff,
+  ctrlClientOn
+}
