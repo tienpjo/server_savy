@@ -13,7 +13,8 @@ module.exports = {
     addDevice,
     delete_device,
     find_tracking_device,
-    find_device
+    find_device,
+    update
 }
 
 async function addDevice(uuid ,deviceParam,pairKey) {
@@ -34,9 +35,19 @@ async function delete_device(id) {
 }
 
 async function find_device(uuid){
-   return await Device.find({"ownerId":uuid}).select('-ownerId').select('-_id').select('-smartKey').select('-__v');
+   return await Device.find({"ownerId":uuid}).select('-ownerId').select('-smartKey').select('-__v');
 }
 
 async function find_tracking_device(device) {
     return await Tracking.findOne({device}).select('-deviceId').select('-__v').select('-_id');
 }
+
+async function update(id, deviceParam) {
+    const device = await User.findById(id);
+    if (!device) throw 'Device not found';
+    if (device.smartKey !== deviceParam.smartKey && await Device.findOne({ smartKey: deviceParam.smartKey })) {
+      throw + userParam.smartKey + '" is already';
+    }
+    Object.assign(device, deviceParam);
+    await device.save;
+  }

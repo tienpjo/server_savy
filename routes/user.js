@@ -10,7 +10,7 @@ const apiDevice = require("../routes/device");
 const rand = require("random-int");
 
 let initAPIs = (app) => {
-    router.post('/register',AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, register);
+    router.post('/register', AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, register);
     router.post('/login', login);
     router.use(AuthMiddleWare.isAuth);
     router.post('/add', add);
@@ -27,7 +27,7 @@ let initAPIs = (app) => {
             });
     });
     router.get('/find_device', find_device);
-    
+    router.get('/deviceUpdate',deviceUpdate);
     // router.get('/', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
@@ -42,7 +42,7 @@ module.exports = initAPIs;
 /* DEVICE */
 function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
-    var pairKey = rand(1000000000,9999999999);
+    var pairKey = rand(1000000000, 9999999999);
     deviceService.addDevice(req.jwtDecoded.sub._id, req.body, pairKey)
         .then(() => {
             res.json(Array.from(String(pairKey)).map(Number));
@@ -65,12 +65,18 @@ function find_device(req, res, next) {
             res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
         });
 }
+function deviceUpdate(req, res, next) {
+    deviceService.update(req.params.id, req.body)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
+        });
+}
 
 /* CONTROL MOTO */
-function actionCtrl(req, res,next) {
-    var user_mobi = hwConnect.controlDevice(req.body)
-    
-}
+
 
 /* END DEVICE */
 function login(req, res, next) {

@@ -4,7 +4,7 @@ const unique = require('mongoose-unique-validator');
 const hwConnectSchema = new mongoose.Schema({
     deviceId: { type: Array, required: true },
     hwConnect: [{ type: Array, require: true }],
-    actionCtrl: { type: String },
+    actionCtrl: { type: String }
 },
     {
         collection: 'hwConnect_dbs'
