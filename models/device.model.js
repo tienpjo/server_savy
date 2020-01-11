@@ -8,7 +8,7 @@ const DeviceSchema = new mongoose.Schema({
     mobileSim: {type: String, required: true },
     bikeName: { type: String, required: true },
     deviceType: {type:Number},
-    pairKey: [{ type: Array, required: true }]
+    pairKey: { type: Array, required: true }
 
 },
     {
