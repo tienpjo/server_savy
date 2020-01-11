@@ -69,8 +69,8 @@ server_tcp.on('connection', function (sock) {
     mapSockets[id_device_gps] = sock;
     var bike_tracking = {
       deviceId: data_filter[0],
-      long: data_filter[1],
-      lati: data_filter[2],
+      lati: data_filter[1],
+      long: data_filter[2],
       date: Date.now()
     };
     var track = new Tracking(bike_tracking);
