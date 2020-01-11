@@ -48,9 +48,12 @@ app.use(function (req, res, next) {
 });
 let mapSockets = [];
 
-app.post('/users/actionCtrl', function (req, res) { 
+app.post('/users/actionCtrl', function (req, res) {
   console.log(req.body.deviceId);
-  mapSockets[1512199512].write('MOTO_ON');
+  if (req.body.actionCtrl == "ON") {
+    mapSockets[1512199512].write('MOTO_ON');
+  }
+  res.json('Control Success');
 });
 
 
@@ -62,6 +65,7 @@ server_tcp.on('connection', function (sock) {
     var data_raw = data.toString();
     data_filter = data_raw.split(',');
     var id_device_gps = parseInt(data_filter[0], 10);
+
     mapSockets[id_device_gps] = sock;
     var bike_tracking = {
       deviceId: data_filter[0],

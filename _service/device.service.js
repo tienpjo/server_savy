@@ -22,6 +22,7 @@ async function addDevice(uuid ,deviceParam,pairKey) {
     }
     // console.log(req.jwtDecoded);
     const device = new Device(deviceParam);
+    device.deviceType = device
     device.ownerId = uuid;
     device.pairKey = Array.from(String(pairKey)).map(Number);
     
