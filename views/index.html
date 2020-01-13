@@ -34,15 +34,16 @@
     }
 
     .nice {
-      background-color: aquamarine;
+      background-color: rgb(253, 253, 253);
     }
     .nice_x {
-      background-color: floralwhite;
+      background-color: rgb(236, 235, 234);
     }
   </style>
 </head>
 
 <body>
+  <button onclick="buttonClicked()">Event</button>
   <script>
     var socket = io.connect('http://103.137.185.94:3000');
     var count = 0;
@@ -63,5 +64,4 @@
     });
   </script>
 </body>
-
 </html>
