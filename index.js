@@ -27,40 +27,14 @@ server_tcp.on('connection', function (sock) {
   console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
   // Add a 'data' event handler to this instance of socket
   io.on('connection', function (socket) {
-
-    socket.on('bat-xe-tu-xa', function (data) {
-      console.log(data);
-      mapSockets[data].write(sock.remoteAddress + ':' + sock.remotePort + ':' + data);
-    });
-
     sock.on('data', function (data) {
       console.log('DATA ' + sock.remoteAddress + ': ' + data);
-      var data_raw = data.toString();
-      var data_filter = data_raw.split(',');
-      var id = parseInt(data_filter[0],10);      
-      mapSockets[id] = sock;
+      socket.emit('news',data);
       // Add a 'close' event handler to this instance of socket
       sock.on('close', function (data) {
         console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
       });
     });
-  });
-  sock.on('timeout', () => {
-    console.log('socket time out');
-    console.log('Connection closed');
-    console.log('CLOSED: ' + sock.remoteAddress + ':' + sock.remotePort);
-    const socket_del = Socket_Get.find({ hw_connect: [sock] });
-    console.log(socket_del);
-    if (socket_del) {
-      Socket_Get.findByIdAndRemove(socket_del._id);
-      sock.end();
-    }
-  });
-  sock.on('end', () => {
-    var idx = mapSockets.indexOf(sock);
-    if (idx != -1) {
-      delete sockets[idx];
-    }
   });
 });
 app.get('/', function (req, res) {
