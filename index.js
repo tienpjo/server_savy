@@ -55,17 +55,20 @@ app.post('/users/actionCtrl', function (req, res) {
   }
   res.json('Control Success');
 });
-
-
+var line;
+io.on('connection', function (socket) {
+  if (line) {
+    socket.emit('news', line);
+  }
+});
 
 server_tcp.on('connection', function (sock) {
   var data_filter;
   sock.on('data', function (data) {
-    //  console.log('DATA ' + sock.remoteAddress + ': ' + data);
+    line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
     var data_raw = data.toString();
     data_filter = data_raw.split(',');
     var id_device_gps = parseInt(data_filter[0], 10);
-
     mapSockets[id_device_gps] = sock;
     var bike_tracking = {
       deviceId: data_filter[0],
