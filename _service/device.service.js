@@ -25,6 +25,7 @@ async function addDevice(uuid ,deviceParam,pairKey) {
     const device = new Device(deviceParam);
     device.deviceType = device;
     device.ownerId = uuid;
+    device.deviceType = 1;
     device.pairKey = Array.from(String(pairKey)).map(Number);
     
     await device.save();
@@ -35,7 +36,7 @@ async function delete_device(id) {
 }
 
 async function find_device(uuid){
-   return await Device.find({"ownerId":uuid}).select('-ownerId').select('-smartKey').select('-__v');
+   return await Device.find({"ownerId":uuid}).select('-ownerId').select('-__v');
 }
 
 async function find_tracking_device(device) {
