@@ -50,10 +50,10 @@ let mapSockets = [];
 
 app.post('/users/actionCtrl', function (req, res) {
   console.log(req.body.deviceId);
-  if (req.body.actionCtrl == "ON") {
-    mapSockets[1512199512].write('MOTO_ON');
+  if (req.body.actionCtrl == "OFF") {
+    mapSockets[req.body.deviceId].write('MOTO_OFF');
   }
-  res.json('Control Success');
+  res.json('ControlSuccess');
 });
 var line;
 server_tcp.on('connection', function (sock) {
@@ -65,19 +65,19 @@ server_tcp.on('connection', function (sock) {
     });
     var data_raw = data.toString();
     data_filter = data_raw.split(',');
-    var id_device_gps = parseInt(data_filter[0], 10);
-    mapSockets[id_device_gps] = sock;
-    var bike_tracking = {
-      deviceId: data_filter[0],
-      lati: data_filter[1],
-      long: data_filter[2],
-      date: Date.now()
-    };
-    var track = new Tracking(bike_tracking);
-    track.save(function (err) {
-      if (err) throw err;
-      console.log('User Test successfully saved.');
-    });
+    var id_device_gps = data_filter[1];//parseInt(data_filter[0], 10);
+     mapSockets[id_device_gps] = sock;
+    // var bike_tracking = {
+    //   deviceId: data_filter[0],
+    //   lati: data_filter[1],
+    //   long: data_filter[2],
+    //   date: Date.now()
+    // };
+    // var track = new Tracking(bike_tracking);
+    // track.save(function (err) {
+    //   if (err) throw err;
+    //   console.log('User Test successfully saved.');
+    // });
     sock.setTimeout(15000);
   });
 
