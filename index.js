@@ -59,27 +59,32 @@ var line;
 server_tcp.on('connection', function (sock) {
   var data_filter;
   // io.on('connection', function (socket) {
-    sock.on('data', function (data) {
-      line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-      // socket.emit('news', line);
-      var data_raw = data.toString();
-      data_filter = data_raw.split(',');
-      var id_device_gps = data_filter[1].map(Number);
-      console.log(id_device_gps);
-      mapSockets[id_device_gps] = sock;
-      // var bike_tracking = {
-      //   deviceId: data_filter[0],
-      //   lati: data_filter[1],
-      //   long: data_filter[2],
-      //   date: Date.now()
-      // };
-      // var track = new Tracking(bike_tracking);
-      // track.save(function (err) {
-      //   if (err) throw err;
-      //   console.log('User Test successfully saved.');
-      // });
-      sock.setTimeout(15000);
-    });
+  sock.on('data', function (data) {
+    line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
+    // socket.emit('news', line);
+    var data_raw = data.toString();
+    data_filter = data_raw.split(',');
+    // var id_device_gps = data_filter[1];
+    var result = 0;
+    for (var i = data_filter[1].length - 1; i >= 0; --i) {
+      result = 10 * result + data_filter[i];
+    }
+    console.log(result);
+    mapSockets[result] = sock;
+    console.log(mapSockets[result]);
+    // var bike_tracking = {
+    //   deviceId: data_filter[0],
+    //   lati: data_filter[1],
+    //   long: data_filter[2],
+    //   date: Date.now()
+    // };
+    // var track = new Tracking(bike_tracking);
+    // track.save(function (err) {
+    //   if (err) throw err;
+    //   console.log('User Test successfully saved.');
+    // });
+    sock.setTimeout(15000);
+  });
   // });
   sock.on('timeout', () => {
     sock.end();
