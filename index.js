@@ -66,7 +66,7 @@ server_tcp.on('connection', function (sock) {
     var id_device_gps = data_filter[1].split('-').map(Number);
     mapSockets[id_device_gps] = sock;
     var bike_tracking = {
-      deviceId: data_filter[1],
+      deviceId: id_device_gps,
       bat: data_filter[2],
       status: data_filter[3],
       lati: data_filter[4],

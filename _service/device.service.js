@@ -23,11 +23,8 @@ async function addDevice(uuid ,deviceParam,pairKey) {
     }
     // console.log(req.jwtDecoded);
     const device = new Device(deviceParam);
-    device.deviceType = device;
     device.ownerId = uuid;
-    device.deviceType = 1;
     device.pairKey = Array.from(String(pairKey)).map(Number);
-    
     await device.save();
 }
 
@@ -40,7 +37,7 @@ async function find_device(uuid){
 }
 
 async function find_tracking_device(device) {
-    return await Tracking.findOne({device}).select('-deviceId').select('-__v').select('-_id');
+    return await Tracking.findOne({device},{"_id": -1}).select('-deviceId').select('-__v').select('-_id');
 }
 
 async function update(id, deviceParam) {

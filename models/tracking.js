@@ -5,7 +5,7 @@ const TrackingSchema = new mongoose.Schema({
     deviceId: {type: Array,required:true},
     long: {type: Number,required:true},
     lati: {type: Number, required:true},
-    bat: {type:Number},
+    bat: {type:String},
     status:{type:String},
 },
     {
