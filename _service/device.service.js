@@ -47,5 +47,5 @@ async function update(id, deviceParam) {
       throw + userParam.smartKey + '" is already';
     }
     Object.assign(device, deviceParam);
-    await device.save;
+    await device.save();
   }
