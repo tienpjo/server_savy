@@ -71,7 +71,7 @@ server_tcp.on('connection', function (sock) {
       status: data_filter[3],
       lati: data_filter[4],
       long: data_filter[5],
-      createdAt: new Date(Date.now)
+      createdAt: Date.now()
     };
     var track = new Tracking(bike_tracking);
     track.save(function (err) {
