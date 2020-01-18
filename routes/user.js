@@ -24,7 +24,7 @@ let initAPIs = (app) => {
                 res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
             });
     });
-    router.get('/find_device/', find_device);
+    router.get('/find_device', find_device);
     router.get('/deviceUpdate/:id',deviceUpdate);
     // router.get('/', getAll);
     // router.get('/current', getCurrent);

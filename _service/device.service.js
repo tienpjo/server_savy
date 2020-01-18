@@ -37,7 +37,7 @@ async function find_device(uuid){
 }
 
 async function find_tracking_device(device) {
-    return await Tracking.findOne(device).sort({createdAt:-1}).select('-createdAt').select('-deviceId').select('-__v').select('-_id');
+    return await Tracking.findOne(device).sort({createdAt:-1}).select('-createdAt').limit(1).select('-deviceId').select('-__v').select('-_id');
 }
 
 async function update(id, deviceParam) {
