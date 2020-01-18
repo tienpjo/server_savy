@@ -16,9 +16,6 @@ let initAPIs = (app) => {
     router.post('/add', add);
     router.post('/delete_device', delete_device);
     router.post('/get_tracking', (req, res) => {
-	console.log(req.body);
-//	console.log(req.body.deviceId);
-	console.log(req.params.deviceId);
         deviceService.find_tracking_device(req.body)
 .then((result) => {
                 res.json(result);
@@ -27,7 +24,7 @@ let initAPIs = (app) => {
                 res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
             });
     });
-    router.get('/find_device/', find_device);
+    router.get('/find_device', find_device);
     router.get('/deviceUpdate/:id',deviceUpdate);
     // router.get('/', getAll);
     // router.get('/current', getCurrent);

@@ -9,7 +9,6 @@ const DeviceSchema = new mongoose.Schema({
     bikeName: { type: String, required: true },
     deviceType: {type:Number},
     pairKey: { type: Array, required: true }
-
 },
     {
         collection: 'device_dbs'

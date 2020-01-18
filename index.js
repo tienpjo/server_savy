@@ -16,8 +16,7 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-var run = "RUN";
-var stop = "STOP";
+
 server.listen(3000);
 
 const server_tcp = net.createServer();
@@ -59,24 +58,23 @@ app.post('/users/actionCtrl', function (req, res) {
 var line;
 server_tcp.on('connection', function (sock) {
   var data_filter;
-//	console.log(sock.remoteAddress);
-  // io.on('connection', function (socket) {
+  var movePer;
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-var movePre;
- var data_raw = data.toString();
-	console.log(data_raw);
+     var data_raw = data.toString();
+    console.log(data_raw);
     data_filter = data_raw.split(',');
+    if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING" ) {
+      if (data_filter[0] == "MOTO-RUNNING")
+      {
+        movePer = "RUN"
+      }
+      if (data_filter[0] == "MOTO-STOPING")
+      {
+        movePer = "STOP"
+      }
     var id_device_gps = data_filter[1].split('-').map(Number);
     mapSockets[id_device_gps] = sock;
-	if (data_filter[0] == "MOTO-RUNNING")
-{
-	movePre = "RUN"
-}
-if (data_filter[0] == "MOTO-STOPING")
-{
-	movePre = "STOP"
-}
     var bike_tracking = {
       deviceId: id_device_gps,
       bat: data_filter[2],
@@ -84,25 +82,18 @@ if (data_filter[0] == "MOTO-STOPING")
       lati: data_filter[4],
       long: data_filter[5],
       createdAt:Date.now(),
-      move: movePre
+      move: movePer
    };
     var track = new Tracking(bike_tracking);
     track.save(function (err) {
       if (err) throw err;
       console.log('User Test successfully saved.');
     });
+	}
     //sock.setTimeout(15000);
   });
-  // });
   sock.on('timeout', () => {
-    // sock.end();
-    // console.log('socket time out');
-    // console.log('Connection closed');
-    // var index = mapSockets.indexOf(sock);
-    // if (index !== -1) {
-    //   delete mapSockets[index];
-    //   console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
-    // }
+    
   });
   sock.on('error', () => {
 
