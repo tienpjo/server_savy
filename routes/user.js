@@ -15,9 +15,12 @@ let initAPIs = (app) => {
     router.use(AuthMiddleWare.isAuth);
     router.post('/add', add);
     router.post('/delete_device', delete_device);
-    router.get('/get_tracking', (req, res) => {
+    router.post('/get_tracking', (req, res) => {
+	console.log(req.body);
+//	console.log(req.body.deviceId);
+	console.log(req.params.deviceId);
         deviceService.find_tracking_device(req.body)
-            .then((result) => {
+.then((result) => {
                 res.json(result);
             })
             .catch((err) => {

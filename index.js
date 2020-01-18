@@ -16,7 +16,8 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-
+var run = "RUN";
+var stop = "STOP";
 server.listen(3000);
 
 const server_tcp = net.createServer();
@@ -58,21 +59,33 @@ app.post('/users/actionCtrl', function (req, res) {
 var line;
 server_tcp.on('connection', function (sock) {
   var data_filter;
+//	console.log(sock.remoteAddress);
   // io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-    var data_raw = data.toString();
+var movePre;
+ var data_raw = data.toString();
+	console.log(data_raw);
     data_filter = data_raw.split(',');
     var id_device_gps = data_filter[1].split('-').map(Number);
     mapSockets[id_device_gps] = sock;
+	if (data_filter[0] == "MOTO-RUNNING")
+{
+	movePre = "RUN"
+}
+if (data_filter[0] == "MOTO-STOPING")
+{
+	movePre = "STOP"
+}
     var bike_tracking = {
       deviceId: id_device_gps,
       bat: data_filter[2],
       status: data_filter[3],
       lati: data_filter[4],
       long: data_filter[5],
-      createdAt: new Date(Date.now)
-    };
+      createdAt:Date.now(),
+      move: movePre
+   };
     var track = new Tracking(bike_tracking);
     track.save(function (err) {
       if (err) throw err;

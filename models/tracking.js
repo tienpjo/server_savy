@@ -7,7 +7,8 @@ const TrackingSchema = new mongoose.Schema({
     lati: {type: Number, required:true},
     bat: {type:String},
     status:{type:String},
-    createdAt:{type:Date}
+    createdAt:{type:Date},
+    move:{type:String}
 },
     {
         collection: 'tracking_dbs'
