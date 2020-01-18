@@ -25,7 +25,7 @@ let initAPIs = (app) => {
             });
     });
     router.get('/find_device', find_device);
-    router.get('/deviceUpdate/:id',deviceUpdate);
+    router.post('/deviceUpdate',deviceUpdate);
     // router.get('/', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
@@ -64,7 +64,7 @@ function find_device(req, res, next) {
         });
 }
 function deviceUpdate(req, res, next) {
-    deviceService.update(req.params.id, req.body)
+    deviceService.update(req.body)
         .then((result) => {
             res.json(result);
         })

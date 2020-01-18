@@ -34,7 +34,6 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
 app.use(cors());
 app.use(jwt());
 
@@ -94,14 +93,7 @@ server_tcp.on('connection', function (sock) {
   });
   // });
   sock.on('timeout', () => {
-    // sock.end();
-    // console.log('socket time out');
-    // console.log('Connection closed');
-    // var index = mapSockets.indexOf(sock);
-    // if (index !== -1) {
-    //   delete mapSockets[index];
-    //   console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
-    // }
+
   });
   sock.on('error', () => {
 
