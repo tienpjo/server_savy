@@ -40,8 +40,8 @@ async function find_tracking_device(device) {
     return await Tracking.findOne(device).sort({createdAt:-1}).select('-createdAt').limit(1).select('-deviceId').select('-__v').select('-_id');
 }
 
-async function update(deviceParam) {
-    const device = await Device.findOne(deviceParam.deviceId);
+async function update(id,deviceParam) {
+    const device = await Device.findOne(id);
     if (!device) throw 'Device not found';
     if (device.smartKey !== deviceParam.smartKey && await Device.findOne({ smartKey: deviceParam.smartKey })) {
       throw + userParam.smartKey + '" is already';

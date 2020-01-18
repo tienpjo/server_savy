@@ -64,7 +64,7 @@ function find_device(req, res, next) {
         });
 }
 function deviceUpdate(req, res, next) {
-    deviceService.update(req.body)
+    deviceService.update(req.body.deviceId,req.body)
         .then((result) => {
             res.json(result);
         })
