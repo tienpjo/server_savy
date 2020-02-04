@@ -9,7 +9,7 @@ module.exports = {
     getCurrent,
     getById,
 };
-function add (req, res, next) {
+function add (req, res, next) {                              // hàm thực thi việc add device
     console.log(req.jwtDecoded.sub._id);
     deviceService.addDevice(req.jwtDecoded.sub._id,req.body)
         .then(() => res.json({}))

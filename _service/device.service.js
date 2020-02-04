@@ -17,7 +17,7 @@ module.exports = {
     update
 }
 
-async function addDevice(uuid ,deviceParam,pairKey) {
+async function addDevice(uuid ,deviceParam,pairKey) {                  // thêm Device vào tài khoản
     if (await Device.findOne( {deviceId:deviceParam.deviceId })) {
         throw 'Device "' + deviceParam.deviceId + '" is already';
     }
@@ -28,24 +28,24 @@ async function addDevice(uuid ,deviceParam,pairKey) {
     await device.save();
 }
 
-async function delete_device(id) {
+async function delete_device(id) {                                      // delete Device (admin)
     await User.findByIdAndRemove(id);
 }
 
-async function find_device(uuid){
+async function find_device(uuid){                                       // tìm kiếm Device của từng user            
    return await Device.find({"ownerId":uuid}).select('-ownerId').select('-__v');
 }
 
-async function find_tracking_device(device) {
+async function find_tracking_device(device) {                           // tạm thời đang lấy tracking từ mongo, lấy track theo DeviceId
     return await Tracking.findOne(device).sort({createdAt:-1}).select('-createdAt').limit(1).select('-deviceId').select('-__v').select('-_id');
 }
 
-async function update(id,deviceParam) {
-    const device = await Device.findOne(id);
+async function update(id,deviceParam) {                                 // cho phép user sửa các dữ liệu cơ bản như là smartKey,.. 
+    const device = await Device.findOne({"deviceId":id});
     if (!device) throw 'Device not found';
     if (device.smartKey !== deviceParam.smartKey && await Device.findOne({ smartKey: deviceParam.smartKey })) {
       throw + userParam.smartKey + '" is already';
     }
     Object.assign(device, deviceParam);
     await device.save();
-  }
+}

@@ -12,10 +12,10 @@ const rand = require("random-int");
 let initAPIs = (app) => {
     router.post('/register', AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, register);
     router.post('/login', login);
-    router.use(AuthMiddleWare.isAuth);
+    router.use(AuthMiddleWare.isAuth);                               // chặn tất cả các truy cập sau login bằng việc Authention
     router.post('/add', add);
     router.post('/delete_device', delete_device);
-    router.post('/get_tracking', (req, res) => {
+    router.post('/get_tracking', (req, res) => {                     // hàm get tracking, @@ kdcviettaiday           
         deviceService.find_tracking_device(req.body)
             .then((result) => {
                 res.json(result);
@@ -37,7 +37,7 @@ let initAPIs = (app) => {
 
 module.exports = initAPIs;
 
-/* DEVICE */
+/* DEVICE */                                                   // các khối xử lý liên quan đến device
 function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
     var pairKey = rand(1000000000, 9999999999);
@@ -76,7 +76,7 @@ function deviceUpdate(req, res, next) {
 /* CONTROL MOTO */
 
 
-/* END DEVICE */
+                                                    // các khối xử lý liên quan đến user
 function login(req, res, next) {
     userService.authenticate(req.body)
         .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))

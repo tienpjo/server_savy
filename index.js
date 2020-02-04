@@ -52,12 +52,15 @@ app.post('/users/actionCtrl', function (req, res) {
   if (req.body.actionCtrl == "OFF") {
     mapSockets[req.body.deviceId].write('MOTO_OFF');
   }
-  res.json('ControlSuccess');
+  // res.json('ControlSuccess');
+  res.status(200).json;
 });
+
 var line;
 server_tcp.on('connection', function (sock) {
   var data_filter;
   var movePer;
+  var stt;
   // io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
@@ -72,12 +75,20 @@ server_tcp.on('connection', function (sock) {
       {
         movePer = "STOP"
       }
+      if (data_filter[3] == "OFF\n")
+      {
+        stt = "OFF"
+      }
+      if (data_filter[3] == "ON\n")
+      {
+         stt = "ON"
+      }
     var id_device_gps = data_filter[1].split('-').map(Number);
       mapSockets[id_device_gps] = sock;
       var bike_tracking = {
         deviceId: id_device_gps,
         bat: data_filter[2],
-        status: data_filter[3],
+        status: stt,
         lati: data_filter[4],
         long: data_filter[5],
         createdAt: Date.now(),
@@ -89,16 +100,13 @@ server_tcp.on('connection', function (sock) {
         console.log('User Test successfully saved.');
       });
     }
-    //sock.setTimeout(15000);
+    sock.setTimeout(15000);
   });
   // });
   sock.on('timeout', () => {
-
   });
-  sock.on('error', () => {
-
+  sock.on('error', () => {    
   });
-
 });
 io.on('connection', function (socket) {
   socket.emit('news', line);
