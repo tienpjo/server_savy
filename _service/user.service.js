@@ -28,7 +28,7 @@ async function authenticate({ mobile, password }) {
   if (user_mobi && bcrypt.compareSync(password, user_mobi.hash)) {
     // const { hash, ...userWithoutHash } = user.toObject();
     const token = jwt.sign(
-      { sub: userData },
+      { sub: userData,role:user_mobi.role },
       config.secret,
       {
         algorithm: "HS256",

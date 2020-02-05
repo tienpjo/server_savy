@@ -4,6 +4,7 @@ const UserSchema = new mongoose.Schema({
     name:{type: String,required:true},                      // user cần khai báo tên
     mobile: {type:String,unique:true,required:true},        // số đt
     hash: {type:String,required:true},                      // mật khẩu sau khi hash
+    role:{type:String}
     //address: {type:String,required:true},  
 },
     {

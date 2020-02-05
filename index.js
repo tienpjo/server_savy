@@ -8,6 +8,7 @@ const tracking = require('./models/tracking');
 const dbs = require('./_helpers/database');
 const Tracking = dbs.Tracking;
 const hw = dbs.HwConnect;
+const processData = require('./middleware/processData');
 var net = require('net');
 let bodyParser = require('body-parser');
 var cors = require('cors');
@@ -66,46 +67,15 @@ server_tcp.on('connection', function (sock) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
     var data_raw = data.toString();
     data_filter = data_raw.split(',');
-    if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING" ) {
-      if (data_filter[0] == "MOTO-RUNNING")
-      {
-        movePer = "RUN"
-      }
-      if (data_filter[0] == "MOTO-STOPING")
-      {
-        movePer = "STOP"
-      }
-      if (data_filter[3] == "OFF\n")
-      {
-        stt = "OFF"
-      }
-      if (data_filter[3] == "ON\n")
-      {
-         stt = "ON"
-      }
     var id_device_gps = data_filter[1].split('-').map(Number);
-      mapSockets[id_device_gps] = sock;
-      var bike_tracking = {
-        deviceId: id_device_gps,
-        bat: data_filter[2],
-        status: stt,
-        lati: data_filter[4],
-        long: data_filter[5],
-        createdAt: Date.now(),
-        move : movePer
-      };
-      var track = new Tracking(bike_tracking);
-      track.save(function (err) {
-        if (err) throw err;
-        console.log('User Test successfully saved.');
-      });
-    }
-    sock.setTimeout(15000);
+    mapSockets[id_device_gps] = sock;
+    processData.processData(data_filter,id_device_gps);
+    // sock.setTimeout(15000);
   });
   // });
   sock.on('timeout', () => {
   });
-  sock.on('error', () => {    
+  sock.on('error', () => {
   });
 });
 io.on('connection', function (socket) {

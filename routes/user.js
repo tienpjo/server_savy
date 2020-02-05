@@ -4,9 +4,9 @@ const apiUser = require("../controller/UserController");
 const userService = require('../_service/user.service');
 const deviceService = require('../_service/device.service');
 const trackService = require("../_service/socket.service");
-const hwConnect = require("../_service/socket.service");
+const authorize = require("../middleware/authorize");
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
-const apiDevice = require("../routes/device");
+const managerDevice = require("../_service/manager.service");
 const rand = require("random-int");
 
 let initAPIs = (app) => {
@@ -15,18 +15,12 @@ let initAPIs = (app) => {
     router.use(AuthMiddleWare.isAuth);                               // chặn tất cả các truy cập sau login bằng việc Authention
     router.post('/add', add);
     router.post('/delete_device', delete_device);
-    router.post('/get_tracking', (req, res) => {                     // hàm get tracking, @@ kdcviettaiday           
-        deviceService.find_tracking_device(req.body)
-            .then((result) => {
-                res.json(result);
-            })
-            .catch((err) => {
-                res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
-            });
-    });
+    router.post('/get_tracking', getTracking);                    // hàm get tracking, @@ kdcviettaiday           
     router.get('/find_device', find_device);
-    router.post('/deviceUpdate',deviceUpdate);
-    // router.get('/', getAll);
+    router.post('/deviceUpdate', deviceUpdate);
+    router.get('/isLogined', isLogined);
+    router.get('/overview', overview);
+    router.get('/getAllUser', getAll);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
     // router.get('/:id', update);
@@ -37,7 +31,20 @@ let initAPIs = (app) => {
 
 module.exports = initAPIs;
 
-/* DEVICE */                                                   // các khối xử lý liên quan đến device
+// các khối xử lý liên quan tracking cua bike
+
+function getTracking(req, res, next) {
+    deviceService.find_tracking_device(req.body)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
+        });
+};
+
+
+/* DEVICE */  // các khối xử lý liên quan đến device
 function add(req, res, next) {
     console.log(req.jwtDecoded.sub._id);
     var pairKey = rand(1000000000, 9999999999);
@@ -64,7 +71,7 @@ function find_device(req, res, next) {
         });
 }
 function deviceUpdate(req, res, next) {
-    deviceService.update(req.body.deviceId,req.body)
+    deviceService.update(req.body.deviceId, req.body)
         .then((result) => {
             res.json(result);
         })
@@ -73,10 +80,7 @@ function deviceUpdate(req, res, next) {
         });
 }
 
-/* CONTROL MOTO */
-
-
-                                                    // các khối xử lý liên quan đến user
+// các khối xử lý liên quan đến user
 function login(req, res, next) {
     userService.authenticate(req.body)
         .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))
@@ -121,4 +125,19 @@ function _delete(req, res, next) {
 
 function logout(req, res, ) {
     res.status(200).send({ auth: false, token: null });
+}
+
+//khối liên quan đến react manager
+
+function overview(req, res, next) {
+    managerDevice.getOverView()
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
+        });
+}
+function isLogined(req, res, next) {            // check đã login hay chưa?
+    res.json(200).json();
 }
