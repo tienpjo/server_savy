@@ -60,8 +60,6 @@ app.post('/users/actionCtrl', function (req, res) {
 var line;
 server_tcp.on('connection', function (sock) {
   var data_filter;
-  var movePer;
-  var stt;
   // io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
@@ -69,13 +67,16 @@ server_tcp.on('connection', function (sock) {
     data_filter = data_raw.split(',');
     var id_device_gps = data_filter[1].split('-').map(Number);
     mapSockets[id_device_gps] = sock;
-    processData.processData(data_filter,id_device_gps);
+    processData.processData(data_filter, id_device_gps);
     // sock.setTimeout(15000);
   });
   // });
   sock.on('timeout', () => {
   });
   sock.on('error', () => {
+  });
+  sock.on('close', function (data) {
+    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
   });
 });
 io.on('connection', function (socket) {

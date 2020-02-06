@@ -18,7 +18,7 @@ async function getOverView() {                                      // delete De
     const totalDevice = await Device.count({});
     var total = {
         totalUser:totalUser,
-        totalUser:totalDevice
+        totalDevice:totalDevice
     }
     return total;
 }

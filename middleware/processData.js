@@ -1,4 +1,4 @@
-const dbs = require('./_helpers/database');
+const dbs = require('../_helpers/database');
 const Tracking = dbs.Tracking;
 
 function processData(data, id_device_gps) {
