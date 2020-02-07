@@ -53,8 +53,8 @@ app.post('/users/actionCtrl', function (req, res) {
   if (req.body.actionCtrl == "OFF") {
     mapSockets[req.body.deviceId].write('MOTO_OFF');
   }
-  // res.json('ControlSuccess');
-  res.status(200).json;
+   res.json('ControlSuccess');
+  //res.status(200).json;
 });
 
 var line;
@@ -64,6 +64,7 @@ server_tcp.on('connection', function (sock) {
   // io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
+    console.log(line);
     var data_raw = data.toString();
     data_filter = data_raw.split(',');
     if (data_filter[0] == "MOTO-ID") {
