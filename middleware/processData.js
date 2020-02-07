@@ -33,6 +33,12 @@ function processData(data, id_device_gps) {
         console.log('User Test successfully saved.');
     });
 }
+
+function processData(data)
+{
+    
+
+}
 module.exports = {
     processData
 }

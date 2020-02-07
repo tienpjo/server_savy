@@ -60,14 +60,21 @@ app.post('/users/actionCtrl', function (req, res) {
 var line;
 server_tcp.on('connection', function (sock) {
   var data_filter;
+  var id_device_gps;
   // io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
     var data_raw = data.toString();
     data_filter = data_raw.split(',');
-    var id_device_gps = data_filter[1].split('-').map(Number);
-    mapSockets[id_device_gps] = sock;
-    processData.processData(data_filter, id_device_gps);
+    if (data_filter[0] == "MOTO-ID") {
+      id_device_gps = data_filter[1].split('-').map(Number);
+      mapSockets[id_device_gps] = sock;
+    }
+    else if (data_filter[0] != "MOTO-ID") {
+      id_device_gps = data_filter[1].split('-').map(Number);
+      mapSockets[id_device_gps] = sock;
+      processData.processData(data_filter, id_device_gps);
+    }
     // sock.setTimeout(15000);
   });
   // });
