@@ -34,11 +34,7 @@ function processData(data, id_device_gps) {
     });
 }
 
-function processData(data)
-{
-    
 
-}
 module.exports = {
     processData
 }
