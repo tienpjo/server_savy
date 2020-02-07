@@ -71,7 +71,7 @@ server_tcp.on('connection', function (sock) {
       id_device_gps = data_filter[1].split('-').map(Number);
       mapSockets[id_device_gps] = sock;
     }
-    else if (data_filter[0] != "MOTO-ID") {
+    else if (data[0] == "MOTO-RUNNING" || data[0] == "MOTO-STOPING") {
       id_device_gps = data_filter[1].split('-').map(Number);
       mapSockets[id_device_gps] = sock;
       processData.processData(data_filter, id_device_gps);
