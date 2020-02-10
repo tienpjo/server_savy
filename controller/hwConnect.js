@@ -1,4 +1,6 @@
 const hwConnect = require('../_service/hwConnect.service');
+const dbs = require('../_helpers/database');
+const status = dbs.Status;
 module.exports = {
     hwCloseSocket
 }
@@ -9,7 +11,7 @@ function hwCloseSocket(remoteAdress) {
         sttGPS: "-",
         sttConnect: "CLOSE",
     }
-    var stt = new hwConnect(sttSrv);
+    var stt = new status(sttSrv);
     stt.save(function (err) {
         if (err) throw err;
         console.log('Save SOCKET Succesfully.');
