@@ -23,7 +23,7 @@ async function findhwConnect({ remoteAdress }) {
         sttGPS: "-",
         sttConnect: "CLOSE",
     }
-    updateSttServer(deviceId,sttSrv);
+    updateSttServer(hw.deviceId,sttSrv);
 }
 
 // find status de tao roter cho app get
