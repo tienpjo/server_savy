@@ -100,14 +100,14 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
   });
   sock.on('close', function (data) {
-    const hwSock = hwConn.findhwConnect(sock.remoteAddress);
+    hwConn.findhwConnect(sock.remoteAddress);
     // console.log(hwSock);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     // let index = mapSockets.findIndex(function (o) {
     //   return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
     // })
-    //  console.log(mapSockets[[22, 157, 252, 62, 188, 105, 221, 220]])
-    //var index = mapSockets.findIndex(i => i.);
+    // console.log(mapSockets[[22, 157, 252, 62, 188, 105, 221, 220]])
+    // var index = mapSockets.findIndex(i => i.);
     // console.log(index);
     // if (index !== -1) mapSockets.splice(index, 1);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
