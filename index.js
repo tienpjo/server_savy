@@ -2,11 +2,7 @@ var express = require('express');
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var mongoClient = require('mongoose');
-const router = express.Router();
-const tracking = require('./models/tracking');
 const dbs = require('./_helpers/database');
-const Tracking = dbs.Tracking;
 const hw = dbs.hwConnect;
 const processData = require('./middleware/processData');
 var net = require('net');
@@ -17,7 +13,7 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-const hwConn = require('./_service/hwConnect.service');
+const hwConn = require('./controller/hwConnect');
 server.listen(3000);
 
 const server_tcp = net.createServer();
@@ -100,7 +96,7 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
   });
   sock.on('close', function (data) {
-    hwConn.findhwConnect(sock.remoteAddress);
+    hwConn.hwCloseSocket(sock.remoteAddress);
     // console.log(hwSock);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     // let index = mapSockets.findIndex(function (o) {
