@@ -25,5 +25,5 @@ async function findhwConnect({remoteAdress}) {
 }
 
 async function deleteConnect({id}) {
-    await hwConnect.findByIdAndRemove(id);
+    await hwConnect.findByIdAndDelete(id);
 }
