@@ -10,7 +10,6 @@ module.exports = {
 // Thời gian sống của token
 async function findhwConnect({remoteAdress}) {
     const hw =  await hwConnect.findOne({remoteAdress});
-    console.log(hw);
     var sttSrv = {
         deviceId: hw.deviceId,
         sttGPS: "-",
@@ -20,6 +19,7 @@ async function findhwConnect({remoteAdress}) {
     stt.save(function (err) {
         if (err) throw err;
         console.log('Save Stus Succesfully.');
+        await hwConnect.findByIdAndRemove(hw._id);
     });
     // console.log(hw);
 }
