@@ -91,7 +91,7 @@ server_tcp.on('connection', function (sock) {
     // let index = mapSockets.findIndex(function (o) {
     //   return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
     // })
-    let index = mapSockets.findIndex(device => device.remoteAddress === sock.remoteAddress);
+    var index = mapSockets.findIndex(i => i.remoteAddress === sock.remoteAddress && i.remotePort === sock.remotePort);
     console.log(index);
     // if (index !== -1) mapSockets.splice(index, 1);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
