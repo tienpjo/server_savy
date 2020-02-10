@@ -9,7 +9,7 @@ module.exports = {
 }
 // Thời gian sống của token
 async function findhwConnect({remoteAdress}) {
-    const hw =  hwConnect.findOne({remoteAdress});
+    const hw =  await hwConnect.findOne({remoteAdress});
     console.log(hw);
     var sttSrv = {
         deviceId: hw.deviceId,
