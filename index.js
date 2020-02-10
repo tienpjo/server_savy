@@ -17,7 +17,7 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-
+const hwConn = require('./_service/hwConnect.service');
 server.listen(3000);
 
 const server_tcp = net.createServer();
@@ -100,8 +100,8 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
   });
   sock.on('close', function (data) {
-    const hwSock = await hw.findOne(sock.remoteAddress);
-    console.log(hwSock);
+    const hwSock = hwConn.findhwConnect(sock.remoteAddress);
+    // console.log(hwSock);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     // let index = mapSockets.findIndex(function (o) {
     //   return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;

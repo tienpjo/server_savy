@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const dbs = require('../_helpers/database');
 const User = dbs.User;
-const Token = dbs.Token;
+
 // Thời gian sống của token
 
 const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE || "3650d";
