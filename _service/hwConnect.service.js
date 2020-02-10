@@ -23,7 +23,9 @@ async function findhwConnect({ remoteAdress }) {
         sttGPS: "-",
         sttConnect: "CLOSE",
     }
-    updateSttServer(hw.deviceId,sttSrv);
+    if (updateSttServer(hw.deviceId, sttSrv)) {
+        deleteConnect(hw._id);
+    }
 }
 
 // find status de tao roter cho app get
@@ -31,11 +33,10 @@ async function findStatusConnect(deviceId) {
     return await status.findOne(deviceId);
 }
 // tao async thuc hien update trang thai cua server - sim
-async function updateSttServer(deviceId,sttParam) {
-    const stt = await status.findOne({deviceId});
+async function updateSttServer(deviceId, sttParam) {
+    const stt = await status.findOne({ deviceId });
     if (stt) {
         Object.assign(stt, sttParam);
         await stt.save;
-        deleteConnect(hw._id);
     }
 }
