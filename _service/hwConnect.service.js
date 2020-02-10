@@ -31,8 +31,8 @@ async function findStatusConnect(deviceId) {
     return await status.findOne(deviceId);
 }
 // tao async thuc hien update trang thai cua server - sim
-async function updateSttServer(id,sttParam) {
-    const stt = await status.findById(id);
+async function updateSttServer(deviceId,sttParam) {
+    const stt = await status.findOne(deviceId);
     if (stt) {
         Object.assign(user, sttParam);
         await stt.save;
