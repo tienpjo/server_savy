@@ -5,7 +5,8 @@ module.exports = {
     hwCloseSocket
 }
 function hwCloseSocket(remoteAdress) {
-    const hw = hwConnect.findhwConnect(remoteAdress);
+    const hw = hwConnect.findhwConnect({remoteAdress});
+    console.log(hw);
     var sttSrv = {
         deviceId: hw.deviceId,
         sttGPS: "-",
