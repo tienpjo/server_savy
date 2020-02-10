@@ -8,4 +8,5 @@ module.exports = {
     Device: require('../models/device.model'),
     Tracking: require('../models/tracking'),
     Status: require('../models/status.model'),
+    hwConnect: require('../models/hwConnect.model'),
 };

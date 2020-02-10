@@ -7,7 +7,7 @@ const router = express.Router();
 const tracking = require('./models/tracking');
 const dbs = require('./_helpers/database');
 const Tracking = dbs.Tracking;
-const hw = dbs.HwConnect;
+const hw = dbs.hwConnect;
 const processData = require('./middleware/processData');
 var net = require('net');
 let bodyParser = require('body-parser');
@@ -71,7 +71,16 @@ server_tcp.on('connection', function (sock) {
     if (data_filter[0] == "MOTO-ID") {
       id_device_gps = data_filter[1].split('-').map(Number);
       console.log(id_device_gps);
-      mapSockets[id_device_gps] = {sock,id_device_gps};
+      mapSockets[id_device_gps] = sock;
+      var hwConnect = {
+        deviceId: id_device_gps,
+        sockConnect: sock
+      }
+      var bikeSock = new hw(hwConnect);
+      bikeSock.save(function (err) {
+        if (err) throw err;
+        console.log('Save SOCKET Succesfully.');
+      });
     }
     else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
       id_device_gps = data_filter[1].split('-').map(Number);
@@ -91,13 +100,15 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
   });
   sock.on('close', function (data) {
+    const hwSock = await hw.findOne(sock.remoteAddress);
+    console.log(hwSock);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     // let index = mapSockets.findIndex(function (o) {
     //   return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
     // })
-     console.log(mapSockets[[22, 157, 252, 62, 188, 105, 221, 220]])
-    var index = mapSockets.findIndex(i => [[i.remoteAddress]] == [[sock.remoteAddress]]);
-    console.log(index);
+    //  console.log(mapSockets[[22, 157, 252, 62, 188, 105, 221, 220]])
+    //var index = mapSockets.findIndex(i => i.);
+    // console.log(index);
     // if (index !== -1) mapSockets.splice(index, 1);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
   });
