@@ -57,10 +57,11 @@ app.post('/users/actionCtrl', function (req, res) {
   //res.status(200).json;
 });
 
-var line;
+
 server_tcp.on('connection', function (sock) {
   var data_filter;
   var id_device_gps;
+  var line;
   // io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
@@ -70,7 +71,7 @@ server_tcp.on('connection', function (sock) {
     if (data_filter[0] == "MOTO-ID") {
       id_device_gps = data_filter[1].split('-').map(Number);
       console.log(id_device_gps);
-      mapSockets[id_device_gps] = sock;
+      mapSockets[id_device_gps] = {sock,id_device_gps};
     }
     else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
       id_device_gps = data_filter[1].split('-').map(Number);
@@ -78,6 +79,8 @@ server_tcp.on('connection', function (sock) {
       processData.getTracking(data_filter, id_device_gps);
     }
     else if (data_filter[0] == "MOTO-GPS") {
+      id_device_gps = data_filter[1].split('-').map(Number);
+      mapSockets[id_device_gps] = sock;
       processData.getStt(data_filter, id_device_gps);
     }
     // sock.setTimeout(15000);
@@ -88,12 +91,12 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
   });
   sock.on('close', function (data) {
-    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+    // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     // let index = mapSockets.findIndex(function (o) {
     //   return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
     // })
-    // console.log(mapSockets[[ 22, 157, 252, 62, 188, 105, 221, 220 ]])
-    var index = mapSockets.indexOf(sock.remoteAddress);
+    //  console.log(mapSockets[[22, 157, 252, 62, 188, 105, 221, 220]])
+    var index = mapSockets.indexOf(i => i.id_device_gps = id_device_gps);
     console.log(index);
     // if (index !== -1) mapSockets.splice(index, 1);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
