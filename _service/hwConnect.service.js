@@ -19,7 +19,11 @@ async function findhwConnect({remoteAdress}) {
     stt.save(function (err) {
         if (err) throw err;
         console.log('Save Stus Succesfully.');
-        await hwConnect.findByIdAndRemove(hw._id);
+        deleteConnect(hw._id);
     });
     // console.log(hw);
+}
+
+async function deleteConnect({id}) {
+    await hwConnect.findByIdAndRemove(hw._id);
 }
