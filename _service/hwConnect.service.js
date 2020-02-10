@@ -36,6 +36,6 @@ async function updateSttServer(deviceId, sttParam) {
     const stt = await status.findOne({ deviceId });
     if (stt) {
         Object.assign(stt, sttParam);
-        await stt.save;
+        await stt.save();
     }
 }
