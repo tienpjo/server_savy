@@ -53,7 +53,7 @@ app.post('/users/actionCtrl', function (req, res) {
   if (req.body.actionCtrl == "OFF") {
     mapSockets[req.body.deviceId].write('MOTO_OFF');
   }
-   res.json('ControlSuccess');
+  res.json('ControlSuccess');
   //res.status(200).json;
 });
 
@@ -71,10 +71,13 @@ server_tcp.on('connection', function (sock) {
       id_device_gps = data_filter[1].split('-').map(Number);
       mapSockets[id_device_gps] = sock;
     }
-    else if (data[0] == "MOTO-RUNNING" || data[0] == "MOTO-STOPING") {
+    else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
       id_device_gps = data_filter[1].split('-').map(Number);
       mapSockets[id_device_gps] = sock;
-      processData.processData(data_filter, id_device_gps);
+      processData.getTracking(data_filter, id_device_gps);
+    }
+    else if (data_filter[0] == "MOTO-GPS") {
+      processData.getStt(data_filter, id_device_gps);
     }
     // sock.setTimeout(15000);
   });
@@ -84,6 +87,12 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
   });
   sock.on('close', function (data) {
+    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+    let index = mapSockets.findIndex(function (o) {
+      return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
+    })
+    console.log(index);
+    if (index !== -1) mapSockets.splice(index, 1);
     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
   });
 });

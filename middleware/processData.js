@@ -1,7 +1,7 @@
 const dbs = require('../_helpers/database');
 const Tracking = dbs.Tracking;
-
-function processData(data, id_device_gps) {
+const Status = dbs.Status;
+function getTracking(data, id_device_gps) {
     var movePer;
     var stt;
     if (data[0] == "MOTO-RUNNING" || data[0] == "MOTO-STOPING") {
@@ -18,7 +18,7 @@ function processData(data, id_device_gps) {
             stt = "ON"
         }
     }
-    var bike_tracking = {
+    var bikeTracking = {
         deviceId: id_device_gps,
         bat: data[2],
         status: stt,
@@ -27,14 +27,33 @@ function processData(data, id_device_gps) {
         createdAt: Date.now(),
         move: movePer
     };
-    var track = new Tracking(bike_tracking);
+    var track = new Tracking(bikeTracking);
     track.save(function (err) {
         if (err) throw err;
         console.log('User Test successfully saved.');
     });
 }
 
+function getStt(data,id_device_gps)
+{
+    var bikeStatus = {
+        deviceId:id_device_gps,
+        sttGPS:data[1],
+        // sttConnect:data[2]
+    }
+    var stt = new Status(bikeStatus);
+    stt.save(function (err) {
+        if (err) throw err;
+        console.log('Save Status Succesfully.');
+    });
+}
 
+function closeHandler(data)
+{
+    
+    
+}
 module.exports = {
-    processData
+    getTracking,
+    getStt
 }
