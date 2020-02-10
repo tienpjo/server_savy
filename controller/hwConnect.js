@@ -2,7 +2,7 @@ const hwConnect = require('../_service/hwConnect.service');
 const dbs = require('../_helpers/database');
 const status = dbs.Status;
 module.exports = {
-    hwCloseSocket
+    
 }
 function hwCloseSocket(remoteAdress) {
     const hw = hwConnect.findhwConnect({remoteAdress});

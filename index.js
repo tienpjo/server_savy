@@ -14,6 +14,7 @@ const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
 const hwConn = require('./controller/hwConnect');
+const hwTest = require('./_service/hwConnect.service')
 server.listen(3000);
 
 const server_tcp = net.createServer();
@@ -96,7 +97,7 @@ server_tcp.on('connection', function (sock) {
   sock.on('error', () => {
   });
   sock.on('close', function (data) {
-    hwConn.hwCloseSocket(sock.remoteAddress);
+    hwTest.findhwConnect(sock.remoteAddress);
     // console.log(hwSock);
     // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     // let index = mapSockets.findIndex(function (o) {
