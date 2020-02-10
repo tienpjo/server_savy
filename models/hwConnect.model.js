@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const unique = require('mongoose-unique-validator');
 const hwConnectSchema = new mongoose.Schema({
-    deviceId:{type: String,required:true},                      // 
+    deviceId:{type: Array, required: true},                      // 
     sockConnect:{type:Array,require: true}        // 
 },
     {
