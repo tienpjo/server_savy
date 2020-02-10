@@ -69,6 +69,7 @@ server_tcp.on('connection', function (sock) {
     data_filter = data_raw.split(',');
     if (data_filter[0] == "MOTO-ID") {
       id_device_gps = data_filter[1].split('-').map(Number);
+      console.log(id_device_gps);
       mapSockets[id_device_gps] = sock;
     }
     else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
