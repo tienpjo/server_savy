@@ -8,7 +8,7 @@ const authorize = require("../middleware/authorize");
 const AuthMiddleWare = require("../middleware/AuthMiddleware");
 const managerDevice = require("../_service/manager.service");
 const rand = require("random-int");
-
+const getStatus = require('../controller/sttServer/getStatus');
 let initAPIs = (app) => {
     router.post('/register', AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, register);
     router.post('/login', login);
@@ -21,6 +21,7 @@ let initAPIs = (app) => {
     router.get('/isLogined', isLogined);
     router.get('/overview', overview);
     router.get('/getAllUser', getAll);
+    router.get('/getStatusSrv',getStatus.getStatusSrv);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
     // router.get('/:id', update);
