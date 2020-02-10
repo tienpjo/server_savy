@@ -28,5 +28,5 @@ async function findhwConnect({remoteAdress}) {
 }
 
 async function findStatusConnect(deviceId) {                           // tạm thời đang lấy tracking từ mongo, lấy track theo DeviceId
-    return await hwConnect.findOne(deviceId);
+    return await status.findOne(deviceId);
 }
