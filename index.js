@@ -88,12 +88,13 @@ server_tcp.on('connection', function (sock) {
   });
   sock.on('close', function (data) {
     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
-    let index = mapSockets.findIndex(function (o) {
-      return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
-    })
+    // let index = mapSockets.findIndex(function (o) {
+    //   return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
+    // })
+    let index = mapSockets.findIndex(device => device.remoteAddress === sock.remoteAddress);
     console.log(index);
-    if (index !== -1) mapSockets.splice(index, 1);
-    console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+    // if (index !== -1) mapSockets.splice(index, 1);
+    // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
   });
 });
 io.on('connection', function (socket) {
