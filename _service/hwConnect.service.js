@@ -34,7 +34,7 @@ async function findStatusConnect(deviceId) {
 async function updateSttServer(deviceId,sttParam) {
     const stt = await status.findOne({deviceId});
     if (stt) {
-        Object.assign(user, sttParam);
+        Object.assign(stt, sttParam);
         await stt.save;
         deleteConnect(hw._id);
     }
