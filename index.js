@@ -13,7 +13,7 @@ var PORT = 9000;
 const jwt = require('./_helpers/jwt');
 var errHandler = require('./_helpers/error-handler')
 const initAPIs = require('./routes/user');
-const hwTest = require('./_service/hwConnect.service')
+const hwTest = require('./_service/connect/hwConnect.service')
 server.listen(3000);
 
 const server_tcp = net.createServer();
