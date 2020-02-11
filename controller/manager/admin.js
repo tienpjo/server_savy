@@ -1,5 +1,5 @@
 //khối liên quan đến react manager
-const managerDevice = require("../../_service/manager.service");
+const managerDevice = require("../../_service/manager/manager.service");
 module.exports = {
     overview,
     isLogined
