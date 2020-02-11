@@ -24,7 +24,7 @@ let initAPIs = (app) => {
     // router.get('/:id', getById);
     // router.get('/:id', update);
     // router.delete('/:id', _delete);
-    router.post('/logout', logout);
+    router.post('/logout', user.logout);
     return app.use("/users", router);
 }
 module.exports = initAPIs;
