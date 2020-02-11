@@ -18,7 +18,7 @@ let initAPIs = (app) => {
     router.post('/deviceUpdate', device.deviceUpdate);
     router.post('/get_tracking', track.getTracking);                    // hàm get tracking, @@ kdcviettaiday           
     router.get('/isLogined', manager.isLogined);
-    router.get('/overview', manager.overviewoverview);
+    router.get('/overview', manager.overview);
     router.get('/getStatusSrv', getStatus.getStatusSrv);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
