@@ -1,7 +1,7 @@
 const config = require('../config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const dbs = require('../_helpers/database');
+const dbs = require('../../_helpers/database');
 const User = dbs.User;
 
 // Thời gian sống của token

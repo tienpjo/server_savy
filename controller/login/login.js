@@ -1,23 +1,18 @@
-const express = require('express');
-const userService = require('../_service/user.service');
-const deviceService = require('../_service/device.service');
-module.exports = {
-    add,
+const userService = require('../../_service/user/user.service');
+
+module.exports ={
     login,
     register,
     getAll,
     getCurrent,
     getById,
-};
-function add (req, res, next) {                              // hàm thực thi việc add device
-    console.log(req.jwtDecoded.sub._id);
-    deviceService.addDevice(req.jwtDecoded.sub._id,req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
-  };
+    update,
+    _delete,
+    logout
+}
 
 function login(req, res, next) {
-         userService.authenticate(req.body)
+    userService.authenticate(req.body)
         .then(user_mobi => user_mobi ? res.json(user_mobi) : res.status(400).json({ message: 'Username or password is incorrect' }))
         .catch(err => next(err));
 }
@@ -56,4 +51,8 @@ function _delete(req, res, next) {
     userService.delete(req.params.id)
         .then(() => res.json({}))
         .catch(err => next(err));
+}
+
+function logout(req, res, ) {
+    res.status(200).send({ auth: false, token: null });
 }

@@ -1,9 +1,11 @@
-const hwConnect = require('../../_service/connect/hwConnect.service')
+
+const deviceService = require('../../_service/device/device.service');
 module.exports = {
-    getStatusSrv
+    getTracking
 }
-function getStatusSrv(req, res, next) {
-    hwConnect.findStatusConnect(req.body)
+
+function getTracking(req, res, next) {
+    deviceService.find_tracking_device(req.body)
         .then((result) => {
             res.json(result);
         })

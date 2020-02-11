@@ -1,5 +1,5 @@
 const jwtHelper = require("../_helpers/jwt");
-const userService = require('../_service/user.service');
+const userService = require('../_service/user/user.service');
 const config = require('../config.json');
 const debug = console.log.bind(console);
 const { body, validationResult } = require('express-validator');
