@@ -1,5 +1,6 @@
 const dbs = require('../../../_helpers/database');
 const User = dbs.User;
+const Device = dbs.Device;
 module.exports = {
   getAll,
   update,
@@ -7,6 +8,16 @@ module.exports = {
   getById,
   addUser,
   findUserByPhone,
+  getOverView
+}
+async function getOverView() {                                      // delete Device (admin)
+  const totalUser = await User.count({});
+  const totalDevice = await Device.count({});
+  var total = {
+      totalUser:totalUser,
+      totalDevice:totalDevice
+  }
+  return total;
 }
 
 async function update(id, userParam) {
