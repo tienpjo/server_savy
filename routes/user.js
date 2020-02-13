@@ -25,21 +25,21 @@ let initAPIs = (app) => {
     router.post('/logout', user.logout);
     return app.use("/users", router);
 }
-let UserManagerApi = (app) => {
+let UserManagerApi = (appApi) => {
     router.get('/isLogined', dashboardUser.isLogined);
     router.get('/overview', dashboardUser.overview);
     router.get('/getAllUser', dashboardUser.getAll);
     router.post('/edit', dashboardUser.update);
     router.post('/add',dashboardUser.addUser);
     router.get('/getUserByPhone',dashboardUser.getUserByPhone);
-    return app.use("/user",router);
+    return appApi.use("/user",router);
 }
-let DeviceManagerApi = (app) => {
+let DeviceManagerApi = (appApiDevice) => {
     router.get('/DeviceList', dashboardDevice.getDeviceAll);
     router.post('/getDeviceListByDeviceId',dashboardDevice.deviceGetDeviceList);
     router.post('/edit',dashboardDevice.deviceEdit);
     router.get('/delete',dashboardDevice.deviceDelete);
-    return app.use("/device",router);
+    return appApiDevice.use("/device",router);
 }
 module.exports = {
     initAPIs,
