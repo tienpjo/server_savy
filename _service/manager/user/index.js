@@ -1,4 +1,4 @@
-const dbs = require('../../_helpers/database');
+const dbs = require('../../../_helpers/database');
 const User = dbs.User;
 module.exports = {
   getAll,
