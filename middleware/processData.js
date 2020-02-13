@@ -51,7 +51,6 @@ function getStt(data,id_device_gps)
 function closeHandler(data)
 {
     
-    
 }
 module.exports = {
     getTracking,

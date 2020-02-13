@@ -1,4 +1,4 @@
-const dbs = require('../../_helpers/database');
+const dbs = require('../../../../_helpers/database');
 const Device = dbs.Device;
 const User = dbs.User;
 
@@ -16,3 +16,4 @@ async function getOverView() {                                      // delete De
     }
     return total;
 }
+

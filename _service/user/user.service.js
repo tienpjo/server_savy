@@ -9,13 +9,9 @@ const User = dbs.User;
 const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE || "3650d";
 module.exports = {
   authenticate,
-  getAll,
-  getById,
   create,
-  update,
   refreshToken,
-  verifyToken,
-  delete: _delete
+  verifyToken
 }
 
 async function authenticate({ mobile, password }) {
@@ -40,13 +36,7 @@ async function authenticate({ mobile, password }) {
   }
 }
 
-async function getAll() {
-  return await User.find().select('-hash');
-}
 
-async function getById(id) {
-  return await User.findById(id).select('-hash');
-}
 
 async function create(userParam) {
   if (await User.findOne({ mobile: userParam.mobile })) {
@@ -59,22 +49,7 @@ async function create(userParam) {
   await user.save();
 }
 
-async function update(id, userParam) {
-  const user = await User.findById(id);
-  if (!user) throw 'User not found';
-  if (user.mobile !== userParam.mobile && await User.findOne({ mobile: userParam.mobile })) {
-    throw 'Mobile "' + userParam.mobile + '" is already';
-  }
-  if (userParam.password) {
-    userParam.hash = bcrypt.hashSync(userParam.password, 10);
-  }
-  Object.assign(user, userParam);
-  await user.save;
-}
 
-async function _delete(id) {
-  await User.findByIdAndRemove(id);
-}
 
 async function refreshToken(req, res) {
   // User gửi mã refresh token kèm theo trong body

@@ -6,19 +6,16 @@ const getStatus = require('../controller/sttServer/getStatus');
 const user = require('../controller/login/login');
 const device = require('../controller/device/device');
 const track = require('../controller/track/track');
-const manager = require('../controller/manager/admin')
+const dashboard = require('../controller/dashboard/user')
 let initAPIs = (app) => {
     router.post('/register', AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, user.register);
     router.post('/login', user.login);
     router.use(AuthMiddleWare.isAuth);                               // chặn tất cả các truy cập sau login bằng việc Authention
-    router.get('/getAllUser', user.getAll);
     router.post('/add', device.add);
     router.post('/delete_device', device.delete_device);
     router.get('/find_device', device.find_device);
     router.post('/deviceUpdate', device.deviceUpdate);
-    router.post('/get_tracking', track.getTracking);                    // hàm get tracking, @@ kdcviettaiday           
-    router.get('/isLogined', manager.isLogined);
-    router.get('/overview', manager.overview);
+    router.post('/get_tracking', track.getTracking);                              
     router.get('/getStatusSrv', getStatus.getStatusSrv);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
@@ -27,5 +24,12 @@ let initAPIs = (app) => {
     router.post('/logout', user.logout);
     return app.use("/users", router);
 }
-module.exports = initAPIs;
-
+let initManagerApi = (app) => {
+    router.get('/isLogined', dashboard.isLogined);
+    router.get('/overview', dashboard.overview);
+    router.get('/getAllUser', user.getAll);
+}
+module.exports = {
+    initAPIs,
+    initManagerApi
+}

@@ -45,14 +45,11 @@ app.use(function (req, res, next) {
 let mapSockets = [];
 
 app.post('/users/actionCtrl', function (req, res) {
-  console.log(req.body.deviceId);
   if (req.body.actionCtrl == "OFF") {
     mapSockets[req.body.deviceId].write('MOTO_OFF');
   }
   res.json('ControlSuccess');
-  //res.status(200).json;
 });
-
 
 server_tcp.on('connection', function (sock) {
   var data_filter;
@@ -78,6 +75,7 @@ server_tcp.on('connection', function (sock) {
         console.log('Save SOCKET Succesfully.');
       });
     }
+
     else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
       id_device_gps = data_filter[1].split('-').map(Number);
       mapSockets[id_device_gps] = sock;
