@@ -6,7 +6,7 @@ module.exports = {
     edit,
     _delete,
     getDeviceById,
-    getDeviceListByDeviceId
+    getDeviceListByDeviceId,
 }
 async function getAllDevice() {
     return await Device.find();

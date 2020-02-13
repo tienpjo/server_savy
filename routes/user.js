@@ -6,7 +6,8 @@ const getStatus = require('../controller/sttServer/getStatus');
 const user = require('../controller/login/login');
 const device = require('../controller/device/device');
 const track = require('../controller/track/track');
-const dashboard = require('../controller/dashboard/user')
+const dashboardUser = require('../controller/dashboard/user')
+const dashboardDevice = require('../controller/dashboard/device')
 let initAPIs = (app) => {
     router.post('/register', AuthMiddleWare.userValidationRules(), AuthMiddleWare.validate, user.register);
     router.post('/login', user.login);
@@ -24,12 +25,24 @@ let initAPIs = (app) => {
     router.post('/logout', user.logout);
     return app.use("/users", router);
 }
-let initManagerApi = (app) => {
-    router.get('/isLogined', dashboard.isLogined);
-    router.get('/overview', dashboard.overview);
-    router.get('/getAllUser', user.getAll);
+let UserManagerApi = (app) => {
+    router.get('/isLogined', dashboardUser.isLogined);
+    router.get('/overview', dashboardUser.overview);
+    router.get('/getAllUser', dashboardUser.getAll);
+    router.post('/edit', dashboardUser.update);
+    router.post('/add',dashboardUser.addUser);
+    router.get('/getUserByPhone',dashboardUser.getUserByPhone);
+    return app.use("/user",router);
+}
+let DeviceManagerApi = (app) => {
+    router.get('/DeviceList', dashboardDevice.getDeviceAll);
+    router.post('/getDeviceListByDeviceId',dashboardDevice.deviceGetDeviceList);
+    router.post('/edit',dashboardDevice.deviceEdit);
+    router.get('/delete',dashboardDevice.deviceDelete);
+    return app.use("/device",router);
 }
 module.exports = {
     initAPIs,
-    initManagerApi
+    UserManagerApi,
+    DeviceManagerApi
 }

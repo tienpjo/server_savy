@@ -7,7 +7,9 @@ module.exports = {
     _delete,
     getAll,
     getCurrent,
-    getById
+    getById,
+    addUser,
+    getUserByPhone
 }
 function overview(req, res, next) {
     managerUser.getOverView()
@@ -21,6 +23,7 @@ function overview(req, res, next) {
 function isLogined(req, res, next) {            // check đã login hay chưa?
     res.json(200).json();
 }
+
 
 function update(req, res, next) {
     managerUser.update(req.params.id, req.body)
@@ -48,6 +51,17 @@ function getById(req, res, next) {
 
 function _delete(req, res, next) {
     managerUser._delete(req.params.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+function addUser(req, res, next) {
+    managerUser.addUser(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function getUserByPhone(req, res, next) {
+    managerUser.findUserByPhone(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
