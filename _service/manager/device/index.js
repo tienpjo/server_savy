@@ -1,4 +1,4 @@
-const dbs = require('../../_helpers/database');
+const dbs = require('../../../_helpers/database');
 const Device = dbs.Device;
 
 module.exports = {
