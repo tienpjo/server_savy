@@ -9,12 +9,8 @@ module.exports = {
 }
 function getDeviceAll(req, res, next) {
     manageDevice.getAllDevice()
-    .then((result) => {
-        res.json(result);
-    })
-    .catch((err) => {
-        res.status(500).json({ success: false, msg: `Something went wrong. ${err}` });
-    });
+    .then(devices => res.json(devices))
+    .catch(err => next(err));
 }
 
 function deviceEdit(req, res, next) {
