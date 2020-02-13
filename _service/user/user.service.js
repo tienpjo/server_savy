@@ -11,7 +11,8 @@ module.exports = {
   authenticate,
   create,
   refreshToken,
-  verifyToken
+  verifyToken,
+  getById
 }
 
 async function authenticate({ mobile, password }) {
@@ -75,7 +76,9 @@ async function refreshToken(req, res) {
     });
   }
 }
-
+async function getById(id) {
+  return await User.findById(id).select('-hash');
+}
 async function verifyToken(token, secretKey) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, secretKey, (error, decoded) => {
