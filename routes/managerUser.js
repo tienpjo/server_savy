@@ -13,6 +13,5 @@ let UserManagerApi = (appApi) => {
     return appApi.use("/user",router);
 }
 
-module.exports = {
-    UserManagerApi
-}
+module.exports = UserManagerApi;
+

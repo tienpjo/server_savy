@@ -27,6 +27,4 @@ let initAPIs = (app) => {
 }
 
 
-module.exports = {
-    initAPIs
-}
+module.exports = initAPIs;

@@ -9,6 +9,4 @@ let DeviceManagerApi = (appApiDevice) => {
     router.get('/delete',dashboardDevice.deviceDelete);
     return appApiDevice.use("/device",router);
 }
-module.exports = {
-    DeviceManagerApi
-}
+module.exports = DeviceManagerApi;
