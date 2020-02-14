@@ -44,9 +44,9 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-initAPIs(app);
 DeviceManagerApi(app);
 UserManagerApi(app);
+initAPIs(app);
 let mapSockets = [];
 
 app.post('/users/actionCtrl', function (req, res) {
