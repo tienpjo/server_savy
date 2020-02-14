@@ -9,7 +9,7 @@ module.exports = {
     getDeviceListByDeviceId,
 }
 async function getAllDevice() {
-    return await Device.find();
+    return await Device.find().select("__v");
 }
 
 async function edit(id, deviceParam) {
