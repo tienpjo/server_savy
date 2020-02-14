@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const unique = require('mongoose-unique-validator');
-const UserSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
     username:{type: String,required:true},                      // user cần khai báo tên
     password: {type:String,unique:true,required:true},        // số đt
 },
