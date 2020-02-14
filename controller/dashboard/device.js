@@ -9,7 +9,7 @@ module.exports = {
 }
 function getDeviceAll(req, res, next) {
     manageDevice.getAllDevice()
-    .then(devices => res.json({"data":devices}))
+    .then(devices => res.status(200).json({"data":devices}))
     .catch(err => next(err));
 }
 
