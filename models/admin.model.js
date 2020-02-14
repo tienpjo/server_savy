@@ -10,4 +10,4 @@ const AdminSchema = new mongoose.Schema({
 });
 AdminSchema.plugin(unique, { message: 'That {PATH} is already taken.' });
 AdminSchema.set('toJSON',{virtuals: true});
-const Admin = module.exports = mongoose.model('Admin',UserSchema);
+const Admin = module.exports = mongoose.model('Admin',AdminSchema);
