@@ -9,8 +9,15 @@ module.exports = {
     getCurrent,
     getById,
     addUser,
-    getUserByPhone
+    getUserByPhone,
+    login
 }
+function login(req, res, next) {
+    managerUser.login(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
 function overview(req, res, next) {
     managerUser.getOverView()
         .then((result) => {

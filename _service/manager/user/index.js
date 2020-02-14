@@ -1,4 +1,5 @@
 const dbs = require('../../../_helpers/database');
+const bcrypt = require('bcryptjs');
 const User = dbs.User;
 const Device = dbs.Device;
 module.exports = {
@@ -8,8 +9,20 @@ module.exports = {
   getById,
   addUser,
   findUserByPhone,
-  getOverView
+  getOverView,
+  login
 }
+async function login({ username, password }) {
+  const admin= await Admin.findOne({ username });
+  if (admin && bcrypt.compareSync(password, admin.password))
+  {
+    const OK = "OK";
+    return {
+      OK
+    };
+  }
+}
+
 async function getOverView() {                                      // delete Device (admin)
   const totalUser = await User.count({});
   const totalDevice = await Device.count({});

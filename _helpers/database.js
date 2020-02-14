@@ -9,4 +9,5 @@ module.exports = {
     Tracking: require('../models/tracking'),
     Status: require('../models/status.model'),
     hwConnect: require('../models/hwConnect.model'),
+    Admin: require('../models/admin.model'),
 };
