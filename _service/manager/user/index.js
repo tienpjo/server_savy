@@ -16,7 +16,11 @@ module.exports = {
 async function login({ username, password }) {
   const admin= await Admin.findOne({ username });
   if (admin && bcrypt.compareSync(password, admin.password))
-  return 1;
+  {
+    const Ok = "OK";
+    return Ok;
+  };
+  // return 1;
 }
 
 async function getOverView() {                                      // delete Device (admin)
