@@ -28,7 +28,7 @@ function overview(req, res, next) {
         });
 }
 function isLogined(req, res, next) {            // check đã login hay chưa?
-    res.json(200).json();
+    res.json({});
 }
 
 
