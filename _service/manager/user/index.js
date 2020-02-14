@@ -2,6 +2,7 @@ const dbs = require('../../../_helpers/database');
 const bcrypt = require('bcryptjs');
 const User = dbs.User;
 const Device = dbs.Device;
+const Admin = dbs.Admin;
 module.exports = {
   getAll,
   update,
