@@ -23,7 +23,7 @@ server_tcp.listen(PORT, HOST, () => {
   console.log('TCP Server is running on port ' + PORT + '.');
 });
 
-app.options('*', cors());
+app.options('http://localhost:3000', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
