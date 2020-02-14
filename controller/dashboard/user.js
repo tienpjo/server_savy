@@ -14,7 +14,7 @@ module.exports = {
 }
 function login(req, res, next) {
     managerUser.login(req.body)
-        .then(() => res.json(OK))
+        .then(() => res.json("OK"))
         .catch(err => next(err));
 }
 
