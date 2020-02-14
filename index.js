@@ -23,7 +23,7 @@ server_tcp.listen(PORT, HOST, () => {
   console.log('TCP Server is running on port ' + PORT + '.');
 });
 
-app.options('http://localhost:3000', cors());
+app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -32,8 +32,7 @@ app.use(bodyParser.urlencoded({
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-DeviceManagerApi(app);
-UserManagerApi(app);
+
 app.use(cors());
 app.use(jwt());
 
@@ -41,12 +40,14 @@ app.use(jwt());
 app.use(errHandler);
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
 initAPIs(app);
+DeviceManagerApi(app);
+UserManagerApi(app);
 let mapSockets = [];
 
 app.post('/users/actionCtrl', function (req, res) {
