@@ -81,7 +81,6 @@ server_tcp.on('connection', function (sock) {
         console.log('Save SOCKET Succesfully.');
       });
     }
-
     else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
       id_device_gps = data_filter[1].split('-').map(Number);
       mapSockets[id_device_gps] = sock;

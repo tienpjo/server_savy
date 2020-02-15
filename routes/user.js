@@ -17,7 +17,7 @@ let initAPIs = (app) => {
     router.get('/find_device', device.find_device);
     router.post('/deviceUpdate', device.deviceUpdate);
     router.post('/get_tracking', track.getTracking);                              
-    router.get('/getStatusSrv', getStatus.getStatusSrv);
+    router.post('/checkServer', getStatus.getStatusSrv);
     // router.get('/current', getCurrent);
     // router.get('/:id', getById);
     // router.get('/:id', update);
