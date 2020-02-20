@@ -38,9 +38,7 @@ function deviceDelete(req, res, next) {
 }
 
 function deviceGetDeviceList(req,res,next) {
-    console.log(req.body);
-    console.log('deviceId' + req.body.deviceId);
     manageDevice.getDeviceListByDeviceId(req.body.deviceId)
-        .then((device) => res.json({device}))
+        .then((device) => res.json({data : device}))
         .catch(err => next(err));
 }
