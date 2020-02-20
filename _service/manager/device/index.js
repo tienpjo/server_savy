@@ -28,5 +28,5 @@ async function getDeviceById(id) {
 }
 
 async function getDeviceListByDeviceId(deviceId) {
-    return await Device.find(deviceId).select('-__v');
+    return await Device.find({ "deviceId.0": { $exists: true }, deviceId: deviceId}).select('-__v');
 }
