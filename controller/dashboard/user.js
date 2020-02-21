@@ -71,7 +71,7 @@ function getUserByPhone(req, res, next) {
     console.log(req.params);
     let mobile;
       mobile = req.params["mobile"];
-      mobile = phone.slice(1);
+      mobile = mobile.slice(1);
       console.log(mobile);
     managerUser.findUserByPhone(mobile)
         .then((users) => res.json({data : users}))
