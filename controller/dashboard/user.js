@@ -40,7 +40,7 @@ function update(req, res, next) {
 
 function getAll(req, res, next) {
     managerUser.getAll()
-        .then(users => res.json(users))
+        .then(users => res.json({ data: users }))
         .catch(err => next(err));
 }
 
