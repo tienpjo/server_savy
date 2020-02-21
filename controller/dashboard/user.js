@@ -68,11 +68,15 @@ function addUser(req, res, next) {
 }
 
 function getUserByPhone(req, res, next) {
-    console.log(req.params);
     let mobile;
-      mobile = req.params["mobile"];
-      mobile = mobile.slice(1);
-      console.log(mobile);
+    try {
+        mobile = req.params["mobile"];
+        mobile = mobile.slice(1);
+      } catch (error) {
+        res.json({ error: error });
+        console.error("queryUserByPhone", error);
+        return;
+      }
     managerUser.findUserByPhone(mobile)
         .then((users) => res.json({data : users}))
         .catch(err => next(err));
