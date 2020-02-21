@@ -54,8 +54,9 @@ async function getAll() {
   return await User.find();
 }
 
-async function getById(id) {
-  return await User.findById(id);
+async function getById(userId) {
+  return await User.findOne(
+    { _id: userId });
 }
 
 async function addUser(userParam) {

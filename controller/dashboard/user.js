@@ -51,8 +51,16 @@ function getCurrent(req, res, next) {
 }
 
 function getById(req, res, next) {
-    managerUser.getById(req.params.id)
-        .then(user => user ? res.json(user) : res.sendStatus(404))
+    let userId;
+    try {
+        userId = req.params["id"];
+    } catch (error) {
+        res.send({ error: error });
+        console.error("queryUserById", error);
+        return;
+    }
+    managerUser.getById(userId)
+        .then(user => res.json({ data: user }))
         .catch(err => next(err));
 }
 
@@ -72,12 +80,12 @@ function getUserByPhone(req, res, next) {
     try {
         mobile = req.params["mobile"];
         mobile = mobile.slice(1);
-      } catch (error) {
+    } catch (error) {
         res.json({ error: error });
         console.error("queryUserByPhone", error);
         return;
-      }
+    }
     managerUser.findUserByPhone(mobile)
-        .then((users) => res.json({data : users}))
+        .then((users) => res.json({ data: users }))
         .catch(err => next(err));
 }
