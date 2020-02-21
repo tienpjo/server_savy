@@ -33,7 +33,7 @@ function isLogined(req, res, next) {            // check đã login hay chưa?
 
 
 function update(req, res, next) {
-    managerUser.update(req.params.id, req.body)
+    managerUser.update(req.params._id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
