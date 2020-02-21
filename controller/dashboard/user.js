@@ -68,7 +68,8 @@ function addUser(req, res, next) {
 }
 
 function getUserByPhone(req, res, next) {
-    managerUser.findUserByPhone(req.body)
+    console.log(req.params);
+    managerUser.findUserByPhone(req.params)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

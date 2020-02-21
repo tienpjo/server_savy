@@ -10,7 +10,7 @@ let UserManagerApi = (appApi) => {
     router.get('/getAllUser', dashboardUser.getAll);
     router.post('/edit', dashboardUser.update);
     router.post('/add',dashboardUser.addUser);
-    router.get('/getUserByPhone',dashboardUser.getUserByPhone);
+    router.get('/getUserByPhone/:mobile',dashboardUser.getUserByPhone);
     return appApi.use("/user",router);
 }
 

@@ -67,5 +67,5 @@ async function addUser(userParam) {
 }
 
 async function findUserByPhone(userParam) {
-  return await User.find({ mobile: userParam.mobile })
+  return await User.find({ mobile: { $regex: `.*${mobile}.*` } })
 }
