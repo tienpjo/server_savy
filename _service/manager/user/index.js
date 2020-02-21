@@ -51,7 +51,7 @@ async function _delete(id) {
 }
 
 async function getAll() {
-  return await User.find({});
+  return await User.find({}).select('-__v').select('-id');
 }
 
 async function getById(userId) {
