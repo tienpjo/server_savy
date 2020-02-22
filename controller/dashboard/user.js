@@ -72,6 +72,7 @@ function _delete(req, res, next) {
         .catch(err => next(err));
 }
 function addUser(req, res, next) {
+    console.log(req.body);
     managerUser.addUser(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
