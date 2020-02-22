@@ -41,11 +41,7 @@ function update(req, res, next) {
 
 function getAll(req, res, next) {
     managerUser.getAll()
-             .then((result) => {
-                   res.json(bcrypt.decodeBase64(result.hash,10));
-                        })
-        // .then((users) => {
-        //     res.json({ data: users }))
+        .then(users => res.json({ data: users }))
         .catch(err => next(err));
 }
 
