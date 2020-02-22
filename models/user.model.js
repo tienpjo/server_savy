@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema({
     createdDate: { type: Number, default: Date.now }, // Thời gian tạo tài khoản
     expiredDate: Number,                                // Thời gian hết hạn
     storeInfo: {
-        name: String,
         addr: String, // Địa chỉ
         ward: String,
         district: String,
