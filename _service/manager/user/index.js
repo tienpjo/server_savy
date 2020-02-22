@@ -64,8 +64,8 @@ async function addUser(userParam) {
     throw 'Mobile "' + userParam.mobile + '" is already';
   }
   const userAdd = new User(userParam);
-  console.log(userAdd.password);
-  if (userAdd.password) {
+  // console.log(userAdd.password);
+  if (userParam.password) {
     userAdd.hash = bcrypt.hashSync(userParam.password, 10);
   }
   await userAdd.save();
