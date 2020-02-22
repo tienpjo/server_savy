@@ -1,5 +1,6 @@
 //khối liên quan đến react manager
 const managerUser = require("../../_service/manager/user/index");
+const bcrypt = require('bcryptjs');
 module.exports = {
     overview,
     isLogined,
@@ -40,7 +41,11 @@ function update(req, res, next) {
 
 function getAll(req, res, next) {
     managerUser.getAll()
-        .then(users => res.json({ data: users }))
+             .then((result) => {
+                   res.json(bcrypt.decodeBase64(result.hash,10));
+                        })
+        // .then((users) => {
+        //     res.json({ data: users }))
         .catch(err => next(err));
 }
 
@@ -65,7 +70,7 @@ function getById(req, res, next) {
 }
 
 function _delete(req, res, next) {
-    console.log(req.params._id);
+    let id = req.params["_id"];
     managerUser._delete(req.params._id)
         .then(() => res.json({}))
         .catch(err => next(err));
