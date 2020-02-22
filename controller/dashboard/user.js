@@ -67,6 +67,8 @@ function getById(req, res, next) {
 
 function _delete(req, res, next) {
     let id = req.params["_id"];
+    console.log(id);
+    console.log(req.params._id);
     managerUser._delete(req.params._id)
         .then(() => res.json({}))
         .catch(err => next(err));
