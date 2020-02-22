@@ -63,7 +63,7 @@ async function addUser(userParam) {
   if (await User.findOne({ mobile: userParam.mobile })) {
     throw 'Mobile "' + userParam.mobile + '" is already';
   }
-  const userAdd = new User(userAdd);
+  const userAdd = new User(userParam);
   if (userAdd.password) {
     userAdd.hash = bcrypt.hashSync(userParam.password, 10);
   }
