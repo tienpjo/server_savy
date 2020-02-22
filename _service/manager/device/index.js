@@ -20,7 +20,7 @@ async function edit(id, deviceParam) {
 }
 
 async function _delete(id) {
-    await Device.findByIdAndRemove(id);
+    return await Device.findByIdAndRemove(id);
 }
 
 async function getDeviceById(id) {

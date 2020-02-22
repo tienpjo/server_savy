@@ -32,7 +32,8 @@ function getDeviceById(req, res, next) {
 }
 
 function deviceDelete(req, res, next) {
-    manageDevice._delete(req.params.id)
+    let id = req.params["id"];
+    manageDevice._delete(id)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
