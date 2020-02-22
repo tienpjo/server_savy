@@ -73,7 +73,7 @@ function _delete(req, res, next) {
 }
 function addUser(req, res, next) {
     console.log(req.body);
-    managerUser.addUser(req.body)
+    managerUser.addUser(req.body.user)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
