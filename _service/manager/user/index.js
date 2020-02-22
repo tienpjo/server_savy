@@ -40,7 +40,7 @@ async function update(id, userParam) {
     throw 'Mobile "' + userParam.mobile + '" is already';
   }
   if (userParam.password) {
-    userParam.hash = bcrypt.hashSync(userParam.password, 10);
+    user.hash = bcrypt.hashSync(userParam.password, 10);
   }
   Object.assign(user, userParam);
   await user.save();
