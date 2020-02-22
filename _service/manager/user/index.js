@@ -62,8 +62,8 @@ async function getById(userId) {
 async function addUser(userParam) {
   // const err = "Đã tồn tại người dùng";
   if (await User.findOne({ mobile: userParam.mobile })) {
-    // throw 'Mobile "' + userParam.mobile + '" is already';
-     return 'Mobile "' + userParam.mobile + '" is already';
+    throw 'Mobile "' + userParam.mobile + '" is already';
+    //  return 'Mobile "' + userParam.mobile + '" is already';
   }
   const userAdd = new User(userParam);
   if (userAdd.password) {
