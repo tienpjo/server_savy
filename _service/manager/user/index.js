@@ -47,7 +47,8 @@ async function update(id, userParam) {
 }
 
 async function _delete(id) {
-  await User.findOneAndRemove(id);
+  console.log(id);
+  // await User.findOneAndRemove(id);
 }
 
 async function getAll() {
