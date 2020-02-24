@@ -1,4 +1,5 @@
 const dbs = require('../_helpers/database');
+const hwConn = require('../_service/connect/hwConnect.service');
 const Tracking = dbs.Tracking;
 const Status = dbs.Status;
 function getTracking(data, id_device_gps) {
@@ -34,11 +35,10 @@ function getTracking(data, id_device_gps) {
     });
 }
 
-function getStt(data,id_device_gps)
-{
+function getStt(data, id_device_gps) {
     var bikeStatus = {
-        deviceId:id_device_gps,
-        sttGPS:data[1],
+        deviceId: id_device_gps,
+        sttGPS: data[1],
         // sttConnect:data[2]
     }
     var stt = new Status(bikeStatus);
@@ -48,11 +48,27 @@ function getStt(data,id_device_gps)
     });
 }
 
-function closeHandler(data)
-{
-    
+function saveSockConnect(idDevice, sockConn) {
+    var hwConnect = {
+        deviceId: idDevice,
+        sockConnect: sockConn
+    }
+    // const hw = await hwConnect.findOne({ remoteAdress });
+    let bikeSock = await hwConn.findSockConn({ idDevice });
+    if (result) {
+        Object.assign(bikeSock, hwConnect);
+    }
+    else {
+        bikeSock = new hw(hwConnect);
+    }
+    bikeSock.save(function (err) {
+        if (err) throw err;
+        console.log('Save SOCKET Succesfully.');
+    });
 }
+
 module.exports = {
     getTracking,
-    getStt
+    getStt,
+    saveSockConnect
 }

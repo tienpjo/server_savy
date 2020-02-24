@@ -57,10 +57,10 @@ app.post('/users/actionCtrl', function (req, res) {
   res.json('ControlSuccess');
 });
 
+var line;
 server_tcp.on('connection', function (sock) {
   var data_filter;
   var id_device_gps;
-  var line;
   // io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
@@ -69,21 +69,11 @@ server_tcp.on('connection', function (sock) {
     data_filter = data_raw.split(',');
     if (data_filter[0] == "MOTO-ID") {
       id_device_gps = data_filter[1].split('-').map(Number);
-      console.log(id_device_gps);
       mapSockets[id_device_gps] = sock;
     }
     else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
       id_device_gps = data_filter[1].split('-').map(Number);
       mapSockets[id_device_gps] = sock;
-      var hwConnect = {
-        deviceId: id_device_gps,
-        sockConnect: sock
-      }
-      var bikeSock = new hw(hwConnect);
-      bikeSock.save(function (err) {
-        if (err) throw err;
-        console.log('Save SOCKET Succesfully.');
-      });
       processData.getTracking(data_filter, id_device_gps);
     }
     else if (data_filter[0] == "MOTO-GPS") {
@@ -113,5 +103,5 @@ server_tcp.on('connection', function (sock) {
   });
 });
 io.on('connection', function (socket) {
-  // socket.emit('news', line);
+  socket.emit('news', line);
 });

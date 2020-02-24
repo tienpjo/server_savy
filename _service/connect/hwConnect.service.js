@@ -4,11 +4,12 @@ const status = dbs.Status;
 module.exports = {
     findhwConnect,
     findStatusConnect,
-    updateSttServer
+    updateSttServer,
+    findSockConn
 }
 
 async function deleteConnect(id) {
-    await hwConnect.findByIdAndDelete(id);
+    await hwConnect.findByIdAndRemove(id);
 }
 
 // tim kiem connect da duoc luu trong mongod
@@ -17,7 +18,6 @@ async function findhwConnect({ remoteAdress }) {
     const hw = await hwConnect.findOne({ remoteAdress });
     var sttSrv = {
         deviceId: hw.deviceId,
-        sttGPS: "-",
         sttConnect: "CLOSE",
     }
     updateSttServer(hw.deviceId, sttSrv);
@@ -28,6 +28,11 @@ async function findhwConnect({ remoteAdress }) {
 async function findStatusConnect(deviceId) {
     return await status.findOne(deviceId);
 }
+
+async function findSockConn(deviceId) {
+    return await hwConnect.findOne(deviceId);
+}
+
 // tao async thuc hien update trang thai cua server - sim
 async function updateSttServer(deviceId, sttParam) {
     const stt = await status.findOne({ deviceId });
