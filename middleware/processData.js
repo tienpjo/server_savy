@@ -48,7 +48,7 @@ function getStt(data, id_device_gps) {
     });
 }
 
-function saveSockConnect(idDevice, sockConn) {
+async function saveSockConnect(idDevice, sockConn) {
     var hwConnect = {
         deviceId: idDevice,
         sockConnect: sockConn
