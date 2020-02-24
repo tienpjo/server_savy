@@ -64,7 +64,7 @@ server_tcp.on('connection', function (sock) {
   // io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
-    console.log(line);
+    // console.log(line);
     var data_raw = data.toString();
     data_filter = data_raw.split(',');
     if (data_filter[0] == "MOTO-ID") {
@@ -91,7 +91,7 @@ server_tcp.on('connection', function (sock) {
   sock.on('close', function (data) {
     hwTest.findhwConnect(sock.remoteAddress);
     // console.log(hwSock);
-    // console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+     console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     // let index = mapSockets.findIndex(function (o) {
     //   return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort;
     // })
