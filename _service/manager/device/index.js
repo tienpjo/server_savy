@@ -7,11 +7,15 @@ module.exports = {
     _delete,
     getDeviceById,
     getDeviceListByDeviceId,
+    getDeviceByOnwerId
 }
 async function getAllDevice() {
     return await Device.find().select('-__v');
 }
 
+async function getDeviceByOnwerId(ownerId) {
+    return await Device.find({"ownerId":ownerId}).select('-ownerId').select('-__v');
+}
 async function edit(id, deviceParam) {
     const device = await Device.findById(id);
     if (!device) throw 'Device not found';

@@ -5,7 +5,8 @@ module.exports = {
     getDeviceById,
     deviceDelete,
     deviceEdit,
-    deviceGetDeviceList
+    deviceGetDeviceList,
+    getDeviceByOwnerId
 }
 function getDeviceAll(req, res, next) {
     manageDevice.getAllDevice()
@@ -13,6 +14,11 @@ function getDeviceAll(req, res, next) {
     .catch(err => next(err));
 }
 
+function getDeviceByOwnerId (req,res,next) {
+    manageDevice.getDeviceByOnwerId(req.body.ownerId)
+    .then(devices => res.status(200).json({"data":devices}))
+    .catch(err => next(err));
+}
 function deviceEdit(req, res, next) {
     manageDevice.edit(req.params.id, req.body)
         .then(() => res.json({}))
