@@ -63,31 +63,32 @@ server_tcp.on('connection', function (sock) {
   var data_filter;
   var id_device_gps;
   //  
-  sock.on('data', function (data) {
-    io.on('connection', function (socket) {
+  io.on('connection', function (socket) {
+    sock.on('data', function (data) {
+
       line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
       console.log(line);
       socket.emit('news', line);
-    });
-    var data_raw = data.toString();
-    data_filter = data_raw.split(',');
-    if (data_filter[0] == "MOTO-ID") {
-      id_device_gps = data_filter[1].split('-').map(Number);
-      mapSockets[id_device_gps] = sock;
-    }
-    else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
-      id_device_gps = data_filter[1].split('-').map(Number);
-      mapSockets[id_device_gps] = sock;
-      processData.getTracking(data_filter, id_device_gps);
-    }
-    else if (data_filter[0] == "MOTO-GPS") {
-      id_device_gps = data_filter[1].split('-').map(Number);
-      mapSockets[id_device_gps] = sock;
-      processData.getStt(data_filter, id_device_gps);
-    }
-    // sock.setTimeout(15000);
-  });
 
+      var data_raw = data.toString();
+      data_filter = data_raw.split(',');
+      if (data_filter[0] == "MOTO-ID") {
+        id_device_gps = data_filter[1].split('-').map(Number);
+        mapSockets[id_device_gps] = sock;
+      }
+      else if (data_filter[0] == "MOTO-RUNNING" || data_filter[0] == "MOTO-STOPING") {
+        id_device_gps = data_filter[1].split('-').map(Number);
+        mapSockets[id_device_gps] = sock;
+        processData.getTracking(data_filter, id_device_gps);
+      }
+      else if (data_filter[0] == "MOTO-GPS") {
+        id_device_gps = data_filter[1].split('-').map(Number);
+        mapSockets[id_device_gps] = sock;
+        processData.getStt(data_filter, id_device_gps);
+      }
+      // sock.setTimeout(15000);
+    });
+  });
   sock.on('timeout', () => {
   });
   sock.on('error', () => {
