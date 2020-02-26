@@ -14,7 +14,7 @@ async function getAllDevice() {
 }
 
 async function getDeviceByOnwerId(ownerId) {
-    return await Device.find({ownerId}).select('-ownerId').select('-__v');
+    return await Device.find({"ownerId":ownerId}).select('-ownerId').select('-__v');
 }
 async function edit(id, deviceParam) {
     const device = await Device.findById(id);
