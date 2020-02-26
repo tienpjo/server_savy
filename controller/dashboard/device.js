@@ -16,6 +16,7 @@ function getDeviceAll(req, res, next) {
 
 function getDeviceByOwnerId (req,res,next) {
     let deviceId = req.params["ownerId"];
+    console.log(deviceId);
     manageDevice.getDeviceByOnwerId(deviceId)
     .then(devices => res.status(200).json({"data":devices}))
     .catch(err => next(err));
