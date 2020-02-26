@@ -58,11 +58,10 @@ app.post('/users/actionCtrl', function (req, res) {
   res.json('ControlSuccess');
 });
 
-
+var line;
 server_tcp.on('connection', function (sock) {
   var data_filter;
   var id_device_gps;
-  var line;
   //  io.on('connection', function (socket) {
   sock.on('data', function (data) {
     line = 'GPS_SAVY' + '---->' + sock.remoteAddress.toString() + ' ---->' + data.toString();
