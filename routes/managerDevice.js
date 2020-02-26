@@ -7,7 +7,7 @@ let DeviceManagerApi = (appApiDevice) => {
     router.post('/getDeviceListByDeviceId',dashboardDevice.deviceGetDeviceList);
     router.post('/edit',dashboardDevice.deviceEdit);
     router.delete('/:id',dashboardDevice.deviceDelete);
-    router.post('/getDeviceByOwner',dashboardDevice.getDeviceByOwnerId);
+    router.get('/getDeviceByOwner',dashboardDevice.getDeviceByOwnerId);
     return appApiDevice.use("/device",router);
 }
 module.exports = DeviceManagerApi;
