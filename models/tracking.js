@@ -7,7 +7,7 @@ const TrackingSchema = new mongoose.Schema({
     lati: {type: Number, required:true},        // vĩ độ
     bat: {type:String},
     status:{type:String},                       // trạng thái hiện tại của sẽ là ON or OFF
-    createdAt:{type:Date, expires: 7200},                      // thời gian lưu track vào mongo, auto delete sau ..gio
+    createdAt:{type:Date, expires: 1296000},                      // thời gian lưu track vào mongo, auto delete sau ..gio
     move:{type:String}                          // lưu sẽ đang di chuyển hay là ko di chuyển, xe đang OFF vẫn có thể di chuyển đc? vì sensor
 },
     {
