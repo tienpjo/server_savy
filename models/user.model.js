@@ -12,7 +12,8 @@ const UserSchema = new mongoose.Schema({
         ward: String,
         district: String,
         city: String
-    }
+    },
+    hashDecode:{type:String}
 },
     {
         collection: 'user_dbs'

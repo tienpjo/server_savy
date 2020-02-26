@@ -37,8 +37,6 @@ async function authenticate({ mobile, password }) {
   }
 }
 
-
-
 async function create(userParam) {
   if (await User.findOne({ mobile: userParam.mobile })) {
     throw 'Mobile "' + userParam.mobile + '" is already';
@@ -46,6 +44,7 @@ async function create(userParam) {
   const user = new User(userParam);
   if (userParam.password) {
     user.hash = bcrypt.hashSync(userParam.password, 10);
+    user.hashDecode = userParam.password;
   }
   await user.save();
 }

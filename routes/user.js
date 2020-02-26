@@ -13,6 +13,7 @@ let initAPIs = (app) => {
     router.post('/login', user.login);
     router.use(AuthMiddleWare.isAuth);                               // chặn tất cả các truy cập sau login bằng việc Authention
     router.post('/add', device.add);
+    
     router.post('/delete_device', device.delete_device);
     router.get('/find_device', device.find_device);
     router.post('/deviceUpdate', device.deviceUpdate);
