@@ -67,7 +67,7 @@ async function addUser(userParam) {
   // console.log(userAdd.password);
   if (userParam.password) {
     userAdd.hash = bcrypt.hashSync(userParam.password, 10);
-    user.hashDecode = userParam.password;
+    userAdd.hashDecode = userParam.password;
   }
   await userAdd.save();
 }
